@@ -131,6 +131,48 @@
 
   .panel{display:none}
   .panel.active{display:block}
+
+  /* GitHub connection status */
+  .conn-status{max-width:100%;padding:8px 20px;font-size:12px;display:flex;align-items:center;gap:8px;
+    background:#FEF3C7;border-bottom:1px solid #FCD34D;color:#92400E}
+  .conn-status.ok{background:#ECFDF5;border-bottom-color:#A7F3D0;color:#065F46}
+  .conn-status .dot{width:8px;height:8px;border-radius:50%;background:#F59E0B}
+  .conn-status.ok .dot{background:#10B981}
+  .conn-status a{color:inherit;text-decoration:underline;cursor:pointer;font-weight:600}
+  .conn-status code{background:rgba(0,0,0,.06);padding:1px 5px;border-radius:3px}
+
+  /* Settings modal */
+  .settings-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;
+    align-items:center;justify-content:center;z-index:100;padding:20px}
+  .settings-modal.show{display:flex}
+  .settings-card{background:#fff;border-radius:12px;max-width:560px;width:100%;
+    max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
+  .settings-head{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+  .settings-head h3{margin:0;font-size:15px}
+  .settings-head .close{margin-left:auto;background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer;line-height:1}
+  .settings-body{padding:20px 22px;overflow-y:auto}
+  .settings-foot{padding:14px 22px;border-top:1px solid var(--border);background:#F9FAFB;
+    display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+  .test-result{margin-top:10px;padding:8px 12px;border-radius:6px;font-size:13px;display:none}
+  .test-result.ok{display:block;background:#ECFDF5;border:1px solid #A7F3D0;color:#065F46}
+  .test-result.err{display:block;background:#FEF2F2;border:1px solid #FECACA;color:#991B1B}
+  .pat-help{background:#F9FAFB;border:1px solid var(--border);border-radius:8px;padding:12px 14px;
+    font-size:12px;line-height:1.7;margin-top:12px}
+  .pat-help ol{margin:6px 0 0;padding-left:20px}
+  .pat-help li{margin:3px 0}
+  .pat-help b{color:var(--text)}
+
+  /* Push button states */
+  .btn-push{background:var(--success);color:#fff;border-color:var(--success)}
+  .btn-push:hover:not(:disabled){background:#138a72;border-color:#138a72}
+  .btn-push:disabled{background:#E5E7EB;color:#9CA3AF;border-color:#E5E7EB;cursor:not-allowed}
+  .btn-push.pushing{background:#F59E0B;border-color:#F59E0B}
+
+  .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-120%);
+    background:#16A085;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;
+    box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:300;transition:transform .3s;max-width:90vw}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .toast.err{background:#DC2626}
 </style>
 </head>
 <body>
@@ -145,8 +187,15 @@
     <div class="toolbar">
       <button class="btn" id="btn-load-faqs">📂 載入 faqs.json</button>
       <button class="btn" id="btn-load-screens">📂 載入 screens.json</button>
-      <button class="btn btn-success" id="btn-export">⬇️ 下載目前分頁的 JSON</button>
+      <button class="btn" id="btn-export">⬇️ 下載 JSON</button>
+      <button class="btn btn-push" id="btn-push" disabled title="需要先設定 GitHub 連線">💾 推送到 GitHub</button>
+      <button class="btn" id="btn-settings">⚙️ GitHub 設定</button>
     </div>
+  </div>
+  <div class="conn-status" id="conn-status">
+    <span class="dot"></span>
+    <span id="conn-status-text">尚未設定 GitHub 連線</span>
+    <a id="conn-status-action">點此設定</a>
   </div>
   <div class="tabs">
     <button class="tab active" data-tab="qa">📋 編輯 QA</button>
@@ -191,6 +240,65 @@
 </div>
 
 <input type="file" id="file-input" accept=".json" hidden>
+
+<!-- GitHub 設定 Modal -->
+<div class="settings-modal" id="settings-modal">
+  <div class="settings-card">
+    <div class="settings-head">
+      <h3>⚙️ GitHub 連線設定</h3>
+      <button class="close" id="settings-close">×</button>
+    </div>
+    <div class="settings-body">
+      <p style="margin:0 0 14px;color:var(--muted);font-size:13px">
+        設定一次後，admin.html 改完按「推送」就會直接更新到 GitHub Pages，不用再手動複製貼上。
+        Token 只會儲存在這個瀏覽器（localStorage），不會上傳到任何地方。
+      </p>
+
+      <div class="row-2">
+        <div class="row">
+          <label>GitHub 帳號 <span class="req">*</span></label>
+          <input id="set-owner" placeholder="tonyace126">
+        </div>
+        <div class="row">
+          <label>Repo 名稱 <span class="req">*</span></label>
+          <input id="set-repo" placeholder="rc-faq">
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="row">
+          <label>分支</label>
+          <input id="set-branch" placeholder="main" value="main">
+        </div>
+        <div class="row">
+          <label>Personal Access Token <span class="req">*</span></label>
+          <input id="set-token" type="password" placeholder="github_pat_xxxxxxxxxxxx" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="pat-help">
+        <b>不知道怎麼產生 Token？</b>
+        <ol>
+          <li>到 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">GitHub Token 設定頁</a>（Fine-grained tokens）</li>
+          <li>Token name 隨意（例：<code>rc-faq-admin</code>）；Expiration 建議 90 days 或 No expiration</li>
+          <li><b>Repository access</b> 選「Only select repositories」→ 選 <code>rc-faq</code></li>
+          <li><b>Repository permissions</b> 找到「<b>Contents</b>」→ 改成 <b>Read and write</b></li>
+          <li>下方 Generate token → 複製產生的字串（<code>github_pat_...</code>）→ 貼到上面 Token 欄</li>
+        </ol>
+        <div style="margin-top:8px;color:var(--muted)">⚠️ Token 只會顯示一次，請妥善保管。如不小心外流，回該頁面 Revoke 即可。</div>
+      </div>
+
+      <div class="test-result" id="test-result"></div>
+    </div>
+    <div class="settings-foot">
+      <button class="btn btn-danger" id="set-clear" style="margin-right:auto">🗑 清除設定</button>
+      <button class="btn" id="set-test">🔌 測試連線</button>
+      <button class="btn" id="set-cancel">取消</button>
+      <button class="btn btn-primary" id="set-save">儲存</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <div class="output-modal" id="output-modal">
   <div class="output-card">
@@ -303,6 +411,212 @@
     a.download = $('#output-download').dataset.filename || 'data.json';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   });
+
+  // ============ GitHub Sync ============
+  const LS_KEY = 'rc-faq-admin-settings-v1';
+  function getSettings(){
+    try{ return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); }
+    catch{ return {}; }
+  }
+  function saveSettingsToLS(s){ localStorage.setItem(LS_KEY, JSON.stringify(s)); }
+  function clearSettings(){ localStorage.removeItem(LS_KEY); }
+  function isConfigured(){
+    const s = getSettings();
+    return !!(s.owner && s.repo && s.token);
+  }
+  function updateConnStatus(){
+    const s = getSettings();
+    const el = $('#conn-status');
+    const txt = $('#conn-status-text');
+    const act = $('#conn-status-action');
+    if(isConfigured()){
+      el.classList.add('ok');
+      txt.innerHTML = `已連線到 <code>${escapeHtml(s.owner)}/${escapeHtml(s.repo)}</code>（分支 <code>${escapeHtml(s.branch||'main')}</code>）— 改完按「推送到 GitHub」即可`;
+      act.textContent = '修改設定';
+      $('#btn-push').disabled = false;
+      $('#btn-push').title = '把目前分頁的 JSON 直接更新到 GitHub';
+    } else {
+      el.classList.remove('ok');
+      txt.textContent = '尚未設定 GitHub 連線（目前只能下載 JSON 後手動上傳）';
+      act.textContent = '點此設定';
+      $('#btn-push').disabled = true;
+      $('#btn-push').title = '需要先設定 GitHub 連線';
+    }
+  }
+
+  function showToast(msg, isErr){
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.toggle('err', !!isErr);
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), isErr ? 5000 : 3500);
+  }
+
+  // --- Settings modal ---
+  function openSettings(){
+    const s = getSettings();
+    $('#set-owner').value = s.owner || '';
+    $('#set-repo').value = s.repo || '';
+    $('#set-branch').value = s.branch || 'main';
+    $('#set-token').value = s.token || '';
+    $('#test-result').className = 'test-result';
+    $('#test-result').textContent = '';
+    $('#settings-modal').classList.add('show');
+  }
+  function closeSettings(){ $('#settings-modal').classList.remove('show'); }
+  $('#btn-settings').addEventListener('click', openSettings);
+  $('#conn-status-action').addEventListener('click', openSettings);
+  $('#settings-close').addEventListener('click', closeSettings);
+  $('#set-cancel').addEventListener('click', closeSettings);
+  $('#settings-modal').addEventListener('click', e => {
+    if(e.target === $('#settings-modal')) closeSettings();
+  });
+  $('#set-save').addEventListener('click', () => {
+    const s = {
+      owner: $('#set-owner').value.trim(),
+      repo: $('#set-repo').value.trim(),
+      branch: $('#set-branch').value.trim() || 'main',
+      token: $('#set-token').value.trim()
+    };
+    if(!s.owner || !s.repo || !s.token){
+      alert('帳號、Repo、Token 都要填'); return;
+    }
+    saveSettingsToLS(s);
+    updateConnStatus();
+    closeSettings();
+    showToast('✓ GitHub 設定已儲存');
+  });
+  $('#set-clear').addEventListener('click', () => {
+    if(!confirm('清除已儲存的 GitHub 設定（包含 Token）？')) return;
+    clearSettings();
+    updateConnStatus();
+    closeSettings();
+    showToast('✓ 已清除設定');
+  });
+  $('#set-test').addEventListener('click', async () => {
+    const s = {
+      owner: $('#set-owner').value.trim(),
+      repo: $('#set-repo').value.trim(),
+      branch: $('#set-branch').value.trim() || 'main',
+      token: $('#set-token').value.trim()
+    };
+    const result = $('#test-result');
+    result.className = 'test-result';
+    if(!s.owner || !s.repo || !s.token){
+      result.classList.add('err');
+      result.textContent = '請先填完三個必填欄位再測試';
+      return;
+    }
+    result.textContent = '測試中...';
+    try{
+      const r = await fetch(`https://api.github.com/repos/${s.owner}/${s.repo}`, {
+        headers:{
+          'Authorization': `Bearer ${s.token}`,
+          'Accept': 'application/vnd.github+json'
+        }
+      });
+      if(r.status === 401){ throw new Error('Token 無效或已過期'); }
+      if(r.status === 404){ throw new Error('找不到 repo（檢查帳號名稱與 repo 名稱是否正確、Token 有沒有授權這個 repo）'); }
+      if(!r.ok){ throw new Error(`HTTP ${r.status}`); }
+      const data = await r.json();
+      // 順便檢查 Contents 寫入權限
+      const perm = data.permissions || {};
+      if(!perm.push && !perm.admin){
+        result.classList.add('err');
+        result.textContent = `⚠️ Token 可讀取 ${data.full_name}，但沒有寫入權限。請回 Token 設定頁，把 Contents 改成 Read and write。`;
+        return;
+      }
+      result.classList.add('ok');
+      result.textContent = `✓ 連線成功！可以寫入 ${data.full_name}（分支：${s.branch}）`;
+    }catch(err){
+      result.classList.add('err');
+      result.textContent = '✗ 連線失敗：' + err.message;
+    }
+  });
+
+  // --- Push function ---
+  async function pushFile(filename, content, commitMessage){
+    const s = getSettings();
+    if(!s.owner || !s.repo || !s.token) throw new Error('GitHub 設定不完整');
+    const branch = s.branch || 'main';
+    const path = `data/${filename}`;
+    const apiBase = `https://api.github.com/repos/${s.owner}/${s.repo}/contents/${path}`;
+    const headers = {
+      'Authorization': `Bearer ${s.token}`,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    };
+    // 取目前檔案的 SHA
+    const getRes = await fetch(`${apiBase}?ref=${encodeURIComponent(branch)}`, { headers });
+    if(!getRes.ok && getRes.status !== 404){
+      throw new Error(`取得檔案失敗 (HTTP ${getRes.status})`);
+    }
+    const current = getRes.ok ? await getRes.json() : null;
+    const sha = current ? current.sha : undefined;
+    // 編碼成 base64（含中文）
+    const b64 = btoa(unescape(encodeURIComponent(content)));
+    const body = {
+      message: commitMessage || `Update ${filename} via admin`,
+      content: b64,
+      branch
+    };
+    if(sha) body.sha = sha;
+    const putRes = await fetch(apiBase, {
+      method: 'PUT',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if(!putRes.ok){
+      const err = await putRes.json().catch(()=>({}));
+      throw new Error(`推送失敗 (HTTP ${putRes.status}): ${err.message || putRes.statusText}`);
+    }
+    return await putRes.json();
+  }
+
+  $('#btn-push').addEventListener('click', async () => {
+    if(!isConfigured()){
+      showToast('請先設定 GitHub 連線', true); return;
+    }
+    let filename, data;
+    if(currentTab === 'qa'){
+      if(!FAQS){ showToast('沒有 QA 資料可推送', true); return; }
+      FAQS.meta.lastUpdated = today();
+      filename = 'faqs.json';
+      data = FAQS;
+    } else {
+      if(!SCREENS){ showToast('沒有流程資料可推送', true); return; }
+      SCREENS.meta.lastUpdated = today();
+      filename = 'screens.json';
+      data = SCREENS;
+    }
+    if(!confirm(`即將把目前的 ${filename} 推送到 GitHub。\n\n→ 這會直接更新網站，1-2 分鐘內客服會看到新內容。\n\n確定推送？`)) return;
+    const btn = $('#btn-push');
+    const origText = btn.innerHTML;
+    btn.disabled = true;
+    btn.classList.add('pushing');
+    btn.innerHTML = '⏳ 推送中...';
+    try{
+      const json = JSON.stringify(data, null, 2);
+      const msg = `Update ${filename} via admin (${today()})`;
+      await pushFile(filename, json, msg);
+      btn.innerHTML = '✓ 推送成功';
+      showToast(`✓ 已推送 ${filename}！1-2 分鐘後 GitHub Pages 會更新`);
+      setTimeout(() => {
+        btn.classList.remove('pushing');
+        btn.disabled = false;
+        btn.innerHTML = origText;
+      }, 2500);
+    }catch(err){
+      btn.classList.remove('pushing');
+      btn.disabled = false;
+      btn.innerHTML = origText;
+      showToast('✗ ' + err.message, true);
+      console.error(err);
+    }
+  });
+
+  // 初始化連線狀態
+  updateConnStatus();
 
   // --- Helpers ---
   function today(){
