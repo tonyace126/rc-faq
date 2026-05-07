@@ -4,11 +4,31 @@
     "note": "平台頁面流程庫 — 每個流程是會員會走的一條路徑，每張圖是會員在某一步看到的畫面。"
   },
   "categories": [
-    { "id": "service",  "name": "客服 / FAQ 入口", "color": "#3498DB" },
-    { "id": "invoice",  "name": "發票相關",         "color": "#C8102E" },
-    { "id": "campaign", "name": "活動 / 給點訊息",  "color": "#16A085" },
-    { "id": "platform", "name": "平台介紹",         "color": "#8E44AD" },
-    { "id": "backend",  "name": "客服後台操作",     "color": "#7F8C8D" }
+    {
+      "id": "service",
+      "name": "客服 / FAQ 入口",
+      "color": "#3498DB"
+    },
+    {
+      "id": "invoice",
+      "name": "發票相關",
+      "color": "#C8102E"
+    },
+    {
+      "id": "campaign",
+      "name": "活動 / 給點訊息",
+      "color": "#16A085"
+    },
+    {
+      "id": "platform",
+      "name": "平台介紹",
+      "color": "#8E44AD"
+    },
+    {
+      "id": "backend",
+      "name": "客服後台操作",
+      "color": "#7F8C8D"
+    }
   ],
   "flows": [
     {
@@ -27,7 +47,9 @@
           "title": "Step 2：聯繫線上客服",
           "description": "會員點擊『聯繫線上客服』後，會在聊天室收到引導圖。可直接點擊圖中按鈕開啟常見問題，或在聊天室留言由線上客服回覆。",
           "image": "images/screens/contact-02-cs-chat.jpg",
-          "relatedFaqs": ["MEM-001"]
+          "relatedFaqs": [
+            "MEM-001"
+          ]
         }
       ]
     },
@@ -53,7 +75,9 @@
           "title": "Step 3-A：集點與會員相關 FAQ",
           "description": "牌卡引導會員選擇細項問題，每個選項會跳出對應的客服自動答覆。",
           "image": "images/screens/faq-member-01.jpg",
-          "relatedFaqs": ["MEM-001"]
+          "relatedFaqs": [
+            "MEM-001"
+          ]
         },
         {
           "title": "Step 3-A 續：集點與會員相關 FAQ（更多項目）",
@@ -127,13 +151,19 @@
           "title": "可接受的發票照片格式（4 種）",
           "description": "會員上傳的發票照片必須是這 4 種格式之一：①電子發票與消費明細 ②消費通路提供之電子發票消費明細 ③財政部官方發票存摺 APP 畫面 ④其他發票 APP 畫面。",
           "image": "images/screens/invoice-valid-formats.jpg",
-          "relatedFaqs": ["INV-001", "INV-002"]
+          "relatedFaqs": [
+            "INV-001",
+            "INV-002"
+          ]
         },
         {
           "title": "發票照片必要資訊（4 項缺一不可）",
           "description": "無論用哪種格式，發票照片或截圖上必須清楚看到：①發票號碼 ②消費日期與時間 ③通路統編 ④消費明細（含品項名稱、數量、金額）。",
           "image": "images/screens/invoice-required-info.jpg",
-          "relatedFaqs": ["INV-001", "INV-002"]
+          "relatedFaqs": [
+            "INV-001",
+            "INV-002"
+          ]
         }
       ]
     },
@@ -147,13 +177,17 @@
           "title": "每月給點訊息範例",
           "description": "LINE 每月會推送一則互動訊息，會員點擊後即符合給點資格。目前固定派送 HP 100 點。派點時間為訊息發送『當月份的下個月底』，例：5 月發送 → 6/30 才入帳。",
           "image": "images/screens/monthly-msg-01-example.png",
-          "relatedFaqs": ["CAM-001"]
+          "relatedFaqs": [
+            "CAM-001"
+          ]
         },
         {
           "title": "給點訊息圖片：辨識徽章",
           "description": "給點訊息圖片右上角會加上『給點徽章』標示，可以快速辨識這是有給點獎勵的訊息（與一般行銷推播區分）。",
           "image": "images/screens/monthly-msg-02-badge.png",
-          "relatedFaqs": ["CAM-001"]
+          "relatedFaqs": [
+            "CAM-001"
+          ]
         },
         {
           "title": "行銷活動期間的訊息範例",
@@ -174,26 +208,6 @@
           "description": "RC 集點平台的整體功能與會員服務一覽。",
           "image": "images/screens/platform-01-overview.png",
           "relatedFaqs": []
-        }
-      ]
-    },
-    {
-      "id": "FLOW-CS-HANDLING",
-      "category": "backend",
-      "name": "客服處理問題的後台操作",
-      "description": "會員回報問題時，客服需要從漸強後台查詢 LINE UID。這個流程示範收到會員截圖後客服這端的處理動作。",
-      "steps": [
-        {
-          "title": "Step 1：收到會員的問題截圖",
-          "description": "會員回報問題時，請主動引導他提供：①問題截圖或短影片 ②大約遇到問題的時間 ③使用的手機系統（iOS / Android）。範例為會員實際傳來的問題截圖。",
-          "image": "images/screens/cs-handle-01-screenshot.jpg",
-          "relatedFaqs": ["MEM-001"]
-        },
-        {
-          "title": "Step 2：到漸強後台查 LINE UID",
-          "description": "登入漸強後台 > 聯絡人管理 > 聯絡人 > 搜尋會員（用 LINE 暱稱）> 點開會員資料 > 複製『LINE UID』，提供給 TONY 做進一步查詢。",
-          "image": "images/screens/cs-handle-02-uid.jpg",
-          "relatedFaqs": ["MEM-001"]
         }
       ]
     }
