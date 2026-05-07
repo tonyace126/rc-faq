@@ -1,28 +1,38 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-07",
-    "note": "平台頁面流程庫 — 每個流程是會員會走的一條路徑，每張圖是會員在某一步看到的畫面。"
+    "lastUpdated": "2026-05-08",
+    "note": "平台頁面流程庫 — 每條流程是會員在平台上會走的一段路徑，每張圖是會員某一步看到的畫面。客服收到會員截圖時可從這裡找到對應的頁面說明。"
   },
   "categories": [
+    {
+      "id": "platform",
+      "name": "平台介紹",
+      "color": "#8E44AD"
+    },
+    {
+      "id": "pet",
+      "name": "曬寵打卡",
+      "color": "#E91E63"
+    },
+    {
+      "id": "invoice",
+      "name": "消費集點 / 發票",
+      "color": "#C8102E"
+    },
+    {
+      "id": "exchange",
+      "name": "點數兌換",
+      "color": "#00ACC1"
+    },
     {
       "id": "service",
       "name": "客服 / FAQ 入口",
       "color": "#3498DB"
     },
     {
-      "id": "invoice",
-      "name": "發票相關",
-      "color": "#C8102E"
-    },
-    {
       "id": "campaign",
       "name": "活動 / 給點訊息",
       "color": "#16A085"
-    },
-    {
-      "id": "platform",
-      "name": "平台介紹",
-      "color": "#8E44AD"
     },
     {
       "id": "backend",
@@ -32,13 +42,232 @@
   ],
   "flows": [
     {
+      "id": "FLOW-PLATFORM-INTRO",
+      "category": "platform",
+      "name": "法國皇家毛孩健康專寵計劃 平台總覽",
+      "description": "提供毛孩健康知識與專屬點數回饋的會員平台。會員只要參與平台任務，就能獲得 Health Points (HP) 會員點數，HP 可至『點數兌換』兌換 LINE POINTS。新進客服 onboarding 必看，先建立平台全貌的概念。",
+      "steps": [
+        {
+          "title": "Step 1：平台首頁",
+          "description": "會員進入平台後的第一個畫面：上方顯示會員暱稱與 Health Point 餘額；中間是『熱門活動』（目前主推登錄發票）；下方是『點數兌換』熱門品項；最下方是『動動手指立即賺』兩個入口（消費集點 / 賺點任務）以及『曬寵活動即時排行榜』。",
+          "image": "images/screens/contact-02-home.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 2：6 大功能區一覽",
+          "description": "從首頁的選單可進入 6 大功能區：會員面板、消費集點、曬寵打卡、寵物知識、活動專區、點數兌換。下方的客服流程都會與這 6 區對應。",
+          "image": "images/screens/contact-03-menu.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3：會員面板",
+          "description": "查看會員資料的中心：含會員 HP 總點數、寵物資訊（可新增多隻毛孩）、賺點任務、點數紀錄、我的票券（兌換過的 LINE POINTS / 健檢券都在這）。會員問『我兌換的東西在哪』就引導他來這裡。",
+          "image": "images/screens/area-member.jpg",
+          "relatedFaqs": [
+            "HLT-001"
+          ]
+        },
+        {
+          "title": "Step 4：消費集點",
+          "description": "發票登錄任務頁。顯示目前進行中的集點活動（『購買零售產品集點換好康！』），點『登錄集點』即進入發票登錄流程。本檔活動期間：2026-01-01 ~ 2026-12-31。",
+          "image": "images/screens/contact-04-invoice.jpg",
+          "relatedFaqs": [
+            "INV-001",
+            "INV-002",
+            "INV-003",
+            "INV-004"
+          ]
+        },
+        {
+          "title": "Step 5：曬寵打卡",
+          "description": "曬寵秀毛孩。每月會有不同主題（例：『誰是你們家的毛孩好朋友？』），會員上傳符合主題的毛孩照片可賺 50 HP。下方的『曬寵牆』可瀏覽其他會員的照片並點讚（每日點讚 3 張可賺 2 HP），活動結束後讚數最高前三名再額外獲得 100-200 HP。",
+          "image": "images/screens/area-pet-checkin.jpg",
+          "relatedFaqs": [
+            "PET-001"
+          ]
+        },
+        {
+          "title": "Step 6：寵物知識",
+          "description": "毛孩照護知識專區。提供法國皇家專業飼養與照護知識文章（毛孩健康、營養、急救等），會員可篩選主題閱讀。屬於知識性內容，本身不直接賺點數。",
+          "image": "images/screens/area-pet-knowledge.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 7：活動專區",
+          "description": "各類活動列表（含目前主推的『登錄發票』、各檔曬寵主題、不定期行銷活動如抽獎、增粉活動等）。會員問『有什麼活動可以參加』就引導到這裡。",
+          "image": "images/screens/area-campaign.jpg",
+          "relatedFaqs": [
+            "CAM-001"
+          ]
+        },
+        {
+          "title": "Step 8：點數兌換",
+          "description": "上方顯示 HP 餘額，下方為 LINE POINTS 兌換清單（10 / 30 / 50 / 100 / 600 點等不同面額）。每個品項顯示『可兌換時間』與『所需 HP』。另有『活動票券』兌換項目（如健檢券）。已額滿的品項會顯示灰色標籤。",
+          "image": "images/screens/area-exchange.jpg",
+          "relatedFaqs": [
+            "PTS-001",
+            "HLT-001"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FLOW-EARNING-METHODS",
+      "category": "platform",
+      "name": "賺取 Health Point 兩大方式總覽",
+      "description": "會員主要透過兩種方式累積 Health Point：曬寵打卡（免費）+ 消費集點（買產品）。客服遇到『要怎麼賺點數』『怎麼快速累積 HP』的問題就用這條流程說明。",
+      "steps": [
+        {
+          "title": "方式總覽：兩條路徑",
+          "description": "1) 曬寵打卡：免費，靠上傳毛孩照片 / 點讚 / 衝排行榜累積。2) 消費集點：購買法國皇家貓犬零售產品乾糧 / 濕糧，登錄發票後 1元 = 1 HP。兩種方式的 HP 都會合併計算。",
+          "image": "",
+          "relatedFaqs": []
+        },
+        {
+          "title": "方式 1：曬寵打卡（詳見曬寵流程）",
+          "description": "三種賺點活動：每月主題上傳 50 HP / 每日點讚 2 HP / 月排行冠亞季 100-200 HP。完整說明在『曬寵打卡 3 種賺點活動』流程。",
+          "image": "images/screens/area-pet-checkin.jpg",
+          "relatedFaqs": [
+            "PET-001"
+          ]
+        },
+        {
+          "title": "方式 2：消費集點（詳見發票登錄流程）",
+          "description": "兌換比例 1:1（消費 1 元累積 1 HP）。需登錄符合 4 種接受格式的發票，且明細上有『法國皇家發票登錄指定產品品項』。完整規則在『消費集點發票登錄完整說明』流程。",
+          "image": "images/screens/contact-04-invoice.jpg",
+          "relatedFaqs": [
+            "INV-001",
+            "INV-002",
+            "INV-003",
+            "INV-004"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FLOW-PET-CHECKIN",
+      "category": "pet",
+      "name": "曬寵打卡 3 種賺點活動",
+      "description": "曬寵打卡有 3 種賺點方式可疊加，會員每個都做能快速累積 HP。客服遇到『曬寵怎麼賺點』『冠亞季是什麼』就用這條流程說明。",
+      "steps": [
+        {
+          "title": "Step 1：進入曬寵打卡",
+          "description": "從 6 大功能區點選『曬寵打卡』。畫面上方顯示當期主題與活動說明，中間切『曬寵牆 / 本檔參加紀錄』兩個分頁。",
+          "image": "images/screens/area-pet-checkin.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "活動 1：每月曬寵主題（50 HP）",
+          "description": "每月會公告新主題（例：『誰是你們家的毛孩好朋友？』）。會員上傳符合主題的毛孩照片，通過審核即可獲得 50 HP。審核未通過常見原因：照片中沒有清楚拍到寵物本人、照片品質太低、不符合主題。",
+          "image": "",
+          "relatedFaqs": [
+            "PET-001"
+          ]
+        },
+        {
+          "title": "活動 2：每日讚萌寵（2 HP / 日）",
+          "description": "至『曬寵牆』瀏覽任意 3 張照片並點讚，即可獲得 2 HP。點讚記錄『每日 0 點重新計算』，所以會員每天都可以再賺 2 HP。",
+          "image": "",
+          "relatedFaqs": []
+        },
+        {
+          "title": "活動 3：曬寵冠亞季（100-200 HP）",
+          "description": "每檔曬寵活動結束後，按讚數結算前三名：第 1 名 200 HP / 第 2 名 150 HP / 第 3 名 100 HP，自動派點。會員問『冠亞季什麼時候開獎』就告知活動結束後系統會自動結算派發。",
+          "image": "",
+          "relatedFaqs": []
+        }
+      ]
+    },
+    {
+      "id": "FLOW-INVOICE-REGISTRATION",
+      "category": "invoice",
+      "name": "消費集點發票登錄 完整說明",
+      "description": "購買法國皇家貓犬零售產品（乾糧 / 濕糧全產品），登錄發票即可兌換 HP，比例為 1元 = 1 HP。本流程涵蓋接受格式、必要資訊、不接受的圖片範例、10 條活動規則。發票相關問題首先看這條。",
+      "steps": [
+        {
+          "title": "Step 1：進入消費集點",
+          "description": "從 6 大功能區點選『消費集點』，看到當期活動『購買零售產品集點換好康！』，點『登錄集點』進入發票上傳介面。本檔活動期間：2026-01-01 ~ 2026-12-31。",
+          "image": "images/screens/contact-04-invoice.jpg",
+          "relatedFaqs": [
+            "INV-003"
+          ]
+        },
+        {
+          "title": "Step 2：兌換比例 1元 = 1 HP",
+          "description": "消費金額累計方式為該張發票符合『法國皇家指定品項』之項目總額，按金額比例派發 HP。發票金額以整數計算，系統忽略小數值。",
+          "image": "",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3：4 種接受的發票格式",
+          "description": "只接受以下 4 種：(1) 電子發票與消費明細 (2) 消費通路提供之電子發票消費明細 (3) 財政部官方發票存摺 APP 畫面 (4) 其他發票 APP 畫面。圖中為標準範例。",
+          "image": "images/screens/invoice-valid-formats.jpg",
+          "relatedFaqs": [
+            "INV-001",
+            "INV-002"
+          ]
+        },
+        {
+          "title": "Step 4：發票必要資訊 4 項缺一不可",
+          "description": "無論用哪種格式上傳，發票照片或截圖上必須清楚看到：(1) 發票號碼 (2) 消費日期與時間 (3) 通路統編 (4) 消費明細（含品項名稱、數量、金額）。任一項缺漏都會審核退件。",
+          "image": "images/screens/invoice-required-info.jpg",
+          "relatedFaqs": [
+            "INV-001"
+          ]
+        },
+        {
+          "title": "Step 5：不接受的圖片範例",
+          "description": "常見會被退件的錯誤上傳：(1) 免用統編收據（路邊攤、市場、夜市等小商家給的收據，沒有統編，非正式發票，如圖所示）(2) 純商品照片（直接拍法國皇家飼料袋）(3) 出貨單 / 訂購單 / 信用卡簽單等非發票單據。請會員確認上傳的是真正的發票。",
+          "image": "images/screens/invoice-上傳明細錯誤.png",
+          "relatedFaqs": [
+            "INV-004"
+          ]
+        },
+        {
+          "title": "Step 6：10 條活動規則（完整版）",
+          "description": "1. 須先是 LINE 會員。 2. 須先加入『法國皇家 - 毛孩健康專寵計劃』成為會員。 3. 活動期間內購買法國皇家指定品項，登錄發票，審核通過後計算 HP。 4. 每檔活動、每筆發票限登錄一次，重複登錄不予計算。 5. 消費時間需於 2026/1/01 ~ 2026/12/31，且需在活動期間內登錄審核成功。 6. 消費金額累計方式為該張發票符合指定品項之項目總額。 7. 發票金額以整數計算，系統忽略小數值。 8. 電子發票可用 QRcode 掃描、手動輸入或載具登錄；審核以『財政部電子發票整合服務平臺』為準；近期因財政部流量限制，回覆時間延長，請耐心等候。 9. 紙本發票須手動輸入並拍照上傳，照片需清晰可辨識，模糊或損毀無法通過審核。 10. 向法國皇家批發採購之發票不適用本活動，賣方為法國皇家會被排除。",
+          "image": "",
+          "relatedFaqs": [
+            "INV-001",
+            "INV-002",
+            "INV-003",
+            "INV-004"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FLOW-POINT-EXCHANGE",
+      "category": "exchange",
+      "name": "Health Point 兌換 LINE POINTS",
+      "description": "會員賺到的 HP 可在『點數兌換』區換成 LINE POINTS（依面額不同所需 HP 也不同）或活動票券（健檢券等）。客服遇到『點數要怎麼用』『LINE POINTS 怎麼換』就引導到這條。",
+      "steps": [
+        {
+          "title": "Step 1：進入點數兌換",
+          "description": "從 6 大功能區點選『點數兌換』。上方顯示會員 HP 餘額，下方為兌換清單。已額滿的品項會顯示灰色『已額滿』標籤。",
+          "image": "images/screens/area-exchange.jpg",
+          "relatedFaqs": [
+            "PTS-001"
+          ]
+        },
+        {
+          "title": "Step 2：LINE POINTS 兌換比例對照",
+          "description": "目前兌換比例（會依活動調整，請以平台實際顯示為準）：LINE POINTS 10 點 ↔ 1,500 HP / 30 點 ↔ 3,000 HP / 50 點 ↔ 3,800 HP / 100 點 ↔ 4,500 HP / 600 點 ↔ 10,000 HP。會員兌換成功後，LINE POINTS 會自動入帳到 LINE，請會員到 LINE Wallet > LINE POINTS 確認。",
+          "image": "",
+          "relatedFaqs": [
+            "PTS-001"
+          ]
+        }
+      ]
+    },
+    {
       "id": "FLOW-CONTACT-CS",
       "category": "service",
       "name": "會員聯繫線上客服流程",
-      "description": "會員怎麼從 LINE 聯絡到線上客服。客服遇到「會員找不到客服入口」時，把這個流程截圖給會員看即可。",
+      "description": "會員怎麼從 LINE 聯絡到線上客服。客服遇到『會員找不到客服入口』時，把這個流程截圖給會員看即可。",
       "steps": [
         {
-          "title": "Step 1：點擊「更多服務」選單",
+          "title": "Step 1：點擊『更多服務』選單",
           "description": "會員在 LINE 法國皇家官方帳號的圖文選單，點選右下角『更多服務』分頁，即可看到『聯繫線上客服』『尋找皇家據點』『探索皇家官網』『查詢常見問題』四個選項。",
           "image": "images/screens/contact-01-menu.jpg",
           "relatedFaqs": []
@@ -142,32 +371,6 @@
       ]
     },
     {
-      "id": "FLOW-INVOICE-RULES",
-      "category": "invoice",
-      "name": "發票登錄規則參考圖",
-      "description": "客服遇到「發票被退件」「不知道要附什麼」「發票照片格式不對」時，把這兩張圖傳給會員當作範例最快。",
-      "steps": [
-        {
-          "title": "可接受的發票照片格式（4 種）",
-          "description": "會員上傳的發票照片必須是這 4 種格式之一：①電子發票與消費明細 ②消費通路提供之電子發票消費明細 ③財政部官方發票存摺 APP 畫面 ④其他發票 APP 畫面。",
-          "image": "images/screens/invoice-valid-formats.jpg",
-          "relatedFaqs": [
-            "INV-001",
-            "INV-002"
-          ]
-        },
-        {
-          "title": "發票照片必要資訊（4 項缺一不可）",
-          "description": "無論用哪種格式，發票照片或截圖上必須清楚看到：①發票號碼 ②消費日期與時間 ③通路統編 ④消費明細（含品項名稱、數量、金額）。",
-          "image": "images/screens/invoice-required-info.jpg",
-          "relatedFaqs": [
-            "INV-001",
-            "INV-002"
-          ]
-        }
-      ]
-    },
-    {
       "id": "FLOW-MONTHLY-MSG",
       "category": "campaign",
       "name": "每月給點訊息範例",
@@ -198,16 +401,26 @@
       ]
     },
     {
-      "id": "FLOW-PLATFORM-INTRO",
-      "category": "platform",
-      "name": "RC 集點平台整體介紹",
-      "description": "平台功能 / 服務的整體介紹圖。新進客服 onboarding 時可以先看這張，建立平台全貌的概念。",
+      "id": "FLOW-CS-HANDLING",
+      "category": "backend",
+      "name": "客服處理問題的後台操作",
+      "description": "會員回報問題時，客服需要從漸強後台查詢 LINE UID。這個流程示範收到會員截圖後客服這端的處理動作。",
       "steps": [
         {
-          "title": "會員平台特色一覽",
-          "description": "RC 集點平台的整體功能與會員服務一覽。",
-          "image": "images/screens/platform-01-overview.png",
-          "relatedFaqs": []
+          "title": "Step 1：收到會員的問題截圖",
+          "description": "會員回報問題時，請主動引導他提供：(1) 問題截圖或短影片 (2) 大約遇到問題的時間 (3) 使用的手機系統（iOS / Android）。範例為會員實際傳來的問題截圖。",
+          "image": "images/screens/cs-handle-01-screenshot.jpg",
+          "relatedFaqs": [
+            "MEM-001"
+          ]
+        },
+        {
+          "title": "Step 2：到漸強後台查 LINE UID",
+          "description": "登入漸強後台 > 聯絡人管理 > 聯絡人 > 搜尋會員（用 LINE 暱稱）> 點開會員資料 > 複製『LINE UID』，提供給 TONY 做進一步查詢。",
+          "image": "images/screens/cs-handle-02-uid.jpg",
+          "relatedFaqs": [
+            "MEM-001"
+          ]
         }
       ]
     }
