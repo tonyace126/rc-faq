@@ -2,7 +2,7 @@
   "meta": {
     "siteTitle": "RC 集點平台 客服 QA",
     "siteSubtitle": "Royal Canin × LIFF",
-    "lastUpdated": "2026-05-07"
+    "lastUpdated": "2026-05-08"
   },
   "categories": [
     {
@@ -108,12 +108,12 @@
       ],
       "replyTemplate": "您好，登錄發票的路徑是：LINE 加入『法國皇家』官方帳號 > 點選下方圖文選單『集點平台』> 進入後點選『發票登錄』。歡迎依照步驟操作，若還有問題再傳訊息給我們～",
       "images": [
-        "images/screens/contact-01-menu.jpg",
+        "images/screens/contact-01-menu.png",
         "images/screens/contact-02-home.jpg",
         "images/screens/contact-03-menu.jpg",
         "images/screens/contact-04-invoice.jpg"
       ],
-      "updated": "2026-05-07"
+      "updated": "2026-05-08"
     },
     {
       "id": "PET-001",
