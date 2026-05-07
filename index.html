@@ -29,7 +29,7 @@
 
   /* ---------- Header ---------- */
   header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
-  .header-inner{max-width:980px;margin:0 auto;padding:14px 20px;
+  .header-inner{max-width:1080px;margin:0 auto;padding:14px 20px 0;
     display:flex;align-items:center;gap:14px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
   .brand-logo{width:32px;height:32px;border-radius:8px;background:var(--primary);
@@ -37,10 +37,21 @@
   .brand-sub{color:var(--muted);font-weight:400;font-size:13px}
   .header-meta{margin-left:auto;font-size:12px;color:var(--muted)}
 
+  /* ---------- Tabs ---------- */
+  .tabs{max-width:1080px;margin:0 auto;padding:14px 20px 0;display:flex;gap:2px;border-bottom:1px solid var(--border)}
+  .tab{padding:10px 18px;border:none;background:transparent;font:inherit;font-size:14px;font-weight:600;
+    color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+    transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+
+  .panel{display:none}
+  .panel.active{display:block}
+
   /* ---------- Search bar ---------- */
-  .search-wrap{max-width:980px;margin:18px auto 0;padding:0 20px}
+  .search-wrap{max-width:1080px;margin:18px auto 0;padding:0 20px}
   .search-box{position:relative}
-  .search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  .search-box svg.s-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);
     width:18px;height:18px;color:var(--muted)}
   .search-box input{width:100%;padding:14px 44px 14px 42px;border-radius:12px;
     border:1px solid var(--border-strong);background:#fff;font-size:15px;outline:none;
@@ -53,7 +64,7 @@
   @media (max-width:600px){.kbd{display:none}}
 
   /* ---------- Filter chips ---------- */
-  .filters{max-width:980px;margin:14px auto 0;padding:0 20px;
+  .filters{max-width:1080px;margin:14px auto 0;padding:0 20px;
     display:flex;flex-wrap:wrap;gap:8px;align-items:center}
   .chip{padding:7px 13px;border-radius:999px;background:#fff;border:1px solid var(--border-strong);
     cursor:pointer;font-size:13px;color:var(--muted);transition:all .15s;user-select:none;
@@ -63,14 +74,20 @@
   .chip-dot{width:8px;height:8px;border-radius:50%}
   .chip-count{font-size:11px;opacity:.6}
 
-  /* ---------- Result summary ---------- */
-  .summary{max-width:980px;margin:14px auto 0;padding:0 20px;color:var(--muted);font-size:13px}
+  .summary{max-width:1080px;margin:14px auto 0;padding:0 20px;color:var(--muted);font-size:13px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .summary-spacer{flex:1}
+
+  /* mode toggle for flows */
+  .mode-toggle{display:inline-flex;border:1px solid var(--border-strong);border-radius:8px;overflow:hidden}
+  .mode-toggle button{font:inherit;font-size:12px;padding:6px 12px;border:none;background:#fff;cursor:pointer;color:var(--muted)}
+  .mode-toggle button.active{background:var(--text);color:#fff}
 
   /* ---------- FAQ list ---------- */
-  main{max-width:980px;margin:8px auto 60px;padding:0 20px}
+  main{max-width:1080px;margin:8px auto 60px;padding:0 20px}
   .faq{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
     margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden;transition:border-color .15s}
   .faq:hover{border-color:var(--border-strong)}
+  .faq.flash-target{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft), var(--shadow)}
   .faq-summary{padding:16px 18px;cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:12px}
   .faq-summary::-webkit-details-marker{display:none}
   .faq[open] .faq-summary{border-bottom:1px solid var(--border)}
@@ -83,9 +100,7 @@
   .faq-body{padding:6px 18px 18px 18px}
   .field{margin-top:14px}
   .field-label{font-size:12px;font-weight:600;color:var(--muted);
-    text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
-    display:flex;align-items:center;gap:6px}
-  .field-label-icon{width:14px;height:14px}
+    text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
   .field-value{font-size:14px;color:var(--text)}
   .field-value ol, .field-value ul{margin:6px 0;padding-left:22px}
   .field-value li{margin:3px 0}
@@ -114,24 +129,76 @@
   .empty{text-align:center;padding:60px 20px;color:var(--muted)}
   .empty h3{margin:0 0 6px;color:var(--text);font-weight:600}
 
+  /* ---------- Flows: 流程模式 ---------- */
+  .flows-layout{display:grid;grid-template-columns:280px 1fr;gap:18px;margin-top:12px}
+  @media (max-width:760px){.flows-layout{grid-template-columns:1fr}}
+  .flow-side{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:8px;
+    box-shadow:var(--shadow);height:fit-content;position:sticky;top:120px}
+  @media (max-width:760px){.flow-side{position:static}}
+  .flow-item{padding:11px 12px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+  .flow-item:hover{background:#F9FAFB}
+  .flow-item.active{background:var(--primary-soft);border-color:#FCA5A5}
+  .flow-item-head{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+  .flow-cat-badge{font-size:10px;padding:1px 6px;border-radius:4px;color:#fff;font-weight:600}
+  .flow-step-count{font-size:10px;color:var(--muted);margin-left:auto;
+    font-family:ui-monospace,Menlo,monospace}
+  .flow-name{font-size:13px;font-weight:600;line-height:1.4}
+
+  .flow-detail{background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+    padding:24px;box-shadow:var(--shadow)}
+  .flow-detail-head{padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+  .flow-detail-head h2{margin:0 0 6px;font-size:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .flow-detail-head .desc{color:var(--muted);font-size:14px;margin:0}
+
+  .step{display:grid;grid-template-columns:280px 1fr;gap:18px;padding:18px 0;border-top:1px dashed var(--border)}
+  .step:first-child{border-top:none;padding-top:0}
+  @media (max-width:600px){.step{grid-template-columns:1fr}}
+  .step-img{position:relative}
+  .step-img img{width:100%;border-radius:10px;border:1px solid var(--border);cursor:zoom-in;
+    background:#F3F4F6;object-fit:contain;max-height:340px;transition:transform .15s}
+  .step-img img:hover{transform:scale(1.02)}
+  .step-img-noimg{aspect-ratio:9/16;background:#F3F4F6;border-radius:10px;border:2px dashed var(--border-strong);
+    display:grid;place-items:center;color:var(--muted);font-size:12px}
+  .step-meta h4{margin:0 0 6px;font-size:15px;line-height:1.45}
+  .step-meta p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+  .step-related{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .step-related-label{font-size:11px;color:var(--muted)}
+  .step-related a{font-size:12px;padding:3px 9px;background:var(--primary-soft);
+    border-radius:5px;color:var(--primary);text-decoration:none;border:1px solid #FCA5A5;transition:all .15s}
+  .step-related a:hover{background:var(--primary);color:#fff;text-decoration:none}
+
+  /* ---------- Flows: 圖庫模式 ---------- */
+  .library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:12px;margin-top:14px}
+  .lib-card{background:#fff;border:1px solid var(--border);border-radius:10px;
+    overflow:hidden;cursor:pointer;transition:all .15s;display:flex;flex-direction:column}
+  .lib-card:hover{border-color:var(--border-strong);transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,.06)}
+  .lib-card img{width:100%;aspect-ratio:9/16;object-fit:cover;background:#F3F4F6;display:block}
+  .lib-card-meta{padding:8px 10px;font-size:11px}
+  .lib-card-flow{color:var(--muted);font-size:10px;margin-bottom:2px;display:flex;align-items:center;gap:4px}
+  .lib-card-title{font-weight:600;font-size:12px;line-height:1.35;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
   /* ---------- Lightbox ---------- */
   .lb{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;
-    align-items:center;justify-content:center;z-index:200;cursor:zoom-out;padding:20px}
+    align-items:center;justify-content:center;z-index:200;cursor:zoom-out;padding:20px;flex-direction:column}
   .lb.show{display:flex}
-  .lb img{max-width:100%;max-height:100%;border-radius:8px}
+  .lb img{max-width:100%;max-height:calc(100vh - 100px);border-radius:8px}
+  .lb-caption{margin-top:14px;color:#fff;text-align:center;font-size:13px;max-width:80%;line-height:1.6}
   .lb-close{position:fixed;top:18px;right:20px;color:#fff;font-size:32px;cursor:pointer;
     width:40px;height:40px;display:grid;place-items:center;line-height:1;
     border-radius:50%;background:rgba(255,255,255,.1);border:none}
 
   /* ---------- Footer ---------- */
-  footer{max-width:980px;margin:30px auto 40px;padding:0 20px;color:var(--muted);font-size:12px;
+  footer{max-width:1080px;margin:30px auto 40px;padding:0 20px;color:var(--muted);font-size:12px;
     text-align:center;line-height:1.8}
-  footer a{color:var(--muted);border-bottom:1px dotted var(--muted)}
 
   @media (max-width:600px){
     .header-meta{display:none}
     .faq-id{display:none}
     .images img{height:70px}
+    .tab{padding:10px 12px;font-size:13px}
   }
 </style>
 </head>
@@ -142,40 +209,77 @@
     <div class="brand">
       <div class="brand-logo">RC</div>
       <div>
-        客服 QA 查詢
+        客服查詢中心
         <div class="brand-sub">RC 集點平台 · LIFF</div>
       </div>
     </div>
     <div class="header-meta" id="meta"></div>
   </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="qa">📋 QA 查詢</button>
+    <button class="tab" data-tab="flows">📱 平台頁面流程</button>
+  </div>
 </header>
 
-<div class="search-wrap">
-  <div class="search-box">
-    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.7" y2="16.7"/>
-    </svg>
-    <input id="search" type="search" placeholder="搜尋問題、症狀、關鍵字（例如：發票、明細、未收到點數）" autofocus>
-    <span class="kbd">/</span>
+<!-- ============== TAB: QA ============== -->
+<div class="panel active" id="panel-qa">
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg class="s-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.7" y2="16.7"/>
+      </svg>
+      <input id="qa-search" type="search" placeholder="搜尋問題、症狀、關鍵字（例如：發票、明細、未收到點數）" autofocus>
+      <span class="kbd">/</span>
+    </div>
   </div>
+  <div class="filters" id="qa-filters"></div>
+  <div class="summary" id="qa-summary"></div>
+  <main id="qa-list"></main>
 </div>
 
-<div class="filters" id="filters"></div>
-
-<div class="summary" id="summary"></div>
-
-<main id="list"></main>
+<!-- ============== TAB: FLOWS ============== -->
+<div class="panel" id="panel-flows">
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg class="s-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.7" y2="16.7"/>
+      </svg>
+      <input id="flow-search" type="search" placeholder="搜尋流程、步驟、畫面名稱">
+    </div>
+  </div>
+  <div class="filters" id="flow-filters"></div>
+  <div class="summary">
+    <span id="flow-summary"></span>
+    <span class="summary-spacer"></span>
+    <span style="font-size:12px">檢視模式：</span>
+    <div class="mode-toggle">
+      <button class="active" data-mode="flow">📱 流程逐步</button>
+      <button data-mode="library">🖼 圖庫散頁</button>
+    </div>
+  </div>
+  <main>
+    <div id="flows-flow-view"></div>
+    <div id="flows-library-view" style="display:none"></div>
+  </main>
+</div>
 
 <footer>
-  <div>更新時間：<span id="lastUpdated">—</span> · 資料來源：data/faqs.json</div>
-  <div style="margin-top:6px">使用提示：用「<b>/</b>」聚焦搜尋框 · 點分類可篩選 · 截圖點擊可放大 · 「複製話術」可一鍵貼到 LINE</div>
+  <div>更新時間：<span id="lastUpdated">—</span> · 資料來源：data/faqs.json + data/screens.json</div>
+  <div style="margin-top:6px">
+    使用提示：用「<b>/</b>」聚焦搜尋框 · 任何截圖都可點擊放大 · 「📋 複製」一鍵複製話術 · 流程頁面的「相關 QA」可跳到 QA 分頁
+  </div>
 </footer>
 
-<div class="lb" id="lb"><button class="lb-close" id="lbClose" aria-label="關閉">×</button><img id="lbImg" alt=""></div>
+<div class="lb" id="lb">
+  <button class="lb-close" id="lbClose" aria-label="關閉">×</button>
+  <img id="lbImg" alt="">
+  <div class="lb-caption" id="lbCaption"></div>
+</div>
 
 <script>
 (function(){
-  const $ = sel => document.querySelector(sel);
+  const $  = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
   const escapeHtml = s => String(s||'').replace(/[&<>"']/g, c =>
     ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const highlight = (text, q) => {
@@ -185,156 +289,177 @@
     return escaped.replace(new RegExp(safeQ,'gi'), m => `<mark>${m}</mark>`);
   };
 
-  let DATA = null;
-  let activeCat = 'all';
-  let query = '';
+  let FAQS = null, SCREENS = null;
+  let qaActiveCat = 'all', qaQuery = '';
+  let flowActiveCat = 'all', flowQuery = '', flowSelectedId = null, flowMode = 'flow';
 
-  // ---- 載入資料 ----
-  fetch('data/faqs.json?_=' + Date.now())
-    .then(r => {
-      if(!r.ok) throw new Error('無法載入 data/faqs.json (HTTP ' + r.status + ')');
-      return r.json();
-    })
-    .then(d => { DATA = d; init(); })
-    .catch(err => {
-      $('#list').innerHTML =
-        `<div class="empty"><h3>載入失敗</h3>
-         <p>${escapeHtml(err.message)}</p>
-         <p style="font-size:12px">請確認此頁是用 http(s):// 開啟，而非直接打開 file://（瀏覽器會擋 fetch）。</p></div>`;
-    });
+  // ---- 同時載兩個 JSON ----
+  Promise.all([
+    fetch('data/faqs.json?_=' + Date.now()).then(r => r.ok ? r.json() : Promise.reject('faqs.json HTTP ' + r.status)),
+    fetch('data/screens.json?_=' + Date.now()).then(r => r.ok ? r.json() : Promise.reject('screens.json HTTP ' + r.status))
+  ]).then(([faqs, screens]) => {
+    FAQS = faqs; SCREENS = screens;
+    init();
+  }).catch(err => {
+    $('#qa-list').innerHTML =
+      `<div class="empty"><h3>載入失敗</h3><p>${escapeHtml(String(err))}</p>
+       <p style="font-size:12px">請確認此頁是用 http(s):// 開啟，而非直接 file:// 開。</p></div>`;
+  });
 
   function init(){
-    document.title = DATA.meta.siteTitle || document.title;
-    $('#lastUpdated').textContent = DATA.meta.lastUpdated || '—';
-    $('#meta').textContent = `共 ${DATA.faqs.length} 筆 · 更新：${DATA.meta.lastUpdated || '—'}`;
-    renderFilters();
-    render();
+    document.title = (FAQS.meta.siteTitle || 'RC 客服 QA');
+    $('#lastUpdated').textContent = FAQS.meta.lastUpdated || '—';
+    $('#meta').textContent = `QA ${FAQS.faqs.length} 筆 · 流程 ${SCREENS.flows.length} 條 · 更新：${FAQS.meta.lastUpdated || '—'}`;
 
-    $('#search').addEventListener('input', e => { query = e.target.value.trim(); render(); });
+    initTabs();
+    renderQAFilters(); renderQAList();
+    renderFlowFilters(); renderFlowDetail(); renderFlowLibrary();
+
+    $('#qa-search').addEventListener('input', e => { qaQuery = e.target.value.trim(); renderQAList(); });
+    $('#flow-search').addEventListener('input', e => { flowQuery = e.target.value.trim();
+      renderFlowFilters(); renderFlowDetail(); renderFlowLibrary(); });
+
     document.addEventListener('keydown', e => {
       if(e.key === '/' && document.activeElement.tagName !== 'INPUT'){
-        e.preventDefault(); $('#search').focus();
+        e.preventDefault();
+        const target = $('.panel.active').id === 'panel-qa' ? '#qa-search' : '#flow-search';
+        $(target).focus();
       }
       if(e.key === 'Escape') closeLB();
     });
+
     $('#lb').addEventListener('click', closeLB);
     $('#lbClose').addEventListener('click', e => { e.stopPropagation(); closeLB(); });
+
+    // 從 URL hash 設定初始 tab / faq
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
   }
 
-  function renderFilters(){
-    const counts = {all: DATA.faqs.length};
-    DATA.categories.forEach(c => counts[c.id] = 0);
-    DATA.faqs.forEach(f => { if(counts[f.category] !== undefined) counts[f.category]++; });
+  // ============ TABS ============
+  function initTabs(){
+    $$('.tab').forEach(b => b.addEventListener('click', () => activateTab(b.dataset.tab)));
+    $$('.mode-toggle button').forEach(b => b.addEventListener('click', () => {
+      flowMode = b.dataset.mode;
+      $$('.mode-toggle button').forEach(x => x.classList.toggle('active', x === b));
+      $('#flows-flow-view').style.display = flowMode === 'flow' ? '' : 'none';
+      $('#flows-library-view').style.display = flowMode === 'library' ? '' : 'none';
+    }));
+  }
+  function activateTab(tab){
+    $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+    $$('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tab));
+  }
+  function handleHash(){
+    const h = (location.hash || '').replace('#','');
+    if(!h) return;
+    if(h.startsWith('faq=')){
+      activateTab('qa');
+      const id = h.slice(4);
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if(el){
+          el.open = true;
+          el.classList.add('flash-target');
+          el.scrollIntoView({behavior:'smooth', block:'start'});
+          setTimeout(() => el.classList.remove('flash-target'), 2400);
+        }
+      });
+    } else if(h === 'flows'){
+      activateTab('flows');
+    } else if(h.startsWith('flow=')){
+      activateTab('flows');
+      flowSelectedId = h.slice(5);
+      renderFlowDetail();
+    }
+  }
 
-    const html = [`<div class="chip ${activeCat==='all'?'active':''}" data-cat="all">
+  // ============ QA TAB ============
+  function renderQAFilters(){
+    const counts = {all: FAQS.faqs.length};
+    FAQS.categories.forEach(c => counts[c.id] = 0);
+    FAQS.faqs.forEach(f => { if(counts[f.category] !== undefined) counts[f.category]++; });
+
+    const html = [`<div class="chip ${qaActiveCat==='all'?'active':''}" data-cat="all">
         全部 <span class="chip-count">${counts.all}</span></div>`];
-    DATA.categories.forEach(c => {
+    FAQS.categories.forEach(c => {
       if(counts[c.id] === 0) return;
-      html.push(`<div class="chip ${activeCat===c.id?'active':''}" data-cat="${c.id}">
+      html.push(`<div class="chip ${qaActiveCat===c.id?'active':''}" data-cat="${c.id}">
         <span class="chip-dot" style="background:${c.color}"></span>
         ${escapeHtml(c.name)} <span class="chip-count">${counts[c.id]}</span></div>`);
     });
-    $('#filters').innerHTML = html.join('');
-    $('#filters').querySelectorAll('.chip').forEach(el => {
-      el.addEventListener('click', () => {
-        activeCat = el.dataset.cat;
-        renderFilters();
-        render();
-      });
+    $('#qa-filters').innerHTML = html.join('');
+    $('#qa-filters').querySelectorAll('.chip').forEach(el => {
+      el.addEventListener('click', () => { qaActiveCat = el.dataset.cat; renderQAFilters(); renderQAList(); });
     });
   }
-
-  function matches(faq, q){
+  function qaMatches(faq, q){
     if(!q) return true;
-    const hay = [
-      faq.title, faq.memberSymptom, faq.rootCause, faq.replyTemplate,
-      (faq.tags||[]).join(' '), (faq.csSteps||[]).join(' '), faq.id
-    ].join(' ').toLowerCase();
+    const hay = [faq.title, faq.memberSymptom, faq.rootCause, faq.replyTemplate,
+      (faq.tags||[]).join(' '), (faq.csSteps||[]).join(' '), faq.id].join(' ').toLowerCase();
     return q.toLowerCase().split(/\s+/).filter(Boolean).every(t => hay.includes(t));
   }
-
-  function render(){
-    const cat = DATA.categories.reduce((m,c)=>{m[c.id]=c;return m;},{});
-    const filtered = DATA.faqs.filter(f =>
-      (activeCat === 'all' || f.category === activeCat) && matches(f, query)
-    );
-
-    $('#summary').textContent = query
-      ? `找到 ${filtered.length} 筆「${query}」相關 QA`
-      : (activeCat === 'all' ? `共 ${filtered.length} 筆 QA` : `${cat[activeCat].name}：${filtered.length} 筆`);
+  function renderQAList(){
+    const cat = FAQS.categories.reduce((m,c)=>{m[c.id]=c;return m;},{});
+    const filtered = FAQS.faqs.filter(f =>
+      (qaActiveCat === 'all' || f.category === qaActiveCat) && qaMatches(f, qaQuery));
+    $('#qa-summary').innerHTML = qaQuery
+      ? `找到 ${filtered.length} 筆「${escapeHtml(qaQuery)}」相關 QA`
+      : (qaActiveCat === 'all' ? `共 ${filtered.length} 筆 QA` : `${cat[qaActiveCat].name}：${filtered.length} 筆`);
 
     if(filtered.length === 0){
-      $('#list').innerHTML = `<div class="empty"><h3>沒有找到相關問題</h3>
-        <p>試試其他關鍵字，或切換分類。</p>
-        <p style="font-size:12px">如果這是新問題，請通知 TONY 加進 QA 庫。</p></div>`;
+      $('#qa-list').innerHTML = `<div class="empty"><h3>沒有找到相關問題</h3>
+        <p>試試其他關鍵字，或切換分類。如果是新問題，請通知 TONY 加進 QA 庫。</p></div>`;
       return;
     }
-
-    $('#list').innerHTML = filtered.map(f => renderFaq(f, cat[f.category])).join('');
-    bindCardEvents();
+    $('#qa-list').innerHTML = filtered.map(f => renderFaq(f, cat[f.category])).join('');
+    bindFaqEvents();
   }
-
   function renderFaq(f, c){
     const catColor = c ? c.color : '#7F8C8D';
     const catName = c ? c.name : f.category;
     const stepsHtml = (f.csSteps||[]).length
-      ? `<ol>${f.csSteps.map(s => `<li>${highlight(s, query)}</li>`).join('')}</ol>`
+      ? `<ol>${f.csSteps.map(s => `<li>${highlight(s, qaQuery)}</li>`).join('')}</ol>`
       : '<i style="color:var(--muted)">（尚未填寫處理步驟）</i>';
     const tagsHtml = (f.tags||[]).length
       ? `<div class="tags">${f.tags.map(t => `<span class="tag">#${escapeHtml(t)}</span>`).join('')}</div>` : '';
     const imagesHtml = (f.images||[]).length
       ? `<div class="images">${f.images.map(src =>
-          `<img src="${escapeHtml(src)}" data-full="${escapeHtml(src)}" alt="${escapeHtml(f.title)} 截圖" loading="lazy">`
-        ).join('')}</div>` : '';
-
+          `<img src="${escapeHtml(src)}" data-full="${escapeHtml(src)}" data-cap="${escapeHtml(f.title)}" alt="" loading="lazy">`).join('')}</div>` : '';
     return `
     <details class="faq" id="${escapeHtml(f.id)}">
       <summary class="faq-summary">
         <span class="faq-cat" style="background:${catColor}">${escapeHtml(catName)}</span>
-        <span class="faq-title">${highlight(f.title, query)}</span>
+        <span class="faq-title">${highlight(f.title, qaQuery)}</span>
         <span class="faq-id">${escapeHtml(f.id)}</span>
         <svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="6 9 12 15 18 9"/></svg>
       </summary>
       <div class="faq-body">
-        ${f.memberSymptom ? `<div class="field">
-          <div class="field-label">會員常見描述</div>
-          <div class="field-value">「${highlight(f.memberSymptom, query)}」</div>
-        </div>` : ''}
-
-        ${f.rootCause ? `<div class="field">
-          <div class="field-label">問題原因</div>
-          <div class="field-value">${highlight(f.rootCause, query)}</div>
-        </div>` : ''}
-
-        <div class="field">
-          <div class="field-label">客服處理 SOP</div>
-          <div class="field-value">${stepsHtml}</div>
-        </div>
-
-        ${f.replyTemplate ? `<div class="field">
-          <div class="field-label">建議回覆話術</div>
+        ${f.memberSymptom ? `<div class="field"><div class="field-label">會員常見描述</div>
+          <div class="field-value">「${highlight(f.memberSymptom, qaQuery)}」</div></div>` : ''}
+        ${f.rootCause ? `<div class="field"><div class="field-label">問題原因</div>
+          <div class="field-value">${highlight(f.rootCause, qaQuery)}</div></div>` : ''}
+        <div class="field"><div class="field-label">客服處理 SOP</div>
+          <div class="field-value">${stepsHtml}</div></div>
+        ${f.replyTemplate ? `<div class="field"><div class="field-label">建議回覆話術</div>
           <div class="reply-box" id="reply-${escapeHtml(f.id)}">${escapeHtml(f.replyTemplate)}<button class="copy-btn" data-target="${escapeHtml(f.id)}">📋 複製</button></div>
         </div>` : ''}
-
         ${imagesHtml ? `<div class="field"><div class="field-label">相關截圖</div>${imagesHtml}</div>` : ''}
-
         ${tagsHtml}
         <div class="updated">最後更新：${escapeHtml(f.updated || '—')}</div>
       </div>
     </details>`;
   }
-
-  function bindCardEvents(){
-    document.querySelectorAll('.copy-btn').forEach(btn => {
+  function bindFaqEvents(){
+    $$('.copy-btn').forEach(btn => {
       btn.addEventListener('click', async e => {
         e.preventDefault(); e.stopPropagation();
         const id = btn.dataset.target;
-        const faq = DATA.faqs.find(f => f.id === id);
+        const faq = FAQS.faqs.find(f => f.id === id);
         if(!faq || !faq.replyTemplate) return;
-        try{
-          await navigator.clipboard.writeText(faq.replyTemplate);
-        }catch{
+        try{ await navigator.clipboard.writeText(faq.replyTemplate); }
+        catch{
           const ta = document.createElement('textarea');
           ta.value = faq.replyTemplate; document.body.appendChild(ta);
           ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
@@ -345,18 +470,186 @@
         setTimeout(()=>{ btn.classList.remove('copied'); btn.innerHTML = orig; }, 1500);
       });
     });
-    document.querySelectorAll('.images img').forEach(img => {
-      img.addEventListener('click', () => openLB(img.dataset.full));
+    $$('.faq img').forEach(img => {
+      img.addEventListener('click', () => openLB(img.dataset.full, img.dataset.cap));
     });
   }
 
-  function openLB(src){
+  // ============ FLOWS TAB ============
+  function flowMatches(flow, q){
+    if(!q) return true;
+    const hay = [flow.name, flow.description,
+      ...(flow.steps||[]).flatMap(s => [s.title, s.description])].join(' ').toLowerCase();
+    return q.toLowerCase().split(/\s+/).filter(Boolean).every(t => hay.includes(t));
+  }
+
+  function visibleFlows(){
+    return SCREENS.flows.filter(f =>
+      (flowActiveCat === 'all' || f.category === flowActiveCat) && flowMatches(f, flowQuery));
+  }
+
+  function renderFlowFilters(){
+    const counts = {all: SCREENS.flows.length};
+    SCREENS.categories.forEach(c => counts[c.id] = 0);
+    SCREENS.flows.forEach(f => { if(counts[f.category] !== undefined) counts[f.category]++; });
+
+    const html = [`<div class="chip ${flowActiveCat==='all'?'active':''}" data-cat="all">
+        全部 <span class="chip-count">${counts.all}</span></div>`];
+    SCREENS.categories.forEach(c => {
+      if(counts[c.id] === 0) return;
+      html.push(`<div class="chip ${flowActiveCat===c.id?'active':''}" data-cat="${c.id}">
+        <span class="chip-dot" style="background:${c.color}"></span>
+        ${escapeHtml(c.name)} <span class="chip-count">${counts[c.id]}</span></div>`);
+    });
+    $('#flow-filters').innerHTML = html.join('');
+    $('#flow-filters').querySelectorAll('.chip').forEach(el => {
+      el.addEventListener('click', () => {
+        flowActiveCat = el.dataset.cat;
+        flowSelectedId = null;
+        renderFlowFilters(); renderFlowDetail(); renderFlowLibrary();
+      });
+    });
+
+    const total = visibleFlows().length;
+    const totalSteps = visibleFlows().reduce((n,f)=>n + (f.steps||[]).length, 0);
+    $('#flow-summary').textContent = flowQuery
+      ? `找到 ${total} 條流程 / ${totalSteps} 個畫面，含「${flowQuery}」`
+      : `共 ${total} 條流程 / ${totalSteps} 個畫面`;
+  }
+
+  function renderFlowDetail(){
+    const cats = SCREENS.categories.reduce((m,c)=>{m[c.id]=c;return m;},{});
+    const flows = visibleFlows();
+    if(flows.length === 0){
+      $('#flows-flow-view').innerHTML = `<div class="empty"><h3>沒有找到相關流程</h3>
+        <p>試試其他關鍵字或切換分類。</p></div>`;
+      return;
+    }
+    if(!flowSelectedId || !flows.find(f => f.id === flowSelectedId)){
+      flowSelectedId = flows[0].id;
+    }
+    const selected = flows.find(f => f.id === flowSelectedId);
+    const cat = cats[selected.category];
+
+    const sideHtml = flows.map(f => {
+      const c = cats[f.category];
+      return `<div class="flow-item ${f.id===flowSelectedId?'active':''}" data-flow-id="${escapeHtml(f.id)}">
+        <div class="flow-item-head">
+          <span class="flow-cat-badge" style="background:${c?c.color:'#7F8C8D'}">${escapeHtml(c?c.name:f.category)}</span>
+          <span class="flow-step-count">${(f.steps||[]).length} 步</span>
+        </div>
+        <div class="flow-name">${highlight(f.name, flowQuery)}</div>
+      </div>`;
+    }).join('');
+
+    const stepsHtml = (selected.steps||[]).map((s,i) => {
+      const imgHtml = s.image
+        ? `<img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title)}" data-full="${escapeHtml(s.image)}" data-cap="${escapeHtml(selected.name + ' / ' + s.title)}" loading="lazy">`
+        : `<div class="step-img-noimg">尚未上傳截圖</div>`;
+      const related = (s.relatedFaqs||[]).map(fid => {
+        const faq = FAQS.faqs.find(x => x.id === fid);
+        const label = faq ? `${fid} · ${faq.title}` : fid;
+        return `<a href="#faq=${escapeHtml(fid)}">🔗 ${escapeHtml(label)}</a>`;
+      }).join('');
+      const relatedBlock = related ? `<div class="step-related">
+        <span class="step-related-label">相關 QA：</span>${related}</div>` : '';
+      return `<div class="step">
+        <div class="step-img">${imgHtml}</div>
+        <div class="step-meta">
+          <h4>${highlight(s.title, flowQuery)}</h4>
+          <p>${highlight(s.description||'', flowQuery)}</p>
+          ${relatedBlock}
+        </div>
+      </div>`;
+    }).join('');
+
+    $('#flows-flow-view').innerHTML = `
+      <div class="flows-layout">
+        <div class="flow-side">${sideHtml}</div>
+        <div class="flow-detail">
+          <div class="flow-detail-head">
+            <h2>
+              <span class="flow-cat-badge" style="background:${cat?cat.color:'#7F8C8D'}">${escapeHtml(cat?cat.name:selected.category)}</span>
+              ${escapeHtml(selected.name)}
+            </h2>
+            <p class="desc">${escapeHtml(selected.description||'')}</p>
+          </div>
+          ${stepsHtml || '<div class="empty"><p>這個流程還沒有步驟</p></div>'}
+        </div>
+      </div>`;
+
+    $$('.flow-item').forEach(el => {
+      el.addEventListener('click', () => {
+        flowSelectedId = el.dataset.flowId;
+        renderFlowDetail();
+      });
+    });
+    $$('.step-img img').forEach(img => {
+      img.addEventListener('click', () => openLB(img.dataset.full, img.dataset.cap));
+    });
+  }
+
+  function renderFlowLibrary(){
+    const cats = SCREENS.categories.reduce((m,c)=>{m[c.id]=c;return m;},{});
+    const cards = [];
+    visibleFlows().forEach(flow => {
+      const c = cats[flow.category];
+      (flow.steps||[]).forEach(s => {
+        // 圖庫模式下，搜尋會限縮到單一步驟，避免出現整個 flow 的步驟都顯示
+        if(flowQuery){
+          const hay = (flow.name + ' ' + s.title + ' ' + (s.description||'')).toLowerCase();
+          if(!flowQuery.toLowerCase().split(/\s+/).filter(Boolean).every(t => hay.includes(t))) return;
+        }
+        cards.push({ flow, step: s, cat: c });
+      });
+    });
+    if(cards.length === 0){
+      $('#flows-library-view').innerHTML = `<div class="empty"><h3>沒有找到相關畫面</h3></div>`;
+      return;
+    }
+    $('#flows-library-view').innerHTML = `<div class="library-grid">${
+      cards.map(({flow, step, cat}) => {
+        const imgHtml = step.image
+          ? `<img src="${escapeHtml(step.image)}" alt="${escapeHtml(step.title)}" data-full="${escapeHtml(step.image)}" data-cap="${escapeHtml(flow.name + ' / ' + step.title)}" loading="lazy">`
+          : `<div style="aspect-ratio:9/16;background:#F3F4F6;display:grid;place-items:center;color:var(--muted);font-size:11px">無截圖</div>`;
+        return `<div class="lib-card" data-flow="${escapeHtml(flow.id)}">
+          ${imgHtml}
+          <div class="lib-card-meta">
+            <div class="lib-card-flow">
+              <span class="chip-dot" style="background:${cat?cat.color:'#7F8C8D'}"></span>
+              ${escapeHtml(flow.name)}
+            </div>
+            <div class="lib-card-title">${highlight(step.title, flowQuery)}</div>
+          </div>
+        </div>`;
+      }).join('')
+    }</div>`;
+    $$('#flows-library-view .lib-card img').forEach(img => {
+      img.addEventListener('click', e => { e.stopPropagation(); openLB(img.dataset.full, img.dataset.cap); });
+    });
+    $$('#flows-library-view .lib-card').forEach(card => {
+      card.addEventListener('click', () => {
+        flowSelectedId = card.dataset.flow;
+        flowMode = 'flow';
+        $$('.mode-toggle button').forEach(x => x.classList.toggle('active', x.dataset.mode === 'flow'));
+        $('#flows-flow-view').style.display = '';
+        $('#flows-library-view').style.display = 'none';
+        renderFlowDetail();
+        window.scrollTo({top:0, behavior:'smooth'});
+      });
+    });
+  }
+
+  // ============ Lightbox ============
+  function openLB(src, caption){
     $('#lbImg').src = src;
+    $('#lbCaption').textContent = caption || '';
     $('#lb').classList.add('show');
   }
   function closeLB(){
     $('#lb').classList.remove('show');
     $('#lbImg').src = '';
+    $('#lbCaption').textContent = '';
   }
 })();
 </script>

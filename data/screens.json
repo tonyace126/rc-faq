@@ -1,0 +1,201 @@
+{
+  "meta": {
+    "lastUpdated": "2026-05-07",
+    "note": "平台頁面流程庫 — 每個流程是會員會走的一條路徑，每張圖是會員在某一步看到的畫面。"
+  },
+  "categories": [
+    { "id": "service",  "name": "客服 / FAQ 入口", "color": "#3498DB" },
+    { "id": "invoice",  "name": "發票相關",         "color": "#C8102E" },
+    { "id": "campaign", "name": "活動 / 給點訊息",  "color": "#16A085" },
+    { "id": "platform", "name": "平台介紹",         "color": "#8E44AD" },
+    { "id": "backend",  "name": "客服後台操作",     "color": "#7F8C8D" }
+  ],
+  "flows": [
+    {
+      "id": "FLOW-CONTACT-CS",
+      "category": "service",
+      "name": "會員聯繫線上客服流程",
+      "description": "會員怎麼從 LINE 聯絡到線上客服。客服遇到「會員找不到客服入口」時，把這個流程截圖給會員看即可。",
+      "steps": [
+        {
+          "title": "Step 1：點擊「更多服務」選單",
+          "description": "會員在 LINE 法國皇家官方帳號的圖文選單，點選右下角『更多服務』分頁，即可看到『聯繫線上客服』『尋找皇家據點』『探索皇家官網』『查詢常見問題』四個選項。",
+          "image": "images/screens/contact-01-menu.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 2：聯繫線上客服",
+          "description": "會員點擊『聯繫線上客服』後，會在聊天室收到引導圖。可直接點擊圖中按鈕開啟常見問題，或在聊天室留言由線上客服回覆。",
+          "image": "images/screens/contact-02-cs-chat.jpg",
+          "relatedFaqs": ["MEM-001"]
+        }
+      ]
+    },
+    {
+      "id": "FLOW-FAQ-NAVIGATE",
+      "category": "service",
+      "name": "會員自助查詢 FAQ 流程",
+      "description": "會員自己查 FAQ 的路徑：『更多服務』→ 『查詢常見問題』→ 選擇分類。客服可以引導會員自己查。",
+      "steps": [
+        {
+          "title": "Step 1：點擊『更多服務』選單",
+          "description": "與聯繫客服相同入口。",
+          "image": "images/screens/contact-01-menu.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 2：進入『查詢常見問題』",
+          "description": "會員點擊後，系統推送『常見問題：需要什麼樣的協助呢？』牌卡，提供 4 大分類：集點與會員、產品相關、企業合作、快速查詢。",
+          "image": "images/screens/faq-01-entry.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-A：集點與會員相關 FAQ",
+          "description": "牌卡引導會員選擇細項問題，每個選項會跳出對應的客服自動答覆。",
+          "image": "images/screens/faq-member-01.jpg",
+          "relatedFaqs": ["MEM-001"]
+        },
+        {
+          "title": "Step 3-A 續：集點與會員相關 FAQ（更多項目）",
+          "description": "繼續展示集點與會員相關的常見問題子分類。",
+          "image": "images/screens/faq-member-02.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-A 續：集點與會員相關 FAQ（更多項目）",
+          "description": "完整展示集點與會員相關的所有問題項目。",
+          "image": "images/screens/faq-member-03.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-B：產品相關 FAQ",
+          "description": "點擊各選項按鈕會跳出牌卡引導好友持續往下查詢，通常結果會引導到法國皇家官網。",
+          "image": "images/screens/faq-product-01.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-B 續：產品相關 FAQ（細項）",
+          "description": "產品相關常見問題的展開項目。",
+          "image": "images/screens/faq-product-02.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-C：企業合作 FAQ",
+          "description": "選擇『企業合作』後會引導至法國皇家企業合作表單。",
+          "image": "images/screens/faq-enterprise-01.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-C 續：企業合作 FAQ",
+          "description": "企業合作流程引導頁。",
+          "image": "images/screens/faq-enterprise-02.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-D：快速查詢常見問題",
+          "description": "快速查詢分頁，列出最熱門的常見問題以供會員快速點選查看答覆。",
+          "image": "images/screens/faq-quick-01.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-D 續：快速查詢常見問題",
+          "description": "快速查詢的更多項目。",
+          "image": "images/screens/faq-quick-02.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-D 續：快速查詢常見問題",
+          "description": "快速查詢的更多項目。",
+          "image": "images/screens/faq-quick-03.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3-D 續：快速查詢常見問題",
+          "description": "快速查詢的最後一組項目。",
+          "image": "images/screens/faq-quick-04.jpg",
+          "relatedFaqs": []
+        }
+      ]
+    },
+    {
+      "id": "FLOW-INVOICE-RULES",
+      "category": "invoice",
+      "name": "發票登錄規則參考圖",
+      "description": "客服遇到「發票被退件」「不知道要附什麼」「發票照片格式不對」時，把這兩張圖傳給會員當作範例最快。",
+      "steps": [
+        {
+          "title": "可接受的發票照片格式（4 種）",
+          "description": "會員上傳的發票照片必須是這 4 種格式之一：①電子發票與消費明細 ②消費通路提供之電子發票消費明細 ③財政部官方發票存摺 APP 畫面 ④其他發票 APP 畫面。",
+          "image": "images/screens/invoice-valid-formats.jpg",
+          "relatedFaqs": ["INV-001", "INV-002"]
+        },
+        {
+          "title": "發票照片必要資訊（4 項缺一不可）",
+          "description": "無論用哪種格式，發票照片或截圖上必須清楚看到：①發票號碼 ②消費日期與時間 ③通路統編 ④消費明細（含品項名稱、數量、金額）。",
+          "image": "images/screens/invoice-required-info.jpg",
+          "relatedFaqs": ["INV-001", "INV-002"]
+        }
+      ]
+    },
+    {
+      "id": "FLOW-MONTHLY-MSG",
+      "category": "campaign",
+      "name": "每月給點訊息範例",
+      "description": "LINE 每月會推送一則『給點互動訊息』，只要會員點擊就符合給點資格。每月會員都會問『這是真的嗎？』『為什麼還沒收到點？』，把這個流程的圖給他們看就懂。",
+      "steps": [
+        {
+          "title": "每月給點訊息範例",
+          "description": "LINE 每月會推送一則互動訊息，會員點擊後即符合給點資格。目前固定派送 HP 100 點。派點時間為訊息發送『當月份的下個月底』，例：5 月發送 → 6/30 才入帳。",
+          "image": "images/screens/monthly-msg-01-example.png",
+          "relatedFaqs": ["CAM-001"]
+        },
+        {
+          "title": "給點訊息圖片：辨識徽章",
+          "description": "給點訊息圖片右上角會加上『給點徽章』標示，可以快速辨識這是有給點獎勵的訊息（與一般行銷推播區分）。",
+          "image": "images/screens/monthly-msg-02-badge.png",
+          "relatedFaqs": ["CAM-001"]
+        },
+        {
+          "title": "行銷活動期間的訊息範例",
+          "description": "LINE 不定時會舉辦行銷活動（加入會員抽獎、增粉活動等）。屆時會在活動上線前提供一份『活動內容專屬 FAQ 說明』給客服。",
+          "image": "images/screens/campaign-01-marketing.png",
+          "relatedFaqs": []
+        }
+      ]
+    },
+    {
+      "id": "FLOW-PLATFORM-INTRO",
+      "category": "platform",
+      "name": "RC 集點平台整體介紹",
+      "description": "平台功能 / 服務的整體介紹圖。新進客服 onboarding 時可以先看這張，建立平台全貌的概念。",
+      "steps": [
+        {
+          "title": "會員平台特色一覽",
+          "description": "RC 集點平台的整體功能與會員服務一覽。",
+          "image": "images/screens/platform-01-overview.png",
+          "relatedFaqs": []
+        }
+      ]
+    },
+    {
+      "id": "FLOW-CS-HANDLING",
+      "category": "backend",
+      "name": "客服處理問題的後台操作",
+      "description": "會員回報問題時，客服需要從漸強後台查詢 LINE UID。這個流程示範收到會員截圖後客服這端的處理動作。",
+      "steps": [
+        {
+          "title": "Step 1：收到會員的問題截圖",
+          "description": "會員回報問題時，請主動引導他提供：①問題截圖或短影片 ②大約遇到問題的時間 ③使用的手機系統（iOS / Android）。範例為會員實際傳來的問題截圖。",
+          "image": "images/screens/cs-handle-01-screenshot.jpg",
+          "relatedFaqs": ["MEM-001"]
+        },
+        {
+          "title": "Step 2：到漸強後台查 LINE UID",
+          "description": "登入漸強後台 > 聯絡人管理 > 聯絡人 > 搜尋會員（用 LINE 暱稱）> 點開會員資料 > 複製『LINE UID』，提供給 TONY 做進一步查詢。",
+          "image": "images/screens/cs-handle-02-uid.jpg",
+          "relatedFaqs": ["MEM-001"]
+        }
+      ]
+    }
+  ]
+}

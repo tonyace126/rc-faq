@@ -15,8 +15,8 @@
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",
       "Noto Sans TC","Helvetica Neue",Arial,sans-serif;font-size:14px;line-height:1.6}
-  header{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;
-    display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:10;flex-wrap:wrap}
+  header{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px 0;position:sticky;top:0;z-index:10}
+  .header-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
   .brand{font-weight:700;font-size:17px;display:flex;align-items:center;gap:10px}
   .brand-logo{width:30px;height:30px;border-radius:7px;background:var(--primary);color:#fff;
     display:grid;place-items:center;font-weight:800;font-size:12px}
@@ -27,14 +27,22 @@
     background:#fff;color:var(--text);font-size:13px;display:inline-flex;align-items:center;gap:6px;
     transition:all .15s}
   .btn:hover{border-color:#9CA3AF}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
   .btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
   .btn-primary:hover{background:#A50E25;border-color:#A50E25}
   .btn-success{background:var(--success);color:#fff;border-color:var(--success)}
   .btn-success:hover{background:#138a72}
   .btn-danger{color:var(--primary);border-color:#FCA5A5}
   .btn-danger:hover{background:var(--primary-soft)}
+  .btn-tiny{padding:3px 7px;font-size:11px}
 
-  .layout{display:grid;grid-template-columns:340px 1fr;gap:0;min-height:calc(100vh - 60px)}
+  .tabs{display:flex;gap:2px;margin-top:14px;border-bottom:1px solid var(--border)}
+  .tab{padding:10px 18px;border:none;background:transparent;font:inherit;font-size:14px;font-weight:600;
+    color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+
+  .layout{display:grid;grid-template-columns:340px 1fr;gap:0;min-height:calc(100vh - 110px)}
   @media (max-width:900px){.layout{grid-template-columns:1fr}}
 
   /* sidebar */
@@ -53,7 +61,7 @@
   .side-title{font-size:13px;line-height:1.4}
 
   /* editor */
-  main{padding:20px;max-width:780px;margin:0 auto;width:100%}
+  main{padding:20px;max-width:860px;margin:0 auto;width:100%}
   .form{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;
     box-shadow:0 1px 3px rgba(0,0,0,.04)}
   .form-title{font-size:16px;font-weight:700;margin:0 0 4px}
@@ -83,6 +91,18 @@
   .form-actions{display:flex;gap:8px;margin-top:18px;justify-content:space-between;flex-wrap:wrap}
   .form-actions-left, .form-actions-right{display:flex;gap:8px;flex-wrap:wrap}
 
+  /* steps editor */
+  .step-card{border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px;background:#FAFBFC}
+  .step-card-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .step-card-head .step-num{font-size:12px;font-weight:700;color:var(--muted);background:#fff;
+    padding:3px 8px;border-radius:5px;border:1px solid var(--border-strong)}
+  .step-card-head .step-actions{margin-left:auto;display:flex;gap:4px}
+  .step-thumb{width:120px;border-radius:6px;border:1px solid var(--border);background:#fff;display:block;margin-top:6px}
+  .step-faq-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+  .step-faq-tag{display:inline-flex;align-items:center;gap:4px;background:var(--primary-soft);
+    color:var(--primary);padding:3px 8px;border-radius:5px;font-size:11px;border:1px solid #FCA5A5}
+  .step-faq-tag button{background:none;border:none;color:var(--primary);cursor:pointer;font-size:12px;padding:0;line-height:1}
+
   /* output */
   .output-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;
     align-items:center;justify-content:center;z-index:100;padding:20px}
@@ -108,43 +128,66 @@
   .alert b{font-weight:700}
 
   .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+
+  .panel{display:none}
+  .panel.active{display:block}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">
-    <div class="brand-logo">RC</div>
-    QA 編輯工具
-    <span class="brand-sub">給 TONY 用 · 不會公開到網站</span>
+  <div class="header-row">
+    <div class="brand">
+      <div class="brand-logo">RC</div>
+      QA / 流程 編輯工具
+      <span class="brand-sub">給 TONY 用</span>
+    </div>
+    <div class="toolbar">
+      <button class="btn" id="btn-load-faqs">📂 載入 faqs.json</button>
+      <button class="btn" id="btn-load-screens">📂 載入 screens.json</button>
+      <button class="btn btn-success" id="btn-export">⬇️ 下載目前分頁的 JSON</button>
+    </div>
   </div>
-  <div class="toolbar">
-    <button class="btn" id="btn-load">📂 載入 faqs.json</button>
-    <button class="btn btn-primary" id="btn-new">＋ 新增 QA</button>
-    <button class="btn btn-success" id="btn-export">⬇️ 下載 faqs.json</button>
+  <div class="tabs">
+    <button class="tab active" data-tab="qa">📋 編輯 QA</button>
+    <button class="tab" data-tab="flows">📱 編輯平台流程</button>
   </div>
 </header>
 
-<div class="layout">
-  <aside>
-    <input class="side-search" id="side-search" placeholder="搜尋 QA...">
-    <div class="side-list" id="side-list"></div>
-  </aside>
-
-  <main>
-    <div class="alert info">
-      <b>使用流程：</b>
-      點「載入 faqs.json」拉現有資料 → 編輯或新增 → 點「下載 faqs.json」覆蓋原檔 → 把圖片放進 <code>images/</code> 並 push 到 GitHub。<br>
-      <b>圖片做法：</b>先把截圖檔名命名為 <code>INV-001-a.png</code> 這種規則，存進 repo 的 <code>images/</code>，再在「相關截圖」欄填路徑：<code>images/INV-001-a.png</code>。
-    </div>
-
-    <div id="form-area">
-      <div class="empty-state">
-        <h3 style="color:var(--text)">還沒選擇 QA</h3>
-        <p>從左邊清單選一筆來編輯，或點右上「＋ 新增 QA」。</p>
+<!-- ============== TAB: QA ============== -->
+<div class="panel active" id="panel-qa">
+  <div class="layout">
+    <aside>
+      <input class="side-search" id="qa-side-search" placeholder="搜尋 QA...">
+      <div style="margin-bottom:8px"><button class="btn btn-primary" id="btn-new-faq" style="width:100%">＋ 新增 QA</button></div>
+      <div class="side-list" id="qa-side-list"></div>
+    </aside>
+    <main>
+      <div class="alert info">
+        <b>使用流程：</b>
+        點上方「📂 載入 faqs.json」拉現有資料 → 編輯 → 點「⬇️ 下載」匯出新檔 → 蓋掉 GitHub repo 裡的 <code>data/faqs.json</code>。
       </div>
-    </div>
-  </main>
+      <div id="qa-form-area"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ============== TAB: FLOWS ============== -->
+<div class="panel" id="panel-flows">
+  <div class="layout">
+    <aside>
+      <input class="side-search" id="flow-side-search" placeholder="搜尋流程...">
+      <div style="margin-bottom:8px"><button class="btn btn-primary" id="btn-new-flow" style="width:100%">＋ 新增流程</button></div>
+      <div class="side-list" id="flow-side-list"></div>
+    </aside>
+    <main>
+      <div class="alert info">
+        <b>編輯流程：</b>
+        每條流程包含多個「步驟」，每步可以填截圖路徑跟相關 QA ID。截圖檔本身要另外上傳到 repo 的 <code>images/screens/</code> 資料夾。
+      </div>
+      <div id="flow-form-area"></div>
+    </main>
+  </div>
 </div>
 
 <input type="file" id="file-input" accept=".json" hidden>
@@ -152,18 +195,16 @@
 <div class="output-modal" id="output-modal">
   <div class="output-card">
     <div class="output-head">
-      <h3 id="output-title">完整 faqs.json</h3>
+      <h3 id="output-title">JSON 內容</h3>
       <button class="close" id="output-close">×</button>
     </div>
     <div class="output-body">
-      <div class="alert info" style="margin-bottom:12px">
-        把這份內容存成 <code>data/faqs.json</code>（或直接點下方下載）取代你 GitHub repo 裡的舊檔。
-      </div>
+      <div class="alert info" style="margin-bottom:12px" id="output-hint">把這份內容存成檔案，蓋掉 GitHub repo 裡的舊檔即可。</div>
       <pre id="output-pre"></pre>
     </div>
     <div class="output-foot">
       <button class="btn" id="output-copy">複製</button>
-      <button class="btn btn-primary" id="output-download">下載 faqs.json</button>
+      <button class="btn btn-primary" id="output-download">下載</button>
     </div>
   </div>
 </div>
@@ -171,74 +212,79 @@
 <script>
 (function(){
   const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
   const escapeHtml = s => String(s||'').replace(/[&<>"']/g, c =>
     ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-  let DATA = null;
-  let currentId = null;
-  let sideQuery = '';
+  let FAQS = null, SCREENS = null;
+  let currentTab = 'qa';
+  let qaCurrentId = null, qaSideQuery = '';
+  let flowCurrentId = null, flowSideQuery = '';
+  let loadTarget = 'faqs';
 
-  // ---- 啟動：嘗試自動載入 ----
-  fetch('data/faqs.json?_=' + Date.now())
-    .then(r => r.ok ? r.json() : null)
-    .then(d => { if(d){ DATA = d; renderSide(); }})
-    .catch(()=>{});
+  // 嘗試自動載入兩個 JSON
+  Promise.all([
+    fetch('data/faqs.json?_=' + Date.now()).then(r => r.ok ? r.json() : null).catch(()=>null),
+    fetch('data/screens.json?_=' + Date.now()).then(r => r.ok ? r.json() : null).catch(()=>null)
+  ]).then(([f, s]) => {
+    if(f) FAQS = f;
+    if(s) SCREENS = s;
+    renderQASide(); renderQAForm();
+    renderFlowSide(); renderFlowForm();
+  });
 
-  // ---- 載入按鈕：手動上傳 JSON ----
-  $('#btn-load').addEventListener('click', () => $('#file-input').click());
+  // --- Tabs ---
+  $$('.tab').forEach(b => b.addEventListener('click', () => {
+    currentTab = b.dataset.tab;
+    $$('.tab').forEach(x => x.classList.toggle('active', x === b));
+    $$('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + currentTab));
+  }));
+
+  // --- Load buttons ---
+  $('#btn-load-faqs').addEventListener('click', () => { loadTarget = 'faqs'; $('#file-input').click(); });
+  $('#btn-load-screens').addEventListener('click', () => { loadTarget = 'screens'; $('#file-input').click(); });
+
   $('#file-input').addEventListener('change', e => {
     const file = e.target.files[0]; if(!file) return;
     const reader = new FileReader();
     reader.onload = ev => {
       try{
-        DATA = JSON.parse(ev.target.result);
-        currentId = null;
-        renderSide(); renderForm();
-        alert('已載入 ' + DATA.faqs.length + ' 筆 QA');
-      }catch(err){
-        alert('JSON 格式錯誤：' + err.message);
-      }
+        const data = JSON.parse(ev.target.result);
+        if(loadTarget === 'faqs'){
+          FAQS = data; qaCurrentId = null;
+          renderQASide(); renderQAForm();
+          alert('已載入 ' + (data.faqs||[]).length + ' 筆 QA');
+        } else {
+          SCREENS = data; flowCurrentId = null;
+          renderFlowSide(); renderFlowForm();
+          alert('已載入 ' + (data.flows||[]).length + ' 條流程');
+        }
+      }catch(err){ alert('JSON 格式錯誤：' + err.message); }
     };
     reader.readAsText(file);
     e.target.value = '';
   });
 
-  // ---- 新增 ----
-  $('#btn-new').addEventListener('click', () => {
-    if(!DATA){
-      DATA = {
-        meta:{ siteTitle:'RC 集點平台 客服 QA', siteSubtitle:'Royal Canin × LIFF', lastUpdated: today() },
-        categories:[
-          { id:'invoice',  name:'登錄發票',      color:'#C8102E' },
-          { id:'pet',      name:'曬寵打卡',      color:'#F39C12' },
-          { id:'points',   name:'點數兌換',      color:'#27AE60' },
-          { id:'health',   name:'健檢券兌換',    color:'#3498DB' },
-          { id:'member',   name:'會員 / 帳號',   color:'#8E44AD' },
-          { id:'campaign', name:'活動 / 給點訊息', color:'#16A085' },
-          { id:'product',  name:'產品相關',      color:'#D35400' },
-          { id:'other',    name:'其他',         color:'#7F8C8D' }
-        ],
-        faqs:[]
-      };
+  // --- Export button (depends on current tab) ---
+  $('#btn-export').addEventListener('click', () => {
+    if(currentTab === 'qa'){
+      if(!FAQS){ alert('還沒有 QA 資料可匯出'); return; }
+      FAQS.meta.lastUpdated = today();
+      showOutput('faqs.json', JSON.stringify(FAQS, null, 2));
+    } else {
+      if(!SCREENS){ alert('還沒有流程資料可匯出'); return; }
+      SCREENS.meta.lastUpdated = today();
+      showOutput('screens.json', JSON.stringify(SCREENS, null, 2));
     }
-    const newId = nextId(DATA.faqs);
-    DATA.faqs.push({
-      id:newId, category:'other', title:'(未命名)', tags:[],
-      memberSymptom:'', rootCause:'', csSteps:[], replyTemplate:'',
-      images:[], updated: today()
-    });
-    currentId = newId;
-    renderSide(); renderForm();
   });
 
-  // ---- 匯出 ----
-  $('#btn-export').addEventListener('click', () => {
-    if(!DATA){ alert('還沒有資料可匯出'); return; }
-    DATA.meta.lastUpdated = today();
-    const json = JSON.stringify(DATA, null, 2);
+  function showOutput(filename, json){
+    $('#output-title').textContent = filename;
+    $('#output-hint').innerHTML = `把這份內容存成 <code>data/${filename}</code>（或直接點下方下載），蓋掉 GitHub repo 裡的舊檔。`;
     $('#output-pre').textContent = json;
     $('#output-modal').classList.add('show');
-  });
+    $('#output-download').dataset.filename = filename;
+  }
   $('#output-close').addEventListener('click', () => $('#output-modal').classList.remove('show'));
   $('#output-modal').addEventListener('click', e => {
     if(e.target === $('#output-modal')) $('#output-modal').classList.remove('show');
@@ -254,51 +300,64 @@
     const blob = new Blob([$('#output-pre').textContent], {type:'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'faqs.json';
+    a.download = $('#output-download').dataset.filename || 'data.json';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   });
 
-  $('#side-search').addEventListener('input', e => {
-    sideQuery = e.target.value.trim().toLowerCase();
-    renderSide();
-  });
-
+  // --- Helpers ---
   function today(){
     const d = new Date();
-    return d.getFullYear() + '-' +
-      String(d.getMonth()+1).padStart(2,'0') + '-' +
-      String(d.getDate()).padStart(2,'0');
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   }
-
-  function nextId(list){
-    const prefix = 'NEW';
+  function nextId(list, prefix){
     let n = 1;
     while(list.some(f => f.id === `${prefix}-${String(n).padStart(3,'0')}`)) n++;
     return `${prefix}-${String(n).padStart(3,'0')}`;
   }
-
-  function catMap(){
-    const m = {};
-    if(DATA && DATA.categories) DATA.categories.forEach(c => m[c.id] = c);
-    return m;
+  function flash(btn, msg){
+    const orig = btn.textContent;
+    btn.textContent = msg;
+    setTimeout(()=>btn.textContent = orig, 1200);
   }
 
-  function renderSide(){
-    const list = $('#side-list');
-    if(!DATA || !DATA.faqs.length){
-      list.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px">'
-        + '尚未載入資料。點上方「📂 載入 faqs.json」或「＋ 新增 QA」。</div>';
+  // ===================== QA =====================
+  $('#btn-new-faq').addEventListener('click', () => {
+    if(!FAQS){
+      FAQS = {
+        meta:{ siteTitle:'RC 集點平台 客服 QA', siteSubtitle:'Royal Canin × LIFF', lastUpdated: today() },
+        categories:[
+          { id:'invoice',  name:'登錄發票',      color:'#C8102E' },
+          { id:'pet',      name:'曬寵打卡',      color:'#F39C12' },
+          { id:'points',   name:'點數兌換',      color:'#27AE60' },
+          { id:'health',   name:'健檢券兌換',    color:'#3498DB' },
+          { id:'member',   name:'會員 / 帳號',   color:'#8E44AD' },
+          { id:'campaign', name:'活動 / 給點訊息', color:'#16A085' },
+          { id:'product',  name:'產品相關',      color:'#D35400' },
+          { id:'other',    name:'其他',         color:'#7F8C8D' }
+        ],
+        faqs:[]
+      };
+    }
+    const id = nextId(FAQS.faqs, 'NEW');
+    FAQS.faqs.push({ id, category:'other', title:'(未命名)', tags:[], memberSymptom:'',
+      rootCause:'', csSteps:[], replyTemplate:'', images:[], updated: today() });
+    qaCurrentId = id;
+    renderQASide(); renderQAForm();
+  });
+  $('#qa-side-search').addEventListener('input', e => { qaSideQuery = e.target.value.trim().toLowerCase(); renderQASide(); });
+
+  function renderQASide(){
+    const list = $('#qa-side-list');
+    if(!FAQS || !FAQS.faqs.length){
+      list.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px">尚未載入 QA 資料。</div>';
       return;
     }
-    const cats = catMap();
-    const items = DATA.faqs.filter(f => {
-      if(!sideQuery) return true;
-      return (f.title + ' ' + f.id + ' ' + (f.tags||[]).join(' '))
-        .toLowerCase().includes(sideQuery);
-    });
+    const cats = FAQS.categories.reduce((m,c)=>{m[c.id]=c;return m;},{});
+    const items = FAQS.faqs.filter(f => !qaSideQuery ||
+      (f.title + ' ' + f.id + ' ' + (f.tags||[]).join(' ')).toLowerCase().includes(qaSideQuery));
     list.innerHTML = items.map(f => {
       const c = cats[f.category];
-      return `<div class="side-item ${currentId===f.id?'active':''}" data-id="${escapeHtml(f.id)}">
+      return `<div class="side-item ${qaCurrentId===f.id?'active':''}" data-id="${escapeHtml(f.id)}">
         <div class="side-item-head">
           <span class="side-cat" style="background:${c?c.color:'#7F8C8D'}">${escapeHtml(c?c.name:f.category)}</span>
           <span class="side-id">${escapeHtml(f.id)}</span>
@@ -307,117 +366,75 @@
       </div>`;
     }).join('');
     list.querySelectorAll('.side-item').forEach(el => {
-      el.addEventListener('click', () => { currentId = el.dataset.id; renderSide(); renderForm(); });
+      el.addEventListener('click', () => { qaCurrentId = el.dataset.id; renderQASide(); renderQAForm(); });
     });
   }
 
-  function renderForm(){
-    const area = $('#form-area');
-    if(!DATA || !currentId){
+  function renderQAForm(){
+    const area = $('#qa-form-area');
+    if(!FAQS || !qaCurrentId){
       area.innerHTML = '<div class="empty-state"><h3 style="color:var(--text)">還沒選擇 QA</h3>'
-        + '<p>從左邊清單選一筆來編輯，或點右上「＋ 新增 QA」。</p></div>';
+        + '<p>從左邊清單選一筆來編輯，或點「＋ 新增 QA」。</p></div>';
       return;
     }
-    const f = DATA.faqs.find(x => x.id === currentId);
+    const f = FAQS.faqs.find(x => x.id === qaCurrentId);
     if(!f){ area.innerHTML = ''; return; }
-
-    const catOpts = DATA.categories.map(c =>
+    const catOpts = FAQS.categories.map(c =>
       `<option value="${c.id}" ${f.category===c.id?'selected':''}>${escapeHtml(c.name)}</option>`).join('');
     const imagesPills = (f.images||[]).map((src, i) =>
-      `<span class="img-pill">${escapeHtml(src)}<button data-img-i="${i}" title="刪除">×</button></span>`).join('');
+      `<span class="img-pill">${escapeHtml(src)}<button data-img-i="${i}">×</button></span>`).join('');
 
     area.innerHTML = `
     <div class="form">
       <h3 class="form-title">編輯 QA</h3>
-      <p class="form-hint">填完點下方「儲存到記憶體」，再點右上「⬇️ 下載 faqs.json」匯出整份檔案。</p>
-
+      <p class="form-hint">填完點下方「儲存」，再點右上「⬇️ 下載」匯出整份檔案。</p>
       <div class="row-2">
-        <div class="row">
-          <label>ID <span class="req">*</span></label>
+        <div class="row"><label>ID <span class="req">*</span></label>
           <input id="f-id" value="${escapeHtml(f.id)}">
-          <div class="help">建議格式：<code>INV-001</code>、<code>PTS-002</code>（分類前綴+流水號）</div>
-        </div>
-        <div class="row">
-          <label>分類 <span class="req">*</span></label>
-          <select id="f-category">${catOpts}</select>
-        </div>
+          <div class="help">建議：<code>INV-001</code>、<code>PTS-002</code></div></div>
+        <div class="row"><label>分類 <span class="req">*</span></label>
+          <select id="f-category">${catOpts}</select></div>
       </div>
-
-      <div class="row">
-        <label>問題標題 <span class="req">*</span></label>
-        <input id="f-title" value="${escapeHtml(f.title||'')}" placeholder="例：上傳發票沒有附上交易明細">
-      </div>
-
-      <div class="row">
-        <label>會員常見描述（會員端會怎麼說）</label>
-        <textarea id="f-memberSymptom" placeholder="例：為什麼我的發票被退件？">${escapeHtml(f.memberSymptom||'')}</textarea>
-      </div>
-
-      <div class="row">
-        <label>問題原因 / 根因</label>
-        <textarea id="f-rootCause" placeholder="解釋為什麼會發生這個問題">${escapeHtml(f.rootCause||'')}</textarea>
-      </div>
-
-      <div class="row">
-        <label>客服處理 SOP（一行一步）</label>
-        <textarea id="f-csSteps" rows="4" placeholder="第一步...&#10;第二步...&#10;第三步...">${escapeHtml((f.csSteps||[]).join('\n'))}</textarea>
-        <div class="help">每一行會自動變成一個編號步驟</div>
-      </div>
-
-      <div class="row">
-        <label>建議回覆話術</label>
-        <textarea id="f-replyTemplate" rows="4" placeholder="您好～（直接寫客服可貼到 LINE 的內容）">${escapeHtml(f.replyTemplate||'')}</textarea>
-        <div class="help">這段會在主頁顯示「📋 複製」按鈕，客服可一鍵貼到 LINE</div>
-      </div>
-
-      <div class="row">
-        <label>標籤（用逗號或空白分隔）</label>
-        <input id="f-tags" value="${escapeHtml((f.tags||[]).join(', '))}" placeholder="發票, 明細, 退件">
-      </div>
-
-      <div class="row">
-        <label>相關截圖路徑</label>
+      <div class="row"><label>問題標題 <span class="req">*</span></label>
+        <input id="f-title" value="${escapeHtml(f.title||'')}" placeholder="例：上傳發票沒有附上交易明細"></div>
+      <div class="row"><label>會員常見描述</label>
+        <textarea id="f-memberSymptom" placeholder="例：為什麼我的發票被退件？">${escapeHtml(f.memberSymptom||'')}</textarea></div>
+      <div class="row"><label>問題原因 / 根因</label>
+        <textarea id="f-rootCause">${escapeHtml(f.rootCause||'')}</textarea></div>
+      <div class="row"><label>客服處理 SOP（一行一步）</label>
+        <textarea id="f-csSteps" rows="4" placeholder="第一步...&#10;第二步...">${escapeHtml((f.csSteps||[]).join('\n'))}</textarea>
+        <div class="help">每行自動變成一個編號步驟</div></div>
+      <div class="row"><label>建議回覆話術</label>
+        <textarea id="f-replyTemplate" rows="4">${escapeHtml(f.replyTemplate||'')}</textarea>
+        <div class="help">主頁會顯示「📋 複製」按鈕</div></div>
+      <div class="row"><label>標籤（逗號或空白分隔）</label>
+        <input id="f-tags" value="${escapeHtml((f.tags||[]).join(', '))}" placeholder="發票, 明細, 退件"></div>
+      <div class="row"><label>相關截圖路徑</label>
         <div style="display:flex;gap:8px">
           <input id="f-img-input" placeholder="images/INV-001-a.png" style="flex:1">
-          <button class="btn" id="f-img-add" type="button">＋ 加入</button>
-        </div>
-        <div class="help">先把圖片檔放到 repo 的 <code>images/</code> 目錄，這裡填相對路徑即可</div>
-        <div class="images-edit" id="f-images-list">${imagesPills}</div>
-      </div>
-
+          <button class="btn" id="f-img-add" type="button">＋ 加入</button></div>
+        <div class="help">先把圖片放到 repo <code>images/</code>，這裡填路徑</div>
+        <div class="images-edit" id="f-images-list">${imagesPills}</div></div>
       <div class="form-actions">
-        <div class="form-actions-left">
-          <button class="btn btn-danger" id="f-delete">🗑 刪除這筆</button>
-        </div>
+        <div class="form-actions-left"><button class="btn btn-danger" id="f-delete">🗑 刪除這筆</button></div>
         <div class="form-actions-right">
           <button class="btn" id="f-cancel">取消</button>
-          <button class="btn btn-primary" id="f-save">儲存到記憶體</button>
-        </div>
+          <button class="btn btn-primary" id="f-save">儲存</button></div>
       </div>
     </div>`;
 
     $('#f-img-add').addEventListener('click', () => {
-      const v = $('#f-img-input').value.trim();
-      if(!v) return;
-      f.images = f.images || [];
-      f.images.push(v);
-      $('#f-img-input').value = '';
-      renderForm();
+      const v = $('#f-img-input').value.trim(); if(!v) return;
+      f.images = f.images || []; f.images.push(v);
+      $('#f-img-input').value = ''; renderQAForm();
     });
-    document.querySelectorAll('[data-img-i]').forEach(b => {
-      b.addEventListener('click', () => {
-        const i = +b.dataset.imgI;
-        f.images.splice(i, 1);
-        renderForm();
-      });
+    $$('#qa-form-area [data-img-i]').forEach(b => {
+      b.addEventListener('click', () => { f.images.splice(+b.dataset.imgI, 1); renderQAForm(); });
     });
-
     $('#f-save').addEventListener('click', () => {
       const newId = $('#f-id').value.trim();
       if(!newId){ alert('ID 不能空白'); return; }
-      if(newId !== f.id && DATA.faqs.some(x => x.id === newId && x !== f)){
-        alert('ID 重複'); return;
-      }
+      if(newId !== f.id && FAQS.faqs.some(x => x.id === newId && x !== f)){ alert('ID 重複'); return; }
       f.id = newId;
       f.category = $('#f-category').value;
       f.title = $('#f-title').value.trim();
@@ -427,23 +444,188 @@
       f.replyTemplate = $('#f-replyTemplate').value.trim();
       f.tags = $('#f-tags').value.split(/[,\s，、]+/).map(s => s.trim()).filter(Boolean);
       f.updated = today();
-      currentId = f.id;
-      renderSide(); renderForm();
-      flash($('#f-save'), '✓ 已儲存');
+      qaCurrentId = f.id;
+      renderQASide(); renderQAForm(); flash($('#f-save'), '✓ 已儲存');
     });
-    $('#f-cancel').addEventListener('click', () => { currentId = null; renderForm(); });
+    $('#f-cancel').addEventListener('click', () => { qaCurrentId = null; renderQAForm(); });
     $('#f-delete').addEventListener('click', () => {
-      if(!confirm(`確定要刪除「${f.title}」？`)) return;
-      DATA.faqs = DATA.faqs.filter(x => x !== f);
-      currentId = null;
-      renderSide(); renderForm();
+      if(!confirm(`確定刪除「${f.title}」？`)) return;
+      FAQS.faqs = FAQS.faqs.filter(x => x !== f);
+      qaCurrentId = null;
+      renderQASide(); renderQAForm();
     });
   }
 
-  function flash(btn, msg){
-    const orig = btn.textContent;
-    btn.textContent = msg;
-    setTimeout(()=>btn.textContent = orig, 1200);
+  // ===================== FLOWS =====================
+  $('#btn-new-flow').addEventListener('click', () => {
+    if(!SCREENS){
+      SCREENS = {
+        meta:{ lastUpdated: today() },
+        categories:[
+          { id:'service',  name:'客服 / FAQ 入口', color:'#3498DB' },
+          { id:'invoice',  name:'發票相關',         color:'#C8102E' },
+          { id:'campaign', name:'活動 / 給點訊息',  color:'#16A085' },
+          { id:'platform', name:'平台介紹',         color:'#8E44AD' },
+          { id:'backend',  name:'客服後台操作',     color:'#7F8C8D' }
+        ],
+        flows:[]
+      };
+    }
+    const id = nextId(SCREENS.flows, 'FLOW-NEW');
+    SCREENS.flows.push({ id, category:'service', name:'(未命名流程)', description:'', steps:[] });
+    flowCurrentId = id;
+    renderFlowSide(); renderFlowForm();
+  });
+  $('#flow-side-search').addEventListener('input', e => { flowSideQuery = e.target.value.trim().toLowerCase(); renderFlowSide(); });
+
+  function renderFlowSide(){
+    const list = $('#flow-side-list');
+    if(!SCREENS || !SCREENS.flows.length){
+      list.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px">尚未載入流程資料。</div>';
+      return;
+    }
+    const cats = SCREENS.categories.reduce((m,c)=>{m[c.id]=c;return m;},{});
+    const items = SCREENS.flows.filter(f => !flowSideQuery ||
+      (f.name + ' ' + f.id).toLowerCase().includes(flowSideQuery));
+    list.innerHTML = items.map(f => {
+      const c = cats[f.category];
+      return `<div class="side-item ${flowCurrentId===f.id?'active':''}" data-id="${escapeHtml(f.id)}">
+        <div class="side-item-head">
+          <span class="side-cat" style="background:${c?c.color:'#7F8C8D'}">${escapeHtml(c?c.name:f.category)}</span>
+          <span class="side-id">${(f.steps||[]).length}步</span>
+        </div>
+        <div class="side-title">${escapeHtml(f.name)}</div>
+      </div>`;
+    }).join('');
+    list.querySelectorAll('.side-item').forEach(el => {
+      el.addEventListener('click', () => { flowCurrentId = el.dataset.id; renderFlowSide(); renderFlowForm(); });
+    });
+  }
+
+  function renderFlowForm(){
+    const area = $('#flow-form-area');
+    if(!SCREENS || !flowCurrentId){
+      area.innerHTML = '<div class="empty-state"><h3 style="color:var(--text)">還沒選擇流程</h3>'
+        + '<p>從左邊清單選一條來編輯，或點「＋ 新增流程」。</p></div>';
+      return;
+    }
+    const f = SCREENS.flows.find(x => x.id === flowCurrentId);
+    if(!f){ area.innerHTML = ''; return; }
+    const catOpts = SCREENS.categories.map(c =>
+      `<option value="${c.id}" ${f.category===c.id?'selected':''}>${escapeHtml(c.name)}</option>`).join('');
+
+    const stepsHtml = (f.steps||[]).map((s, i) => `
+      <div class="step-card" data-step-i="${i}">
+        <div class="step-card-head">
+          <span class="step-num">Step ${i+1}</span>
+          <div class="step-actions">
+            <button class="btn btn-tiny" data-act="up" data-i="${i}" ${i===0?'disabled':''}>↑</button>
+            <button class="btn btn-tiny" data-act="down" data-i="${i}" ${i===(f.steps.length-1)?'disabled':''}>↓</button>
+            <button class="btn btn-tiny btn-danger" data-act="del" data-i="${i}">刪除</button>
+          </div>
+        </div>
+        <div class="row"><label>步驟標題</label>
+          <input data-step-field="title" data-i="${i}" value="${escapeHtml(s.title||'')}" placeholder="例：Step 1：點擊『更多服務』選單"></div>
+        <div class="row"><label>步驟說明</label>
+          <textarea data-step-field="description" data-i="${i}" rows="2">${escapeHtml(s.description||'')}</textarea></div>
+        <div class="row"><label>截圖路徑</label>
+          <input data-step-field="image" data-i="${i}" value="${escapeHtml(s.image||'')}" placeholder="images/screens/contact-01-menu.jpg">
+          ${s.image ? `<img src="${escapeHtml(s.image)}" class="step-thumb" onerror="this.style.display='none'">` : ''}
+        </div>
+        <div class="row"><label>相關 QA ID（多個用逗號分隔）</label>
+          <input data-step-field="relatedFaqs" data-i="${i}" value="${escapeHtml((s.relatedFaqs||[]).join(', '))}" placeholder="INV-001, INV-002">
+          ${(s.relatedFaqs||[]).length ? `<div class="step-faq-tags">
+            ${s.relatedFaqs.map(fid => {
+              const faq = FAQS && FAQS.faqs.find(x => x.id === fid);
+              const ok = !!faq;
+              return `<span class="step-faq-tag" style="${ok?'':'background:#FEF3C7;color:#92400E;border-color:#FCD34D'}">
+                ${escapeHtml(fid)}${ok?' · '+escapeHtml(faq.title.slice(0,20)):' (找不到此 QA)'}</span>`;
+            }).join('')}
+          </div>` : ''}
+        </div>
+      </div>`).join('');
+
+    area.innerHTML = `
+    <div class="form">
+      <h3 class="form-title">編輯流程</h3>
+      <p class="form-hint">流程是「會員會走的一條路徑」，每個步驟對應一個畫面。可上下移動或刪除步驟。</p>
+      <div class="row-2">
+        <div class="row"><label>流程 ID <span class="req">*</span></label>
+          <input id="ff-id" value="${escapeHtml(f.id)}">
+          <div class="help">建議：<code>FLOW-INVOICE-RULES</code></div></div>
+        <div class="row"><label>分類 <span class="req">*</span></label>
+          <select id="ff-category">${catOpts}</select></div>
+      </div>
+      <div class="row"><label>流程名稱 <span class="req">*</span></label>
+        <input id="ff-name" value="${escapeHtml(f.name||'')}" placeholder="例：發票登錄規則參考圖"></div>
+      <div class="row"><label>流程說明</label>
+        <textarea id="ff-description" rows="2">${escapeHtml(f.description||'')}</textarea></div>
+
+      <div class="row" style="margin-top:24px">
+        <label style="display:flex;align-items:center;justify-content:space-between">
+          <span>步驟（共 ${(f.steps||[]).length} 步）</span>
+          <button class="btn btn-tiny btn-primary" id="ff-add-step">＋ 加一步</button>
+        </label>
+        <div id="ff-steps">${stepsHtml || '<div class="help" style="text-align:center;padding:20px">還沒有步驟，點上方「＋ 加一步」開始</div>'}</div>
+      </div>
+
+      <div class="form-actions">
+        <div class="form-actions-left"><button class="btn btn-danger" id="ff-delete">🗑 刪除整條流程</button></div>
+        <div class="form-actions-right">
+          <button class="btn" id="ff-cancel">取消</button>
+          <button class="btn btn-primary" id="ff-save">儲存</button></div>
+      </div>
+    </div>`;
+
+    // 步驟欄位 inline 編輯（即時寫回 f.steps）
+    $$('#ff-steps [data-step-field]').forEach(el => {
+      el.addEventListener('input', e => {
+        const i = +el.dataset.i;
+        const field = el.dataset.stepField;
+        if(field === 'relatedFaqs'){
+          f.steps[i][field] = el.value.split(/[,\s，、]+/).map(s => s.trim()).filter(Boolean);
+        } else {
+          f.steps[i][field] = el.value;
+        }
+      });
+    });
+    $$('#ff-steps [data-act]').forEach(b => {
+      b.addEventListener('click', () => {
+        const i = +b.dataset.i;
+        if(b.dataset.act === 'up' && i > 0){
+          [f.steps[i-1], f.steps[i]] = [f.steps[i], f.steps[i-1]];
+        } else if(b.dataset.act === 'down' && i < f.steps.length-1){
+          [f.steps[i+1], f.steps[i]] = [f.steps[i], f.steps[i+1]];
+        } else if(b.dataset.act === 'del'){
+          if(!confirm(`刪除 Step ${i+1}？`)) return;
+          f.steps.splice(i, 1);
+        }
+        renderFlowForm();
+      });
+    });
+    $('#ff-add-step').addEventListener('click', () => {
+      f.steps = f.steps || [];
+      f.steps.push({ title:`Step ${f.steps.length+1}`, description:'', image:'', relatedFaqs:[] });
+      renderFlowForm();
+    });
+    $('#ff-save').addEventListener('click', () => {
+      const newId = $('#ff-id').value.trim();
+      if(!newId){ alert('ID 不能空白'); return; }
+      if(newId !== f.id && SCREENS.flows.some(x => x.id === newId && x !== f)){ alert('ID 重複'); return; }
+      f.id = newId;
+      f.category = $('#ff-category').value;
+      f.name = $('#ff-name').value.trim();
+      f.description = $('#ff-description').value.trim();
+      flowCurrentId = f.id;
+      renderFlowSide(); renderFlowForm(); flash($('#ff-save'), '✓ 已儲存');
+    });
+    $('#ff-cancel').addEventListener('click', () => { flowCurrentId = null; renderFlowForm(); });
+    $('#ff-delete').addEventListener('click', () => {
+      if(!confirm(`確定刪除整條流程「${f.name}」？`)) return;
+      SCREENS.flows = SCREENS.flows.filter(x => x !== f);
+      flowCurrentId = null;
+      renderFlowSide(); renderFlowForm();
+    });
   }
 })();
 </script>
