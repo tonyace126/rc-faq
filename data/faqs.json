@@ -235,23 +235,19 @@
       "tags": [
         "SOP",
         "排查",
-        "UID",
-        "漸強"
+        "UID"
       ],
       "memberSymptom": "（任何不確定原因的操作問題）",
       "rootCause": "在無法立即判斷問題前，先收齊客服查問題必要的資訊。",
       "csSteps": [
         "請會員提供：問題截圖 / 短影片",
         "請會員提供：操作時間（幾點幾分）",
-        "請會員提供：使用的手機系統（iOS / Android）",
-        "客服自行至漸強後台查詢 LINE UID（聯絡人管理 > 聯絡人 > LINE UID）",
-        "整理以上資訊後傳給 TONY 確認"
+        "請會員提供：使用的手機系統版本（iOS / Android）",
+        "填寫客服問題追蹤表單：https://docs.google.com/forms/d/e/1FAIpQLSet_Lo6YraQwusLXKoM9Pw9gi3ej-ItbZhLSnYT5ULouMi6RQ/viewform?pli=1"
       ],
-      "replyTemplate": "您好，為了協助您查詢，可以麻煩您提供：1. 操作時遇到的畫面截圖 2. 大約遇到問題的時間 3. 您使用的是 iPhone 還是 Android。我們會盡快協助處理～\n\n（內部參考：到漸強後台 > 聯絡人管理 > 聯絡人 > LINE UID 查詢會員）",
-      "images": [
-        "images/screens/cs-handle-02-uid.jpg"
-      ],
-      "updated": "2026-05-07"
+      "replyTemplate": "您好，為了協助您查詢，可以麻煩您提供：1. 操作時遇到的畫面截圖與錄影 2. 大約遇到問題的時間 3. 您使用的是 iPhone 還是 Android。我們會盡快協助處理～",
+      "images": [],
+      "updated": "2026-05-08"
     }
   ]
 }
