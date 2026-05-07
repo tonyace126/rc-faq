@@ -247,7 +247,8 @@
       ],
       "replyTemplate": "您好～我們收到您上傳的圖片囉！但這次上傳的內容不符合發票格式，所以無法通過審核喔。\n\n法國皇家集點平台只接受以下 4 種發票圖片：\n1. 電子發票與消費明細\n2. 消費通路提供之電子發票消費明細\n3. 財政部官方發票存摺 APP 畫面\n4. 其他發票 APP 畫面\n\n另外，發票明細上必須有顯示購買的「法國皇家發票登錄指定產品品項」才能登錄成功。麻煩您依照以上說明確認後，重新上傳發票，謝謝您～",
       "images": [
-        "images/screens/invoice-上傳明細錯誤.png"
+        "images/screens/invoice-上傳明細錯誤.png",
+        "images/screens/invoice-valid-formats.jpg"
       ],
       "updated": "2026-05-07"
     }
