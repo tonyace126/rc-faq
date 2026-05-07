@@ -158,7 +158,40 @@
     background:#F3F4F6;object-fit:contain;max-height:340px;transition:transform .15s}
   .step-img img:hover{transform:scale(1.02)}
   .step-img-noimg{aspect-ratio:9/16;background:#F3F4F6;border-radius:10px;border:2px dashed var(--border-strong);
-    display:grid;place-items:center;color:var(--muted);font-size:12px}
+    display:grid;place-items:center;color:var(--muted);font-size:12px;text-align:center;padding:10px}
+
+  /* Multi-image carousel */
+  .step-carousel{position:relative;border-radius:10px;border:1px solid var(--border);
+    background:#F3F4F6;overflow:hidden}
+  .step-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .step-carousel-track::-webkit-scrollbar{display:none}
+  .step-carousel-slide{flex:0 0 100%;scroll-snap-align:start;display:flex;align-items:center;
+    justify-content:center;background:#F3F4F6;min-height:200px}
+  .step-carousel-slide img{width:100%;max-height:340px;object-fit:contain;cursor:zoom-in;
+    border:none;border-radius:0;display:block;background:#F3F4F6}
+  .step-carousel-slide img:hover{transform:none}
+  .step-carousel-slide-empty{width:100%;aspect-ratio:9/16;display:grid;place-items:center;
+    color:var(--muted);font-size:12px;text-align:center;padding:10px;background:#F3F4F6}
+  .step-carousel-counter{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.65);
+    color:#fff;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;
+    pointer-events:none;opacity:0;transition:opacity .2s;font-family:ui-monospace,Menlo,monospace}
+  .step-carousel:hover .step-carousel-counter,
+  .step-carousel.has-multi .step-carousel-counter{opacity:1}
+  .step-carousel-dots{display:flex;justify-content:center;gap:5px;padding:6px 0 8px;background:#fff;border-top:1px solid var(--border)}
+  .step-carousel-dot{width:6px;height:6px;border-radius:50%;background:#D1D5DB;transition:all .15s;cursor:pointer;border:none;padding:0}
+  .step-carousel-dot.active{background:var(--primary);width:18px;border-radius:3px}
+  .step-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;
+    border-radius:50%;background:rgba(255,255,255,.9);border:1px solid var(--border-strong);
+    display:none;align-items:center;justify-content:center;cursor:pointer;
+    font-size:16px;color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.1);z-index:2}
+  .step-carousel:hover .step-carousel-arrow{display:flex}
+  .step-carousel-arrow.prev{left:6px}
+  .step-carousel-arrow.next{right:6px}
+  .step-carousel-arrow:disabled{opacity:.3;cursor:not-allowed}
+  @media (max-width:760px){
+    .step-carousel-arrow{display:none !important}
+  }
   .step-meta h4{margin:0 0 6px;font-size:15px;line-height:1.45}
   .step-meta p{margin:0;color:var(--muted);font-size:13px;line-height:1.7;white-space:pre-line}
   .step-related{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -292,6 +325,13 @@
   let FAQS = null, SCREENS = null;
   let qaActiveCat = 'all', qaQuery = '';
   let flowActiveCat = 'all', flowQuery = '', flowSelectedId = null, flowMode = 'flow';
+
+  // 取得一個步驟的所有圖片（向後相容：支援 images 陣列 或 image 單張）
+  function getStepImages(s){
+    if(s.images && Array.isArray(s.images) && s.images.length) return s.images.filter(Boolean);
+    if(s.image) return [s.image];
+    return [];
+  }
 
   // ---- 同時載兩個 JSON ----
   Promise.all([
@@ -543,9 +583,33 @@
     }).join('');
 
     const stepsHtml = (selected.steps||[]).map((s,i) => {
-      const imgHtml = s.image
-        ? `<img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title)}" data-full="${escapeHtml(s.image)}" data-cap="${escapeHtml(selected.name + ' / ' + s.title)}" loading="lazy">`
-        : `<div class="step-img-noimg">尚未上傳截圖</div>`;
+      const imgs = getStepImages(s);
+      let imgHtml;
+      if(imgs.length === 0){
+        imgHtml = `<div class="step-img-noimg">尚未上傳截圖</div>`;
+      } else {
+        const slidesHtml = imgs.map(src => src
+          ? `<div class="step-carousel-slide"><img src="${escapeHtml(src)}" alt="${escapeHtml(s.title)}" data-full="${escapeHtml(src)}" data-cap="${escapeHtml(selected.name + ' / ' + s.title)}" loading="lazy"></div>`
+          : `<div class="step-carousel-slide"><div class="step-carousel-slide-empty">尚未上傳截圖</div></div>`
+        ).join('');
+        const dotsHtml = imgs.length > 1
+          ? `<div class="step-carousel-dots">${imgs.map((_, j) =>
+              `<button class="step-carousel-dot ${j===0?'active':''}" data-slide-idx="${j}" aria-label="第 ${j+1} 張"></button>`).join('')}</div>`
+          : '';
+        const arrowsHtml = imgs.length > 1
+          ? `<button class="step-carousel-arrow prev" aria-label="上一張">‹</button>
+             <button class="step-carousel-arrow next" aria-label="下一張">›</button>`
+          : '';
+        const counterHtml = imgs.length > 1
+          ? `<div class="step-carousel-counter"><span class="step-carousel-current">1</span> / ${imgs.length}</div>`
+          : '';
+        imgHtml = `<div class="step-carousel ${imgs.length>1?'has-multi':''}" data-total="${imgs.length}">
+          <div class="step-carousel-track">${slidesHtml}</div>
+          ${arrowsHtml}
+          ${counterHtml}
+          ${dotsHtml}
+        </div>`;
+      }
       const related = (s.relatedFaqs||[]).map(fid => {
         const faq = FAQS.faqs.find(x => x.id === fid);
         const label = faq ? `${fid} · ${faq.title}` : fid;
@@ -587,6 +651,45 @@
     $$('.step-img img').forEach(img => {
       img.addEventListener('click', () => openLB(img.dataset.full, img.dataset.cap));
     });
+    bindCarousels();
+  }
+
+  // 綁定每個 carousel：滑動時更新頁碼跟 dots、按鈕可前後切換
+  function bindCarousels(){
+    $$('.step-carousel').forEach(car => {
+      const track = car.querySelector('.step-carousel-track');
+      const total = +car.dataset.total;
+      const dots = Array.from(car.querySelectorAll('.step-carousel-dot'));
+      const counterEl = car.querySelector('.step-carousel-current');
+      const prevBtn = car.querySelector('.step-carousel-arrow.prev');
+      const nextBtn = car.querySelector('.step-carousel-arrow.next');
+      if(total <= 1) return;
+
+      function update(){
+        const idx = Math.round(track.scrollLeft / track.clientWidth);
+        if(counterEl) counterEl.textContent = String(idx + 1);
+        dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+        if(prevBtn) prevBtn.disabled = idx <= 0;
+        if(nextBtn) nextBtn.disabled = idx >= total - 1;
+      }
+      track.addEventListener('scroll', () => requestAnimationFrame(update), {passive:true});
+
+      dots.forEach((d, j) => d.addEventListener('click', e => {
+        e.stopPropagation();
+        track.scrollTo({left: j * track.clientWidth, behavior:'smooth'});
+      }));
+      if(prevBtn) prevBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const idx = Math.round(track.scrollLeft / track.clientWidth);
+        track.scrollTo({left: Math.max(0, (idx-1)) * track.clientWidth, behavior:'smooth'});
+      });
+      if(nextBtn) nextBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const idx = Math.round(track.scrollLeft / track.clientWidth);
+        track.scrollTo({left: Math.min(total-1, (idx+1)) * track.clientWidth, behavior:'smooth'});
+      });
+      update();
+    });
   }
 
   function renderFlowLibrary(){
@@ -595,12 +698,19 @@
     visibleFlows().forEach(flow => {
       const c = cats[flow.category];
       (flow.steps||[]).forEach(s => {
-        // 圖庫模式下，搜尋會限縮到單一步驟，避免出現整個 flow 的步驟都顯示
         if(flowQuery){
           const hay = (flow.name + ' ' + s.title + ' ' + (s.description||'')).toLowerCase();
           if(!flowQuery.toLowerCase().split(/\s+/).filter(Boolean).every(t => hay.includes(t))) return;
         }
-        cards.push({ flow, step: s, cat: c });
+        // 多圖步驟拆成多張獨立卡片
+        const imgs = getStepImages(s);
+        if(imgs.length === 0){
+          cards.push({ flow, step: s, cat: c, img: null, subIdx: 0, total: 0 });
+        } else {
+          imgs.forEach((img, idx) => {
+            cards.push({ flow, step: s, cat: c, img, subIdx: idx, total: imgs.length });
+          });
+        }
       });
     });
     if(cards.length === 0){
@@ -608,10 +718,12 @@
       return;
     }
     $('#flows-library-view').innerHTML = `<div class="library-grid">${
-      cards.map(({flow, step, cat}) => {
-        const imgHtml = step.image
-          ? `<img src="${escapeHtml(step.image)}" alt="${escapeHtml(step.title)}" data-full="${escapeHtml(step.image)}" data-cap="${escapeHtml(flow.name + ' / ' + step.title)}" loading="lazy">`
-          : `<div style="aspect-ratio:9/16;background:#F3F4F6;display:grid;place-items:center;color:var(--muted);font-size:11px">無截圖</div>`;
+      cards.map(({flow, step, cat, img, subIdx, total}) => {
+        const subLabel = total > 1 ? ` <span style="color:var(--muted);font-size:10px">(${subIdx+1}/${total})</span>` : '';
+        const cap = flow.name + ' / ' + step.title + (total>1 ? ` (${subIdx+1}/${total})` : '');
+        const imgHtml = img
+          ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(step.title)}" data-full="${escapeHtml(img)}" data-cap="${escapeHtml(cap)}" loading="lazy">`
+          : `<div style="aspect-ratio:9/16;background:#F3F4F6;display:grid;place-items:center;color:var(--muted);font-size:11px;text-align:center;padding:8px">尚未上傳截圖</div>`;
         return `<div class="lib-card" data-flow="${escapeHtml(flow.id)}">
           ${imgHtml}
           <div class="lib-card-meta">
@@ -619,7 +731,7 @@
               <span class="chip-dot" style="background:${cat?cat.color:'#7F8C8D'}"></span>
               ${escapeHtml(flow.name)}
             </div>
-            <div class="lib-card-title">${highlight(step.title, flowQuery)}</div>
+            <div class="lib-card-title">${highlight(step.title, flowQuery)}${subLabel}</div>
           </div>
         </div>`;
       }).join('')

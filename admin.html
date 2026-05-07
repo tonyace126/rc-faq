@@ -828,7 +828,21 @@
     const catOpts = SCREENS.categories.map(c =>
       `<option value="${c.id}" ${f.category===c.id?'selected':''}>${escapeHtml(c.name)}</option>`).join('');
 
-    const stepsHtml = (f.steps||[]).map((s, i) => `
+    // 把舊的 image (單張) 正規化成 images 陣列
+    (f.steps||[]).forEach(s => {
+      if(!s.images || !Array.isArray(s.images)){
+        s.images = s.image ? [s.image] : [];
+      }
+      delete s.image;
+    });
+
+    const stepsHtml = (f.steps||[]).map((s, i) => {
+      const imagesPills = (s.images||[]).map((src, j) =>
+        `<span class="img-pill">${escapeHtml(src)}<button data-step-img-del="${i}-${j}" title="刪除">×</button></span>`).join('');
+      const previewHtml = (s.images||[])[0]
+        ? `<img src="${escapeHtml(s.images[0])}" class="step-thumb" onerror="this.style.display='none'">`
+        : '';
+      return `
       <div class="step-card" data-step-i="${i}">
         <div class="step-card-head">
           <span class="step-num">Step ${i+1}</span>
@@ -842,9 +856,15 @@
           <input data-step-field="title" data-i="${i}" value="${escapeHtml(s.title||'')}" placeholder="例：Step 1：點擊『更多服務』選單"></div>
         <div class="row"><label>步驟說明</label>
           <textarea data-step-field="description" data-i="${i}" rows="2">${escapeHtml(s.description||'')}</textarea></div>
-        <div class="row"><label>截圖路徑</label>
-          <input data-step-field="image" data-i="${i}" value="${escapeHtml(s.image||'')}" placeholder="images/screens/contact-01-menu.jpg">
-          ${s.image ? `<img src="${escapeHtml(s.image)}" class="step-thumb" onerror="this.style.display='none'">` : ''}
+        <div class="row">
+          <label>截圖路徑（可加多張，主頁會做成滑動瀏覽）</label>
+          <div style="display:flex;gap:8px">
+            <input id="step-${i}-img-input" placeholder="images/screens/area-member-pets.jpg" style="flex:1">
+            <button class="btn" data-step-img-add="${i}" type="button">＋ 加入</button>
+          </div>
+          <div class="help">先把圖片放到 repo <code>images/screens/</code>，這裡填路徑。多張圖會在主頁做成左右滑動切換（會員面板那種有 4 個分頁的就用這個）</div>
+          <div class="images-edit">${imagesPills}</div>
+          ${previewHtml}
         </div>
         <div class="row"><label>相關 QA ID（多個用逗號分隔）</label>
           <input data-step-field="relatedFaqs" data-i="${i}" value="${escapeHtml((s.relatedFaqs||[]).join(', '))}" placeholder="INV-001, INV-002">
@@ -857,7 +877,8 @@
             }).join('')}
           </div>` : ''}
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
 
     area.innerHTML = `
     <div class="form">
@@ -901,6 +922,27 @@
         } else {
           f.steps[i][field] = el.value;
         }
+      });
+    });
+    // 步驟圖片：新增按鈕
+    $$('[data-step-img-add]').forEach(b => {
+      b.addEventListener('click', () => {
+        const i = +b.dataset.stepImgAdd;
+        const inp = document.getElementById(`step-${i}-img-input`);
+        const v = inp.value.trim();
+        if(!v) return;
+        f.steps[i].images = f.steps[i].images || [];
+        f.steps[i].images.push(v);
+        inp.value = '';
+        renderFlowForm();
+      });
+    });
+    // 步驟圖片：刪除按鈕
+    $$('[data-step-img-del]').forEach(b => {
+      b.addEventListener('click', () => {
+        const [si, ii] = b.dataset.stepImgDel.split('-').map(Number);
+        f.steps[si].images.splice(ii, 1);
+        renderFlowForm();
       });
     });
     $$('#ff-steps [data-act]').forEach(b => {
