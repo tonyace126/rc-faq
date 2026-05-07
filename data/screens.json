@@ -399,30 +399,6 @@
           "relatedFaqs": []
         }
       ]
-    },
-    {
-      "id": "FLOW-CS-HANDLING",
-      "category": "backend",
-      "name": "客服處理問題的後台操作",
-      "description": "會員回報問題時，客服需要從漸強後台查詢 LINE UID。這個流程示範收到會員截圖後客服這端的處理動作。",
-      "steps": [
-        {
-          "title": "Step 1：收到會員的問題截圖",
-          "description": "會員回報問題時，請主動引導他提供：(1) 問題截圖或短影片 (2) 大約遇到問題的時間 (3) 使用的手機系統（iOS / Android）。範例為會員實際傳來的問題截圖。",
-          "image": "images/screens/cs-handle-01-screenshot.jpg",
-          "relatedFaqs": [
-            "MEM-001"
-          ]
-        },
-        {
-          "title": "Step 2：到漸強後台查 LINE UID",
-          "description": "登入漸強後台 > 聯絡人管理 > 聯絡人 > 搜尋會員（用 LINE 暱稱）> 點開會員資料 > 複製『LINE UID』，提供給 TONY 做進一步查詢。",
-          "image": "images/screens/cs-handle-02-uid.jpg",
-          "relatedFaqs": [
-            "MEM-001"
-          ]
-        }
-      ]
     }
   ]
 }
