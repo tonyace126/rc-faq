@@ -268,13 +268,13 @@
       "steps": [
         {
           "title": "Step 1：點擊『更多服務』選單",
-          "description": "會員在 LINE 法國皇家官方帳號的圖文選單，點選右下角『更多服務』分頁，即可看到『聯繫線上客服』『尋找皇家據點』『探索皇家官網』『查詢常見問題』四個選項。",
+          "description": "會員在 LINE 法國皇家官方帳號的圖文選單，點選右下角『更多服務』分頁，即可看到『線上客服』『前往皇家官網』『產品一覽』『官方商城』四個選項。",
           "image": "images/screens/contact-01-sevice.jpg",
           "relatedFaqs": []
         },
         {
           "title": "Step 2：聯繫線上客服",
-          "description": "會員點擊『聯繫線上客服』後，會在聊天室收到引導圖。可直接點擊圖中按鈕開啟常見問題，或在聊天室留言由線上客服回覆。",
+          "description": "會員點擊『線上客服』後，會在聊天室收到引導圖。可直接點擊圖中按鈕開啟常見問題，或在聊天室留言由線上客服回覆。",
           "image": "images/screens/contact-02-cs-chat.jpg",
           "relatedFaqs": [
             "MEM-001"
@@ -286,17 +286,17 @@
       "id": "FLOW-FAQ-NAVIGATE",
       "category": "service",
       "name": "會員自助查詢 FAQ 流程",
-      "description": "會員自己查 FAQ 的路徑：『更多服務』→ 『查詢常見問題』→ 選擇分類。客服可以引導會員自己查。",
+      "description": "會員自己查 FAQ 的路徑：『更多服務』→ 『線上客服』→ 選擇分類。客服可以引導會員自己查。",
       "steps": [
         {
           "title": "Step 1：點擊『更多服務』選單",
-          "description": "與聯繫客服相同入口。",
+          "description": "點擊線上客服。",
           "image": "images/screens/contact-01-sevice.jpg",
           "relatedFaqs": []
         },
         {
-          "title": "Step 2：進入『查詢常見問題』",
-          "description": "會員點擊後，系統推送『常見問題：需要什麼樣的協助呢？』牌卡，提供 4 大分類：集點與會員、產品相關、企業合作、快速查詢。",
+          "title": "Step 2：瀏覽『常見問題』",
+          "description": "會員點擊後，系統推送『常見問題』牌卡，提供 4 大分類：集點與會員相關、產品相關、企業合作、快速查詢常見問題。",
           "image": "images/screens/faq-01-entry.jpg",
           "relatedFaqs": []
         },
@@ -340,7 +340,7 @@
         },
         {
           "title": "Step 3-C 續：企業合作 FAQ",
-          "description": "企業合作流程引導頁。",
+          "description": "企業合作流程引導頁。目前表單不存在（待確認後會更新）",
           "image": "images/screens/faq-enterprise-02.jpg",
           "relatedFaqs": []
         },
@@ -358,7 +358,7 @@
         },
         {
           "title": "Step 3-D 續：快速查詢常見問題",
-          "description": "快速查詢的更多項目。",
+          "description": "快速查詢更多項目。",
           "image": "images/screens/faq-quick-03.jpg",
           "relatedFaqs": []
         },
