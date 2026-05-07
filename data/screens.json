@@ -269,7 +269,7 @@
         {
           "title": "Step 1：點擊『更多服務』選單",
           "description": "會員在 LINE 法國皇家官方帳號的圖文選單，點選右下角『更多服務』分頁，即可看到『聯繫線上客服』『尋找皇家據點』『探索皇家官網』『查詢常見問題』四個選項。",
-          "image": "images/screens/contact-01-menu.jpg",
+          "image": "images/screens/contact-01-sevice.jpg",
           "relatedFaqs": []
         },
         {
@@ -291,7 +291,7 @@
         {
           "title": "Step 1：點擊『更多服務』選單",
           "description": "與聯繫客服相同入口。",
-          "image": "images/screens/contact-01-menu.jpg",
+          "image": "images/screens/contact-01-sevice.jpg",
           "relatedFaqs": []
         },
         {
