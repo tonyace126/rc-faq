@@ -223,6 +223,30 @@
     width:40px;height:40px;display:grid;place-items:center;line-height:1;
     border-radius:50%;background:rgba(255,255,255,.1);border:none}
 
+  /* ---------- Tracker FAB ---------- */
+  .tracker-fab{position:fixed;bottom:24px;right:24px;z-index:60;
+    background:#F59E0B;color:#fff;padding:12px 20px;border-radius:999px;
+    display:none;align-items:center;gap:8px;font-size:14px;font-weight:600;
+    box-shadow:0 6px 18px rgba(245,158,11,.35), 0 2px 6px rgba(0,0,0,.08);
+    text-decoration:none;transition:all .2s;border:none;cursor:pointer;
+    font-family:inherit;line-height:1.2}
+  .tracker-fab.visible{display:inline-flex}
+  .tracker-fab:hover{background:#D97706;transform:translateY(-2px);
+    box-shadow:0 8px 22px rgba(245,158,11,.45), 0 3px 8px rgba(0,0,0,.1);
+    text-decoration:none}
+  .tracker-fab svg{width:18px;height:18px;flex-shrink:0}
+  @media(max-width:600px){
+    .tracker-fab{padding:10px 14px;font-size:13px;bottom:16px;right:16px}
+    .tracker-fab .full{display:none}
+  }
+
+  /* ---------- Empty state CTA ---------- */
+  .empty-cta{display:inline-flex;align-items:center;gap:8px;margin-top:12px;
+    padding:10px 18px;background:#F59E0B;color:#fff;border-radius:8px;
+    font-size:14px;font-weight:600;text-decoration:none;transition:all .15s}
+  .empty-cta:hover{background:#D97706;text-decoration:none}
+  .empty-cta svg{width:16px;height:16px}
+
   /* ---------- Footer ---------- */
   footer{max-width:1080px;margin:30px auto 40px;padding:0 20px;color:var(--muted);font-size:12px;
     text-align:center;line-height:1.8}
@@ -303,6 +327,13 @@
   </div>
 </footer>
 
+<a class="tracker-fab" id="tracker-fab" href="#" target="_blank" rel="noopener">
+  <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+  </svg>
+  <span><span class="full">仍無法解決？</span>填問題追蹤表單</span>
+</a>
+
 <div class="lb" id="lb">
   <button class="lb-close" id="lbClose" aria-label="關閉">×</button>
   <img id="lbImg" alt="">
@@ -351,6 +382,7 @@
     $('#lastUpdated').textContent = FAQS.meta.lastUpdated || '—';
     $('#meta').textContent = `QA ${FAQS.faqs.length} 筆 · 流程 ${SCREENS.flows.length} 條 · 更新：${FAQS.meta.lastUpdated || '—'}`;
 
+    setupTrackerFAB();
     initTabs();
     renderQAFilters(); renderQAList();
     renderFlowFilters(); renderFlowDetail(); renderFlowLibrary();
@@ -374,6 +406,21 @@
     // 從 URL hash 設定初始 tab / faq
     handleHash();
     window.addEventListener('hashchange', handleHash);
+  }
+
+  // ============ Tracker Form FAB ============
+  function setupTrackerFAB(){
+    const url = (FAQS.meta && FAQS.meta.trackerFormUrl) || '';
+    if(!url) return;
+    const fab = $('#tracker-fab');
+    fab.href = url;
+    fab.classList.add('visible');
+  }
+  function trackerUrl(){
+    return (FAQS && FAQS.meta && FAQS.meta.trackerFormUrl) || '';
+  }
+  function trackerLabel(){
+    return (FAQS && FAQS.meta && FAQS.meta.trackerFormLabel) || '問題追蹤表單';
   }
 
   // ============ TABS ============
@@ -448,8 +495,17 @@
       : (qaActiveCat === 'all' ? `共 ${filtered.length} 筆 QA` : `${cat[qaActiveCat].name}：${filtered.length} 筆`);
 
     if(filtered.length === 0){
+      const url = trackerUrl();
+      const ctaHtml = url
+        ? `<p style="margin-top:18px"><a class="empty-cta" href="${escapeHtml(url)}" target="_blank" rel="noopener">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            填${escapeHtml(trackerLabel())}
+          </a></p>` : '';
       $('#qa-list').innerHTML = `<div class="empty"><h3>沒有找到相關問題</h3>
-        <p>試試其他關鍵字，或切換分類。如果是新問題，請通知 TONY 加進 QA 庫。</p></div>`;
+        <p>試試其他關鍵字，或切換分類。如果是新問題，請通知 TONY 加進 QA 庫。</p>
+        ${ctaHtml}</div>`;
       return;
     }
     $('#qa-list').innerHTML = filtered.map(f => renderFaq(f, cat[f.category])).join('');
