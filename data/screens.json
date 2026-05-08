@@ -50,19 +50,28 @@
         {
           "title": "Step 1：平台首頁",
           "description": "會員進入平台後的第一個畫面：上方顯示會員暱稱與 Health Point 餘額；中間是『熱門活動』（目前主推登錄發票）；下方是『點數兌換』熱門品項；最下方是『動動手指立即賺』兩個入口（消費集點 / 賺點任務）以及『曬寵活動即時排行榜』。",
-          "image": "images/screens/contact-02-home.jpg",
-          "relatedFaqs": []
+          "relatedFaqs": [],
+          "images": [
+            "images/screens/contact-02-home.jpg"
+          ]
         },
         {
           "title": "Step 2：6 大功能區一覽",
           "description": "從首頁的選單可進入 6 大功能區：會員面板、消費集點、曬寵打卡、寵物知識、活動專區、點數兌換。下方的客服流程都會與這 6 區對應。",
-          "image": "images/screens/contact-03-menu.jpg",
-          "relatedFaqs": []
+          "relatedFaqs": [],
+          "images": [
+            "images/screens/contact-03-menu.jpg"
+          ]
         },
         {
           "title": "Step 3：會員面板",
-          "description": "查看會員資料的中心：含會員 HP 總點數、寵物資訊（可新增多隻毛孩）、賺點任務、點數紀錄、我的票券（兌換過的 LINE POINTS / 健檢券都在這）。會員問『我兌換的東西在哪』就引導他來這裡。",
-          "image": "images/screens/area-member.jpg",
+          "description": "查看會員資料的中心，包含 4 個分頁（左右滑可瀏覽）：(1) 寵物資訊：管理多隻毛孩資料 (2) 賺點任務：查看可賺 HP 的任務清單 (3) 點數紀錄：HP 累積與兌換明細 (4) 我的票券：兌換過的 LINE POINTS / 健檢券都在這。會員問『我兌換的東西在哪』就引導他來這裡。",
+          "images": [
+            "images/screens/area-member-pets.jpg",
+            "images/screens/area-member-tasks.jpg",
+            "images/screens/area-member-points.jpg",
+            "images/screens/area-member-tickets.jpg"
+          ],
           "relatedFaqs": [
             "HLT-001"
           ]
@@ -70,43 +79,53 @@
         {
           "title": "Step 4：消費集點",
           "description": "發票登錄任務頁。顯示目前進行中的集點活動（『購買零售產品集點換好康！』），點『登錄集點』即進入發票登錄流程。本檔活動期間：2026-01-01 ~ 2026-12-31。",
-          "image": "images/screens/contact-04-invoice.jpg",
           "relatedFaqs": [
             "INV-001",
             "INV-002",
             "INV-003",
             "INV-004"
+          ],
+          "images": [
+            "images/screens/contact-04-invoice.jpg"
           ]
         },
         {
           "title": "Step 5：曬寵打卡",
           "description": "曬寵秀毛孩。每月會有不同主題（例：『誰是你們家的毛孩好朋友？』），會員上傳符合主題的毛孩照片可賺 50 HP。下方的『曬寵牆』可瀏覽其他會員的照片並點讚（每日點讚 3 張可賺 2 HP），活動結束後讚數最高前三名再額外獲得 100-200 HP。",
-          "image": "images/screens/area-pet-checkin.jpg",
           "relatedFaqs": [
             "PET-001"
+          ],
+          "images": [
+            "images/screens/area-pet-checkin.jpg"
           ]
         },
         {
           "title": "Step 6：寵物知識",
           "description": "毛孩照護知識專區。提供法國皇家專業飼養與照護知識文章（毛孩健康、營養、急救等），會員可篩選主題閱讀。屬於知識性內容，本身不直接賺點數。",
-          "image": "images/screens/area-pet-knowledge.jpg",
-          "relatedFaqs": []
+          "relatedFaqs": [],
+          "images": [
+            "images/screens/area-pet-knowledge.jpg"
+          ]
         },
         {
           "title": "Step 7：活動專區",
           "description": "各類活動列表（含目前主推的『登錄發票』、各檔曬寵主題、不定期行銷活動如抽獎、增粉活動等）。會員問『有什麼活動可以參加』就引導到這裡。",
-          "image": "images/screens/area-campaign.jpg",
           "relatedFaqs": [
             "CAM-001"
+          ],
+          "images": [
+            "images/screens/area-campaign.jpg"
           ]
         },
         {
           "title": "Step 8：點數兌換",
           "description": "上方顯示 HP 餘額，下方為 LINE POINTS 兌換清單（10 / 30 / 50 / 100 / 600 點等不同面額）。每個品項顯示『可兌換時間』與『所需 HP』。另有『活動票券』兌換項目（如健檢券）。已額滿的品項會顯示灰色標籤。",
-          "image": "images/screens/area-exchange.jpg",
           "relatedFaqs": [
             "PTS-001",
             "HLT-001"
+          ],
+          "images": [
+            "images/screens/area-exchange.jpg"
           ]
         }
       ]
@@ -120,26 +139,30 @@
         {
           "title": "方式總覽：兩條路徑",
           "description": "1) 曬寵打卡：免費，靠上傳毛孩照片 / 點讚 / 衝排行榜累積。2) 消費集點：購買法國皇家貓犬零售產品乾糧 / 濕糧，登錄發票後 1元 = 1 HP。兩種方式的 HP 都會合併計算。",
-          "image": "",
-          "relatedFaqs": []
+          "relatedFaqs": [],
+          "images": []
         },
         {
           "title": "方式 1：曬寵打卡（詳見曬寵流程）",
           "description": "三種賺點活動：每月主題上傳 50 HP / 每日點讚 2 HP / 月排行冠亞季 100-200 HP。完整說明在『曬寵打卡 3 種賺點活動』流程。",
-          "image": "images/screens/area-pet-checkin.jpg",
           "relatedFaqs": [
             "PET-001"
+          ],
+          "images": [
+            "images/screens/area-pet-checkin.jpg"
           ]
         },
         {
           "title": "方式 2：消費集點（詳見發票登錄流程）",
           "description": "兌換比例 1:1（消費 1 元累積 1 HP）。需登錄符合 4 種接受格式的發票，且明細上有『法國皇家發票登錄指定產品品項』。完整規則在『消費集點發票登錄完整說明』流程。",
-          "image": "images/screens/contact-04-invoice.jpg",
           "relatedFaqs": [
             "INV-001",
             "INV-002",
             "INV-003",
             "INV-004"
+          ],
+          "images": [
+            "images/screens/contact-04-invoice.jpg"
           ]
         }
       ]
