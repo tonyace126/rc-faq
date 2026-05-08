@@ -2,9 +2,39 @@
   "meta": {
     "siteTitle": "RC 集點平台 客服 QA",
     "siteSubtitle": "Royal Canin × LIFF",
-    "lastUpdated": "2026-05-08 12:47",
+    "lastUpdated": "2026-05-08 14:17",
     "trackerFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSet_Lo6YraQwusLXKoM9Pw9gi3ej-ItbZhLSnYT5ULouMi6RQ/viewform",
-    "trackerFormLabel": "問題追蹤申報"
+    "trackerFormLabel": "問題追蹤申報",
+    "quickLinks": {
+      "primary": [
+        {
+          "label": "法國皇家 LINE OA",
+          "url": "https://lin.ee/yDC2g62",
+          "icon": "💬"
+        },
+        {
+          "label": "法國皇家 集點平台",
+          "url": "https://liff.line.me/1657147716-lbXRV33B",
+          "icon": "🎁"
+        }
+      ],
+      "events": [
+        {
+          "label": "寵物年齡換算器",
+          "url": "https://liff.line.me/1657147716-pgZVBxxo",
+          "tag": "常駐功能",
+          "tagType": "feature"
+        },
+        {
+          "label": "熟齡知識問答",
+          "url": "https://liff.line.me/1657147716-D8deiqHB",
+          "tag": "期間活動",
+          "tagType": "event",
+          "startDate": "2026-04-23",
+          "endDate": "2026-05-31"
+        }
+      ]
+    }
   },
   "categories": [
     {

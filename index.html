@@ -37,6 +37,46 @@
   .brand-sub{color:var(--muted);font-weight:400;font-size:13px}
   .header-meta{margin-left:auto;font-size:12px;color:var(--muted)}
 
+  /* ---------- Quick links bar ---------- */
+  .quick-bar{background:linear-gradient(180deg,#FFF7F8 0%,#FFFFFF 100%);
+    border-bottom:1px solid var(--border);padding:14px 0 12px}
+  .quick-bar-inner{max-width:1080px;margin:0 auto;padding:0 20px;
+    display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center}
+  .quick-section{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .quick-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;
+    text-transform:uppercase;flex-shrink:0}
+  .quick-divider{width:1px;align-self:stretch;background:var(--border);margin:2px 4px}
+  .quick-btn{display:inline-flex;align-items:center;gap:7px;
+    padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;
+    text-decoration:none;transition:all .15s;line-height:1.2;border:1px solid transparent;
+    white-space:nowrap}
+  .quick-btn:hover{text-decoration:none;transform:translateY(-1px)}
+  .quick-btn.primary{background:var(--primary);color:#fff;
+    box-shadow:0 2px 6px rgba(200,16,46,.25)}
+  .quick-btn.primary:hover{background:#A50E26;
+    box-shadow:0 4px 10px rgba(200,16,46,.35)}
+  .quick-btn.event{background:#fff;color:var(--text);border-color:var(--border-strong)}
+  .quick-btn.event:hover{border-color:var(--primary);color:var(--primary);
+    box-shadow:0 2px 6px rgba(0,0,0,.06)}
+  .quick-btn-icon{font-size:14px;line-height:1}
+  .quick-btn-meta{display:inline-flex;align-items:center;gap:6px;margin-left:2px}
+  .quick-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;
+    font-weight:700;letter-spacing:.3px;line-height:1.4}
+  .quick-tag.feature{background:#E0F2FE;color:#0369A1}
+  .quick-tag.event{background:#FEF3C7;color:#B45309}
+  .quick-tag.expired{background:#F3F4F6;color:#9CA3AF}
+  .quick-period{font-size:11px;color:var(--muted);font-weight:400}
+  .quick-btn.event.is-expired{opacity:.55}
+  .quick-btn.event.is-expired:hover{border-color:var(--border-strong);color:var(--muted);transform:none;box-shadow:none}
+  @media(max-width:600px){
+    .quick-bar{padding:10px 0 10px}
+    .quick-bar-inner{padding:0 14px;gap:10px 16px}
+    .quick-label{display:none}
+    .quick-divider{display:none}
+    .quick-btn{padding:7px 12px;font-size:12px}
+    .quick-period{display:none}
+  }
+
   /* ---------- Tabs ---------- */
   .tabs{max-width:1080px;margin:0 auto;padding:14px 20px 0;display:flex;gap:2px;border-bottom:1px solid var(--border)}
   .tab{padding:10px 18px;border:none;background:transparent;font:inherit;font-size:14px;font-weight:600;
@@ -294,6 +334,7 @@
     </div>
     <div class="header-meta" id="meta"></div>
   </div>
+  <div class="quick-bar" id="quickBar" hidden></div>
   <div class="tabs">
     <button class="tab active" data-tab="qa">📋 QA 查詢</button>
     <button class="tab" data-tab="flows">📱 平台頁面流程</button>
@@ -408,6 +449,7 @@
     $('#meta').textContent = `QA ${FAQS.faqs.length} 筆 · 流程 ${SCREENS.flows.length} 條 · 更新：${FAQS.meta.lastUpdated || '—'}`;
 
     setupTrackerFAB();
+    renderQuickLinks();
     initTabs();
     renderQAFilters(); renderQAList();
     renderFlowFilters(); renderFlowDetail(); renderFlowLibrary();
@@ -455,6 +497,56 @@
   }
   function trackerLabel(){
     return (FAQS && FAQS.meta && FAQS.meta.trackerFormLabel) || '問題追蹤表單';
+  }
+
+  // ============ Quick Links Bar ============
+  function renderQuickLinks(){
+    const ql = FAQS.meta && FAQS.meta.quickLinks;
+    const bar = $('#quickBar');
+    if(!ql || (!ql.primary?.length && !ql.events?.length)){
+      bar.hidden = true; return;
+    }
+    const today = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+    const sections = [];
+
+    if(ql.primary?.length){
+      sections.push(`
+        <div class="quick-section">
+          <span class="quick-label">主要入口</span>
+          ${ql.primary.map(it => `
+            <a class="quick-btn primary" href="${escapeHtml(it.url)}" target="_blank" rel="noopener">
+              ${it.icon ? `<span class="quick-btn-icon">${escapeHtml(it.icon)}</span>` : ''}
+              <span>${escapeHtml(it.label)}</span>
+            </a>`).join('')}
+        </div>`);
+    }
+
+    if(ql.events?.length){
+      sections.push(`
+        <div class="quick-section">
+          <span class="quick-label">活動 / 功能</span>
+          ${ql.events.map(it => {
+            const expired = it.endDate && it.endDate < today;
+            const tagType = expired ? 'expired' : (it.tagType || 'feature');
+            const tagText = expired ? '已結束' : (it.tag || '');
+            const period = (it.startDate || it.endDate)
+              ? `<span class="quick-period">${escapeHtml(it.startDate||'')}${it.endDate?` ~ ${escapeHtml(it.endDate)}`:''}</span>` : '';
+            return `
+              <a class="quick-btn event ${expired?'is-expired':''}" href="${escapeHtml(it.url)}" target="_blank" rel="noopener">
+                <span>${escapeHtml(it.label)}</span>
+                <span class="quick-btn-meta">
+                  ${tagText ? `<span class="quick-tag ${tagType}">${escapeHtml(tagText)}</span>` : ''}
+                  ${period}
+                </span>
+              </a>`;
+          }).join('')}
+        </div>`);
+    }
+
+    // 兩個區塊之間插一條分隔
+    const sep = sections.length === 2 ? '<div class="quick-divider"></div>' : '';
+    bar.innerHTML = `<div class="quick-bar-inner">${sections[0] || ''}${sep}${sections[1] || ''}</div>`;
+    bar.hidden = false;
   }
 
   // ============ TABS ============
