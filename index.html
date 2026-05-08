@@ -215,13 +215,35 @@
 
   /* ---------- Lightbox ---------- */
   .lb{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;
-    align-items:center;justify-content:center;z-index:200;cursor:zoom-out;padding:20px;flex-direction:column}
+    align-items:center;justify-content:center;z-index:200;cursor:zoom-out;padding:20px;flex-direction:column;
+    touch-action:pan-y;user-select:none;-webkit-user-select:none}
   .lb.show{display:flex}
-  .lb img{max-width:100%;max-height:calc(100vh - 100px);border-radius:8px}
+  .lb img{max-width:100%;max-height:calc(100vh - 100px);border-radius:8px;
+    transition:opacity .15s;pointer-events:none;-webkit-user-drag:none}
+  .lb.swiping img{transition:transform .05s linear}
   .lb-caption{margin-top:14px;color:#fff;text-align:center;font-size:13px;max-width:80%;line-height:1.6}
   .lb-close{position:fixed;top:18px;right:20px;color:#fff;font-size:32px;cursor:pointer;
     width:40px;height:40px;display:grid;place-items:center;line-height:1;
     border-radius:50%;background:rgba(255,255,255,.1);border:none}
+  .lb-nav{position:fixed;top:50%;transform:translateY(-50%);width:48px;height:48px;
+    display:none;place-items:center;color:#fff;font-size:32px;line-height:1;cursor:pointer;
+    border-radius:50%;background:rgba(255,255,255,.12);border:none;font-family:inherit;
+    transition:background .15s, opacity .15s;z-index:201}
+  .lb-nav:hover{background:rgba(255,255,255,.22)}
+  .lb-nav:disabled{opacity:.25;cursor:default}
+  .lb-prev{left:18px}
+  .lb-next{right:18px}
+  .lb.has-multi .lb-nav{display:grid}
+  .lb-counter{position:fixed;top:22px;left:50%;transform:translateX(-50%);
+    color:#fff;font-size:13px;background:rgba(255,255,255,.12);padding:5px 12px;
+    border-radius:999px;display:none;letter-spacing:.5px;font-variant-numeric:tabular-nums}
+  .lb.has-multi .lb-counter{display:block}
+  @media(max-width:600px){
+    .lb-nav{width:40px;height:40px;font-size:26px}
+    .lb-prev{left:8px}
+    .lb-next{right:8px}
+    .lb-counter{top:14px;font-size:12px}
+  }
 
   /* ---------- Tracker FAB ---------- */
   .tracker-fab{position:fixed;bottom:24px;right:24px;z-index:60;
@@ -336,6 +358,9 @@
 
 <div class="lb" id="lb">
   <button class="lb-close" id="lbClose" aria-label="關閉">×</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="上一張">‹</button>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="下一張">›</button>
+  <div class="lb-counter" id="lbCounter"></div>
   <img id="lbImg" alt="">
   <div class="lb-caption" id="lbCaption"></div>
 </div>
@@ -397,11 +422,20 @@
         const target = $('.panel.active').id === 'panel-qa' ? '#qa-search' : '#flow-search';
         $(target).focus();
       }
+      if(!$('#lb').classList.contains('show')) return;
       if(e.key === 'Escape') closeLB();
+      if(e.key === 'ArrowLeft')  { e.preventDefault(); navLB(-1); }
+      if(e.key === 'ArrowRight') { e.preventDefault(); navLB(+1); }
     });
 
     $('#lb').addEventListener('click', closeLB);
     $('#lbClose').addEventListener('click', e => { e.stopPropagation(); closeLB(); });
+    $('#lbPrev').addEventListener('click', e => { e.stopPropagation(); navLB(-1); });
+    $('#lbNext').addEventListener('click', e => { e.stopPropagation(); navLB(+1); });
+    // 點圖片本身不關閉（避免換頁時誤觸）
+    $('#lbImg').addEventListener('click', e => e.stopPropagation());
+
+    initLBSwipe();
 
     // 從 URL hash 設定初始 tab / faq
     handleHash();
@@ -567,7 +601,7 @@
       });
     });
     $$('.faq img').forEach(img => {
-      img.addEventListener('click', () => openLB(img.dataset.full, img.dataset.cap));
+      img.addEventListener('click', () => openLBFromImg(img));
     });
   }
 
@@ -705,7 +739,7 @@
       });
     });
     $$('.step-img img').forEach(img => {
-      img.addEventListener('click', () => openLB(img.dataset.full, img.dataset.cap));
+      img.addEventListener('click', () => openLBFromImg(img));
     });
     bindCarousels();
   }
@@ -793,7 +827,7 @@
       }).join('')
     }</div>`;
     $$('#flows-library-view .lib-card img').forEach(img => {
-      img.addEventListener('click', e => { e.stopPropagation(); openLB(img.dataset.full, img.dataset.cap); });
+      img.addEventListener('click', e => { e.stopPropagation(); openLBFromImg(img); });
     });
     $$('#flows-library-view .lib-card').forEach(card => {
       card.addEventListener('click', () => {
@@ -809,15 +843,116 @@
   }
 
   // ============ Lightbox ============
-  function openLB(src, caption){
-    $('#lbImg').src = src;
-    $('#lbCaption').textContent = caption || '';
-    $('#lb').classList.add('show');
+  // state: 一組可左右切換的圖片
+  let lbItems = [];   // [{src, cap}]
+  let lbIdx   = 0;
+
+  // 從點到的 img 推回「同組圖片」：
+  //  - 同一 step 的 carousel-track 內所有 img
+  //  - 同一 FAQ 卡片 .images 內所有 img
+  //  - 否則視為單張
+  function gatherLBGroup(img){
+    const container =
+      img.closest('.step-carousel-track') ||
+      img.closest('.images');
+    const nodes = container
+      ? Array.from(container.querySelectorAll('img[data-full]'))
+      : [img];
+    const items = nodes.map(n => ({
+      src: n.dataset.full || n.src,
+      cap: n.dataset.cap || ''
+    }));
+    const idx = Math.max(0, nodes.indexOf(img));
+    return {items, idx};
   }
+
+  function openLBFromImg(img){
+    const {items, idx} = gatherLBGroup(img);
+    openLBGroup(items, idx);
+  }
+
+  function openLBGroup(items, startIdx){
+    if(!items || !items.length) return;
+    lbItems = items;
+    lbIdx = Math.min(Math.max(0, startIdx|0), items.length - 1);
+    const lb = $('#lb');
+    lb.classList.toggle('has-multi', items.length > 1);
+    lb.classList.add('show');
+    renderLB();
+  }
+
+  function renderLB(){
+    const it = lbItems[lbIdx];
+    if(!it) return;
+    const img = $('#lbImg');
+    img.style.transform = '';
+    img.src = it.src;
+    $('#lbCaption').textContent = it.cap || '';
+    $('#lbCounter').textContent = `${lbIdx + 1} / ${lbItems.length}`;
+    $('#lbPrev').disabled = lbIdx <= 0;
+    $('#lbNext').disabled = lbIdx >= lbItems.length - 1;
+  }
+
+  function navLB(delta){
+    const next = lbIdx + delta;
+    if(next < 0 || next >= lbItems.length) return;
+    lbIdx = next;
+    renderLB();
+  }
+
   function closeLB(){
-    $('#lb').classList.remove('show');
+    const lb = $('#lb');
+    lb.classList.remove('show');
+    lb.classList.remove('has-multi');
+    lb.classList.remove('swiping');
     $('#lbImg').src = '';
+    $('#lbImg').style.transform = '';
     $('#lbCaption').textContent = '';
+    $('#lbCounter').textContent = '';
+    lbItems = []; lbIdx = 0;
+  }
+
+  // 觸控滑動切換（左右），垂直滑動則放行（不攔）
+  function initLBSwipe(){
+    const lb = $('#lb');
+    const img = $('#lbImg');
+    let sx=0, sy=0, dx=0, dy=0, tracking=false, locked=null;
+    const THRESHOLD = 50;
+
+    lb.addEventListener('touchstart', e => {
+      if(!lb.classList.contains('show')) return;
+      const t = e.changedTouches[0];
+      sx = t.clientX; sy = t.clientY; dx = 0; dy = 0;
+      tracking = true; locked = null;
+    }, {passive:true});
+
+    lb.addEventListener('touchmove', e => {
+      if(!tracking) return;
+      const t = e.changedTouches[0];
+      dx = t.clientX - sx; dy = t.clientY - sy;
+      if(locked === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)){
+        locked = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+      }
+      if(locked === 'h' && lbItems.length > 1){
+        e.preventDefault();
+        lb.classList.add('swiping');
+        // 邊界阻尼
+        let d = dx;
+        if((lbIdx === 0 && d > 0) || (lbIdx === lbItems.length-1 && d < 0)) d = d * 0.3;
+        img.style.transform = `translateX(${d}px)`;
+      }
+    }, {passive:false});
+
+    lb.addEventListener('touchend', () => {
+      if(!tracking) return;
+      tracking = false;
+      lb.classList.remove('swiping');
+      img.style.transform = '';
+      if(locked === 'h' && lbItems.length > 1){
+        if(dx <= -THRESHOLD) navLB(+1);
+        else if(dx >= THRESHOLD) navLB(-1);
+      }
+    });
   }
 })();
 </script>
