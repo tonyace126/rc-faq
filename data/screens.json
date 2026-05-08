@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-08",
+    "lastUpdated": "2026-05-08 13:30",
     "note": "平台頁面流程庫 — 每條流程是會員在平台上會走的一段路徑，每張圖是會員某一步看到的畫面。客服收到會員截圖時可從這裡找到對應的頁面說明。"
   },
   "categories": [
@@ -140,7 +140,8 @@
           "title": "方式總覽：兩條路徑",
           "description": "1) 曬寵打卡：免費，靠上傳毛孩照片 / 點讚 / 衝排行榜累積。2) 消費集點：購買法國皇家貓犬零售產品乾糧 / 濕糧，登錄發票後 1元 = 1 HP。兩種方式的 HP 都會合併計算。",
           "relatedFaqs": [],
-          "images": []
+          "images": [],
+          "image": "images/screens/earning-overview.jpg"
         },
         {
           "title": "方式 1：曬寵打卡（詳見曬寵流程）",
@@ -182,7 +183,7 @@
         {
           "title": "活動 1：每月曬寵主題（50 HP）",
           "description": "每月會公告新主題（例：『誰是你們家的毛孩好朋友？』）。會員上傳符合主題的毛孩照片，通過審核即可獲得 50 HP。審核未通過常見原因：照片中沒有清楚拍到寵物本人、照片品質太低、不符合主題。",
-          "image": "",
+          "image": "images/screens/checkin-monthly-theme.jpg",
           "relatedFaqs": [
             "PET-001"
           ]
@@ -190,13 +191,13 @@
         {
           "title": "活動 2：每日讚萌寵（2 HP / 日）",
           "description": "至『曬寵牆』瀏覽任意 3 張照片並點讚，即可獲得 2 HP。點讚記錄『每日 0 點重新計算』，所以會員每天都可以再賺 2 HP。",
-          "image": "",
+          "image": "images/screens/checkin-daily-like.jpg",
           "relatedFaqs": []
         },
         {
           "title": "活動 3：曬寵冠亞季（100-200 HP）",
           "description": "每檔曬寵活動結束後，按讚數結算前三名：第 1 名 200 HP / 第 2 名 150 HP / 第 3 名 100 HP，自動派點。會員問『冠亞季什麼時候開獎』就告知活動結束後系統會自動結算派發。",
-          "image": "",
+          "image": "images/screens/checkin-ranking.jpg",
           "relatedFaqs": []
         }
       ]
@@ -218,7 +219,7 @@
         {
           "title": "Step 2：兌換比例 1元 = 1 HP",
           "description": "消費金額累計方式為該張發票符合『法國皇家指定品項』之項目總額，按金額比例派發 HP。發票金額以整數計算，系統忽略小數值。",
-          "image": "",
+          "image": "images/screens/invoice-ratio.jpg",
           "relatedFaqs": []
         },
         {
@@ -249,7 +250,7 @@
         {
           "title": "Step 6：10 條活動規則（完整版）",
           "description": "1. 須先是 LINE 會員。 2. 須先加入『法國皇家 - 毛孩健康專寵計劃』成為會員。 3. 活動期間內購買法國皇家指定品項，登錄發票，審核通過後計算 HP。 4. 每檔活動、每筆發票限登錄一次，重複登錄不予計算。 5. 消費時間需於 2026/1/01 ~ 2026/12/31，且需在活動期間內登錄審核成功。 6. 消費金額累計方式為該張發票符合指定品項之項目總額。 7. 發票金額以整數計算，系統忽略小數值。 8. 電子發票可用 QRcode 掃描、手動輸入或載具登錄；審核以『財政部電子發票整合服務平臺』為準；近期因財政部流量限制，回覆時間延長，請耐心等候。 9. 紙本發票須手動輸入並拍照上傳，照片需清晰可辨識，模糊或損毀無法通過審核。 10. 向法國皇家批發採購之發票不適用本活動，賣方為法國皇家會被排除。",
-          "image": "",
+          "image": "images/screens/invoice-rules.jpg",
           "relatedFaqs": [
             "INV-001",
             "INV-002",
@@ -276,7 +277,7 @@
         {
           "title": "Step 2：LINE POINTS 兌換比例對照",
           "description": "目前兌換比例（會依活動調整，請以平台實際顯示為準）：LINE POINTS 10 點 ↔ 1,500 HP / 30 點 ↔ 3,000 HP / 50 點 ↔ 3,800 HP / 100 點 ↔ 4,500 HP / 600 點 ↔ 10,000 HP。會員兌換成功後，LINE POINTS 會自動入帳到 LINE，請會員到 LINE Wallet > LINE POINTS 確認。",
-          "image": "",
+          "image": "images/screens/exchange-ratio.jpg",
           "relatedFaqs": [
             "PTS-001"
           ]
