@@ -2,7 +2,7 @@
   "meta": {
     "siteTitle": "RC 集點平台 客服 QA",
     "siteSubtitle": "Royal Canin × LIFF",
-    "lastUpdated": "2026-05-15 03:00",
+    "lastUpdated": "2026-05-15 03:15",
     "trackerFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSet_Lo6YraQwusLXKoM9Pw9gi3ej-ItbZhLSnYT5ULouMi6RQ/viewform",
     "trackerFormLabel": "問題追蹤申報",
     "quickLinks": {
@@ -42,7 +42,28 @@
           "endDate": "2026-06-18"
         }
       ]
-    }
+    },
+    "events": [
+      {
+        "id": "BONUS-0518",
+        "name": "5/18-6/18 幼貓/幼犬發票加碼活動",
+        "shortName": "幼貓/幼犬發票加碼",
+        "startDate": "2026-05-18",
+        "endDate": "2026-06-18",
+        "summary": "登錄含「離乳與幼貓/幼犬指定產品」的發票可額外獲得 50% Health Point 回饋（最高 1,000 點），並有加碼抽千點 30 名機會。",
+        "bannerImage": "images/screens/bonus-0518-overview.jpg",
+        "flowId": "FLOW-INVOICE-BONUS-0518",
+        "faqIds": [
+          "INV-101",
+          "INV-102",
+          "INV-103",
+          "INV-104",
+          "INV-105",
+          "INV-106",
+          "INV-107"
+        ]
+      }
+    ]
   },
   "categories": [
     {
