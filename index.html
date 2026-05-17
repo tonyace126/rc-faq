@@ -5,7 +5,44 @@
 <title>RC 集點平台 客服 QA</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="法國皇家 RC 集點平台 客服常見問題查詢">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23C8102E'/%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' fill='white' font-size='34' font-family='system-ui' font-weight='800'%3ERC%3C/text%3E%3C/svg%3E">
+
+<!-- ===== Lock gate (盡早執行避免內容閃現) ===== -->
+<style id="lock-gate-style">
+  html.locked body > *:not(.lock-screen) { display: none !important; }
+  .lock-screen { display: none; }
+  html.locked .lock-screen { display: flex !important; }
+  .lock-screen{position:fixed;inset:0;background:#F6F7F9;z-index:9999;
+    align-items:center;justify-content:center;flex-direction:column;padding:24px;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Noto Sans TC","Helvetica Neue",Arial,sans-serif}
+  .lock-card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;
+    padding:32px 28px;max-width:380px;width:100%;
+    box-shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 28px rgba(0,0,0,.06);text-align:center}
+  .lock-logo{width:48px;height:48px;background:#C8102E;color:#fff;border-radius:12px;
+    display:grid;place-items:center;font-weight:800;font-size:18px;margin:0 auto 14px}
+  .lock-card h2{margin:0 0 6px;font-size:16px;font-weight:700;color:#111827}
+  .lock-card .lock-sub{margin:0 0 20px;font-size:12px;color:#6B7280;line-height:1.6}
+  .lock-input{width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:8px;
+    font-size:14px;font-family:inherit;outline:none;transition:border-color .15s}
+  .lock-input:focus{border-color:#C8102E}
+  .lock-btn{margin-top:12px;width:100%;padding:10px 14px;border:none;
+    background:#C8102E;color:#fff;border-radius:8px;font-size:14px;font-weight:600;
+    cursor:pointer;font-family:inherit;transition:background .15s}
+  .lock-btn:hover{background:#A50E26}
+  .lock-err{margin:10px 0 0;font-size:12px;color:#C8102E;min-height:16px}
+</style>
+<script>
+(function(){
+  var AUTH_KEY = 'rcfaq-auth-v1';
+  var HASH = '63e5dec4320a31100061b24f5f3afcbfeafb29edaf3c6fc849f439d827ea2f9e';
+  try {
+    if (localStorage.getItem(AUTH_KEY) === HASH) return;
+  } catch(e) {}
+  document.documentElement.classList.add('locked');
+})();
+</script>
 <style>
   :root{
     --bg:#F6F7F9;
@@ -395,6 +432,52 @@
 </style>
 </head>
 <body>
+
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-logo">RC</div>
+    <h2>客服查詢中心</h2>
+    <p class="lock-sub">內部使用，請輸入存取密碼<br>有問題請聯繫 TONY</p>
+    <input class="lock-input" id="lockInput" type="password" placeholder="密碼" autocomplete="off" autofocus>
+    <button class="lock-btn" id="lockBtn">進入</button>
+    <p class="lock-err" id="lockErr"></p>
+  </div>
+</div>
+<script>
+(function(){
+  var AUTH_KEY = 'rcfaq-auth-v1';
+  var HASH = '63e5dec4320a31100061b24f5f3afcbfeafb29edaf3c6fc849f439d827ea2f9e';
+  var input = document.getElementById('lockInput');
+  var btn   = document.getElementById('lockBtn');
+  var err   = document.getElementById('lockErr');
+  async function sha256(text){
+    var buf = new TextEncoder().encode(text);
+    var hb  = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hb))
+      .map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+  }
+  async function verify(){
+    var pwd = (input.value || '').trim();
+    if(!pwd){ err.textContent = '請輸入密碼'; return; }
+    btn.disabled = true; err.textContent = '';
+    var h = await sha256(pwd);
+    if(h === HASH){
+      try{ localStorage.setItem(AUTH_KEY, h); }catch(e){}
+      document.documentElement.classList.remove('locked');
+    } else {
+      err.textContent = '密碼錯誤';
+      btn.disabled = false;
+      input.select();
+    }
+  }
+  btn.addEventListener('click', verify);
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter') verify(); });
+  // 自動聚焦（autofocus 在 hidden 狀態可能失效）
+  if(document.documentElement.classList.contains('locked')){
+    setTimeout(function(){ input.focus(); }, 50);
+  }
+})();
+</script>
 
 <header>
   <div class="header-inner">
