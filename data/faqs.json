@@ -2,7 +2,7 @@
   "meta": {
     "siteTitle": "RC 集點平台 客服 QA",
     "siteSubtitle": "Royal Canin × LIFF",
-    "lastUpdated": "2026-05-15 13:16",
+    "lastUpdated": "2026-05-18 00:12",
     "trackerFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSet_Lo6YraQwusLXKoM9Pw9gi3ej-ItbZhLSnYT5ULouMi6RQ/viewform",
     "trackerFormLabel": "問題追蹤申報",
     "quickLinks": {
@@ -35,7 +35,7 @@
         },
         {
           "label": "幼貓/幼犬發票加碼",
-          "url": "https://liff.line.me/1657147716-lbXRV33B",
+          "url": "https://liff.line.me/1657147716-lbXRV33B/points/events/17",
           "tag": "期間活動",
           "tagType": "event",
           "startDate": "2026-05-18",
