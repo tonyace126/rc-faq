@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-06-09 18:08",
+    "lastUpdated": "2026-06-09 18:30",
     "note": "平台頁面流程庫 — 每條流程是會員在平台上會走的一段路徑，每張圖是會員某一步看到的畫面。客服收到會員截圖時可從這裡找到對應的頁面說明。"
   },
   "categories": [
@@ -309,7 +309,7 @@
         },
         {
           "title": "Step 3：到「我的票券」領取 LINE POINTS 票券",
-          "description": "兌換成功後，LINE POINTS 不會直接進 LINE，而是先以「票券」形式發到平台『我的票券 > LINE 票券』。會員會看到一張「LINE POINTS 10點」票券，上面顯示 LP 兌換期限與此券領取日期。點『查看序號』進入下一步。",
+          "description": "兌換成功後，LINE POINTS 不會直接進 LINE，而是先以「票券」形式發到平台『我的票券 > LINE 票券』。會員會看到一張 LINE POINTS 票券（此流程以兌換「LINE POINTS 10 點」為例，實際面額依會員兌換的品項而定，畫面與後續步驟相同），上面顯示 LP 兌換期限與此券領取日期。點『查看序號』進入下一步。",
           "image": "images/screens/exchange-step3-my-tickets.png",
           "relatedFaqs": [
             "PTS-001"
@@ -341,7 +341,7 @@
         },
         {
           "title": "Step 7：LINE 錢包跳出獲得通知",
-          "description": "入帳後，LINE 錢包（LINE 官方帳號）會主動推送一則通知「+10 LINE POINTS 已於點數代碼兌換獲得點數」，會員可直接點『確認剩餘點數』查看。",
+          "description": "入帳後，LINE 錢包（LINE 官方帳號）會主動推送一則獲得通知（本範例為 10 點，故顯示「+10 LINE POINTS 已於點數代碼兌換獲得點數」），會員可直接點『確認剩餘點數』查看。",
           "image": "images/screens/exchange-step7-wallet-notify.png",
           "relatedFaqs": [
             "PTS-001"
@@ -349,7 +349,7 @@
         },
         {
           "title": "Step 8：到 LINE POINTS 歷史記錄確認",
-          "description": "會員也可到 LINE Wallet > LINE POINTS > 歷史記錄 > 獲得記錄，看到一筆「點數代碼兌換 10P」紀錄，即代表本次兌換已完成入帳。客服遇到『換了 LINE POINTS 沒看到 / 要去哪確認』就引導到這裡。",
+          "description": "會員也可到 LINE Wallet > LINE POINTS > 歷史記錄 > 獲得記錄，看到一筆「點數代碼兌換」紀錄（本範例為 10 點，故顯示 10P），即代表本次兌換已完成入帳。客服遇到『換了 LINE POINTS 沒看到 / 要去哪確認』就引導到這裡。",
           "image": "images/screens/exchange-step8-history.png",
           "relatedFaqs": [
             "PTS-001"
