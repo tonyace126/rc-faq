@@ -2,7 +2,7 @@
   "meta": {
     "siteTitle": "RC 集點平台 客服 QA",
     "siteSubtitle": "Royal Canin × LIFF",
-    "lastUpdated": "2026-05-18 00:12",
+    "lastUpdated": "2026-06-09 17:51",
     "trackerFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSet_Lo6YraQwusLXKoM9Pw9gi3ej-ItbZhLSnYT5ULouMi6RQ/viewform",
     "trackerFormLabel": "問題追蹤申報",
     "quickLinks": {
@@ -244,8 +244,10 @@
         "後續紀錄會再回報客戶，看是否重新補發或其他處理"
       ],
       "replyTemplate": "您好，請問可以提供您看到的錯誤訊息截圖嗎？我們需要您的截圖/錄影協助查詢，\n請點選LINE APP右下方：錢包 > 點擊「LINE PONTS 」> 點選「歷史紀錄」。需要錄影兌換日前後十天紀錄。\n我們會盡快幫您確認狀況～",
-      "images": [],
-      "updated": "2026-05-08"
+      "images": [
+        "images/screens/pts-001-line-points-history.png"
+      ],
+      "updated": "2026-06-09"
     },
     {
       "id": "HLT-001",
