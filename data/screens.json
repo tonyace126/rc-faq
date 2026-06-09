@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-05-15 13:16",
+    "lastUpdated": "2026-06-09 18:08",
     "note": "平台頁面流程庫 — 每條流程是會員在平台上會走的一段路徑，每張圖是會員某一步看到的畫面。客服收到會員截圖時可從這裡找到對應的頁面說明。"
   },
   "categories": [
@@ -289,7 +289,7 @@
       "id": "FLOW-POINT-EXCHANGE",
       "category": "exchange",
       "name": "Health Point 兌換 LINE POINTS",
-      "description": "會員賺到的 HP 可在『點數兌換』區換成 LINE POINTS（依面額不同所需 HP 也不同）或活動票券（健檢券等）。客服遇到『點數要怎麼用』『LINE POINTS 怎麼換』就引導到這條。",
+      "description": "會員賺到的 HP 可在『點數兌換』區換成 LINE POINTS（依面額不同所需 HP 也不同）或活動票券（健檢券等）。兌換 LINE POINTS 後不是自動入帳，而是發一張序號票券，需到「我的票券」查看序號並至 points.line.me 輸入儲值，入帳後 LINE 錢包會通知、可在 LINE POINTS 獲得記錄確認。客服遇到『點數要怎麼用』『LINE POINTS 怎麼換 / 換了沒看到』就引導到這條。",
       "steps": [
         {
           "title": "Step 1：進入點數兌換",
@@ -301,8 +301,56 @@
         },
         {
           "title": "Step 2：LINE POINTS 兌換比例對照",
-          "description": "目前兌換比例（會依活動調整，請以平台實際顯示為準）：LINE POINTS 10 點 ↔ 1,500 HP / 30 點 ↔ 3,000 HP / 50 點 ↔ 3,800 HP / 100 點 ↔ 4,500 HP / 600 點 ↔ 10,000 HP。會員兌換成功後，LINE POINTS 會自動入帳到 LINE，請會員到 LINE Wallet > LINE POINTS 確認。",
+          "description": "目前兌換比例（會依活動調整，請以平台實際顯示為準）：LINE POINTS 10 點 ↔ 1,500 HP / 30 點 ↔ 3,000 HP / 50 點 ↔ 3,800 HP / 100 點 ↔ 4,500 HP / 600 點 ↔ 10,000 HP。⚠️ 注意：兌換成功後 LINE POINTS 並非自動入帳，而是先以「序號票券」形式發到平台『我的票券 > LINE 票券』，會員需自行查看序號並到 points.line.me 輸入序號儲值後才會真正入帳（詳見下方 Step 3~8）。",
           "image": "",
+          "relatedFaqs": [
+            "PTS-001"
+          ]
+        },
+        {
+          "title": "Step 3：到「我的票券」領取 LINE POINTS 票券",
+          "description": "兌換成功後，LINE POINTS 不會直接進 LINE，而是先以「票券」形式發到平台『我的票券 > LINE 票券』。會員會看到一張「LINE POINTS 10點」票券，上面顯示 LP 兌換期限與此券領取日期。點『查看序號』進入下一步。",
+          "image": "images/screens/exchange-step3-my-tickets.png",
+          "relatedFaqs": [
+            "PTS-001"
+          ]
+        },
+        {
+          "title": "Step 4：查看序號與使用方式",
+          "description": "點開票券後可看到兌換序號（例：PO3KFSH6QDQHM9ZJ）與「點擊使用」按鈕。兩種使用方式 —— 方法一：直接點『點擊使用』→ 確認 LINE 帳號 → 完成入點；方法二：點序號旁複製鈕，開啟 https://points.line.me/pointcode 用 LINE 帳號登入後輸入。本券僅限 LINE 帳號註冊國家為台灣的用戶使用。",
+          "image": "images/screens/exchange-step4-serial.png",
+          "relatedFaqs": [
+            "PTS-001"
+          ]
+        },
+        {
+          "title": "Step 5：在 LINE POINTS 輸入序號儲值",
+          "description": "在 LINE POINTS『點數代碼』頁輸入序號（須區分大小寫、半形英數、不可有空格），同意注意事項後進行儲值。提醒：使用過的序號無法重複使用、序號有使用期限、遺失或遭竄改恕不補發。",
+          "image": "images/screens/exchange-step5-redeem-code.png",
+          "relatedFaqs": [
+            "PTS-001"
+          ]
+        },
+        {
+          "title": "Step 6：儲值成功，點數入帳",
+          "description": "儲值成功後會顯示「已成功將點數儲值到 LINE POINTS」，並即時顯示點數變化（例：1,874 → 1,884）。此時點數已正式入帳到會員的 LINE POINTS 帳戶。",
+          "image": "images/screens/exchange-step6-success.png",
+          "relatedFaqs": [
+            "PTS-001"
+          ]
+        },
+        {
+          "title": "Step 7：LINE 錢包跳出獲得通知",
+          "description": "入帳後，LINE 錢包（LINE 官方帳號）會主動推送一則通知「+10 LINE POINTS 已於點數代碼兌換獲得點數」，會員可直接點『確認剩餘點數』查看。",
+          "image": "images/screens/exchange-step7-wallet-notify.png",
+          "relatedFaqs": [
+            "PTS-001"
+          ]
+        },
+        {
+          "title": "Step 8：到 LINE POINTS 歷史記錄確認",
+          "description": "會員也可到 LINE Wallet > LINE POINTS > 歷史記錄 > 獲得記錄，看到一筆「點數代碼兌換 10P」紀錄，即代表本次兌換已完成入帳。客服遇到『換了 LINE POINTS 沒看到 / 要去哪確認』就引導到這裡。",
+          "image": "images/screens/exchange-step8-history.png",
           "relatedFaqs": [
             "PTS-001"
           ]
