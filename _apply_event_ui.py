@@ -133,6 +133,13 @@ if ".event-detail-block" not in s:
         "R7-css",
     )
 
+# R8 提示小字一律渲染，展開時交給 CSS 隱藏（修：upcoming 預設展開時提示消失、手動收合後也看不到）
+rep(
+    "    const hintHtml = isOpen ? '' : `<span class=\"event-card-hint\">點擊展開完整流程與 QA ${chevronSvg}</span>`;",
+    "    const hintHtml = `<span class=\"event-card-hint\">點擊展開完整流程與 QA ${chevronSvg}</span>`;",
+    "R8-hint-always",
+)
+
 if errors:
     print("MISSING_ANCHORS:" + ",".join(errors))
     sys.exit(2)
