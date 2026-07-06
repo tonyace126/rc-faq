@@ -332,6 +332,30 @@
   .event-period{font-size:12px;color:var(--muted);margin-bottom:10px;font-variant-numeric:tabular-nums}
   .event-summary-text{font-size:13px;color:var(--text);margin:0;line-height:1.6}
 
+  /* ===== 活動說明結構化區塊 ===== */
+  .event-detail{padding:16px 18px 2px;display:flex;flex-direction:column;gap:12px}
+  .event-detail-block{--acc:#888;border:1px solid var(--border);border-left:4px solid var(--acc);
+    border-radius:10px;padding:12px 15px;background:#fff}
+  .event-detail-block.background{--acc:#8E44AD;background:#FBF7FD}
+  .event-detail-block.timeline{--acc:#2E86DE;background:#F2F8FE}
+  .event-detail-block.reward{--acc:#27AE60;background:#F1FAF4}
+  .event-detail-block.draw{--acc:#E8850C;background:#FEF8EF}
+  .event-detail-block.note{--acc:#C8102E;background:#FDF3F4}
+  .event-detail-h{display:flex;align-items:center;gap:7px;font-weight:800;font-size:14px;
+    margin:0 0 9px;color:var(--acc);letter-spacing:.3px}
+  .event-detail-h .ic{font-size:16px}
+  .event-detail-block ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+  .event-detail-block li{position:relative;padding:1px 0 1px 16px;font-size:13.5px;
+    line-height:1.6;color:#2a2a2a}
+  .event-detail-block li::before{content:'';position:absolute;left:2px;top:9px;width:6px;height:6px;
+    border-radius:50%;background:var(--acc);opacity:.5}
+  .event-detail-block li.has-chip{padding-left:0;display:flex;align-items:flex-start;gap:9px}
+  .event-detail-block li.has-chip::before{display:none}
+  .event-detail-block .dchip{flex-shrink:0;min-width:54px;padding:2px 9px;border-radius:6px;
+    background:var(--acc);color:#fff;font-size:12px;font-weight:700;text-align:center;
+    font-variant-numeric:tabular-nums;margin-top:1px}
+  .event-detail-block p{margin:0;font-size:13.5px;line-height:1.7;color:#2a2a2a}
+
   .event-card-body{padding:0 18px 20px;border-top:1px solid var(--border)}
   .event-section-h{font-size:13px;font-weight:700;color:var(--text);
     margin:18px 0 10px;display:flex;align-items:center;gap:8px}
@@ -494,7 +518,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="qa">📋 QA 查詢</button>
     <button class="tab" data-tab="flows">📱 平台頁面流程</button>
-    <button class="tab" data-tab="event" id="tab-event" hidden>🎫 發票加碼活動</button>
+    <button class="tab" data-tab="event" id="tab-event" hidden>🎫 會員平台活動</button>
   </div>
 </header>
 
@@ -1139,13 +1163,37 @@
     bindEventCardEvents();
   }
 
+  function renderDetailSections(e){
+    if(!e.detailSections || !e.detailSections.length) return '';
+    const blocks = e.detailSections.map(sec => {
+      let inner;
+      if(sec.text){
+        inner = `<p>${escapeHtml(sec.text)}</p>`;
+      } else {
+        inner = `<ul>${(sec.items || []).map(it => {
+          const i = it.indexOf('｜');
+          if(i > -1){
+            return `<li class="has-chip"><span class="dchip">${escapeHtml(it.slice(0, i))}</span><span>${escapeHtml(it.slice(i + 1))}</span></li>`;
+          }
+          return `<li>${escapeHtml(it)}</li>`;
+        }).join('')}</ul>`;
+      }
+      return `<div class="event-detail-block ${escapeHtml(sec.type || '')}">
+        <div class="event-detail-h"><span class="ic">${escapeHtml(sec.icon || '')}</span>${escapeHtml(sec.label || '')}</div>
+        ${inner}
+      </div>`;
+    }).join('');
+    return `<div class="event-detail">${blocks}</div>`;
+  }
+
   function renderEventCard(e, status){
     const labels = {active:'進行中', upcoming:'即將開始', expired:'已結束'};
-    const isOpen = (status === 'active');
+    const isOpen = (status !== 'expired');
     const period = `${e.startDate || ''}${e.endDate ? ' ~ ' + e.endDate : ''}`;
     const banner = e.bannerImage
       ? `<img class="event-card-banner" src="${escapeHtml(e.bannerImage)}" data-full="${escapeHtml(e.bannerImage)}" data-cap="${escapeHtml(e.name)}" alt="${escapeHtml(e.name)}" loading="lazy">`
       : '';
+    const detailHtml = renderDetailSections(e);
 
     // 對應 flow + faqs
     const flow = (SCREENS.flows || []).find(f => f.id === e.flowId);
@@ -1187,12 +1235,13 @@
           <span class="event-status-tag ${status}">${labels[status]}</span>
           <h4>${escapeHtml(e.name)}</h4>
           <div class="event-period">${escapeHtml(period)}</div>
-          <p class="event-summary-text">${escapeHtml(e.summary || '')}</p>
+          <p class="event-summary-text">${escapeHtml(e.tagline || e.summary || '')}</p>
           ${hintHtml}
         </div>
         <span class="event-card-toggle" aria-hidden="true">${chevronSvg}</span>
       </summary>
       <div class="event-card-body">
+        ${detailHtml}
         ${flowHtml}
         ${faqsHtml}
       </div>
