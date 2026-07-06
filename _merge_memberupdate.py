@@ -28,6 +28,7 @@ meta["events"].append({
     "shortName": "會員資料更新活動",
     "startDate": "2026-07-10",
     "endDate": "2026-07-17",
+    "bannerImage": "images/screens/memberupdate-2606-banner.jpg",
     "summary": "活動期間 7/10–7/17，針對姓名、手機、Email 任一欄位未填寫的舊會員，透過 LINE 分兩波推播（7/10 首波、7/15 二波催促未讀未更新者）驅動補填資料：完成更新即獲 Health Point 500 點（系統即時入帳），並自動取得抽獎資格（系統於 2026/7/21 電腦隨機抽出 50 名幸運兒，全程錄影存證，2026/7/24 以 LINE 通知中獎會員並公布名單；贈品為「FHN 皇家理想體態成貓F32 2KG」×30包／「SHN 皇家小型成犬MNA 2KG」×20包其一；中獎表單 2026/7/31 截止；飼料預計 2026/8/31 前陸續寄出）。",
     "faqIds": FAQ_IDS,
 })
