@@ -24,7 +24,7 @@ FAQ_IDS = [f"CAM-1{n:02d}" for n in range(1, 13)]  # CAM-101 ~ CAM-112
 # 活動期間依流程簡報 slide 1/4：2026/7/10-7/17（首波推播7/10、二波7/15、活動截止7/17）
 meta["events"].append({
     "id": "MEMBERUPDATE-2606",
-    "name": "2606 會員資料更新活動 (7/10-7/17)",
+    "name": "7/10-7/17 會員資料更新活動",
     "shortName": "會員資料更新活動",
     "startDate": "2026-07-10",
     "endDate": "2026-07-17",
