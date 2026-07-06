@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head><meta charset="UTF-8"><title>rc-faq 施工日誌</title></head>
+<body>
+<h1>rc-faq 施工日誌</h1>
+
+<p><strong>TL;DR 給 Tony：</strong>
+接手時發現 <code>_merge_memberupdate.py</code>（前一輪 session 產出）內容有大量中文字元污染（獸/皆/寥/恩/檸/宵/隐/饑/盡/逸/惠/届 等替換錯字），且抽獎「7/21 全程錄影存證」等細節在原始簡報裡查無依據，疑似同一輪污染順帶編造。已對照
+<code>~/Downloads/皇家寵物_會員資料更新活動_流程簡報.pptx</code>
+逐條校正，並依 Tony 現場確認的品名/抽獎機制二次修正，目前
+<code>data/faqs.json</code> 的 CAM-101~112 與 <code>MEMBERUPDATE-2606</code>
+事件卡已定稿，仍未 commit/push（等 Tony 最後拍板）。
+</p>
+
+<h2>設計決定</h2>
+<ul>
+  <li>活動期間採「7/10-7/17」（流程簡報 slide 1/3/4 三處一致：首波推播 7/10、二波 7/15、活動截止 7/17）——已由 Tony 確認採用此日期，非報價單的 7/10-7/31。</li>
+  <li>CAM-104 抽獎日期／錄影：Tony 確認「7/21 抽獎（全程錄影存證）、7/24 以 LINE 通知中獎」屬實 — 這點原本我以簡報/報價單都查無依據為由整段拿掉，是判斷錯誤，已依 Tony 提供的正確資訊補回。</li>
+  <li>CAM-107 抽獎機制：Tony 確認為「系統從符合資格會員中隨機抽出 50 名幸運兒」，<strong>不是</strong>依寵物類別分組抽獎（我原本因誤讀簡報的貓 30／狗 20 包裝分佈畫成分組抽獎，已依 Tony 更正改回單一隨機抽獎）。</li>
+  <li>CAM-107 商品名稱：Tony 確認正式品名為「FHN 皇家理想體態成貓F32 2KG」×30包／「SHN 皇家小型成犬MNA 2KG」×20包，已寫入 FAQ 與事件卡 summary。</li>
+</ul>
+
+<h2>偏離之處</h2>
+<ul>
+  <li>無（品名與抽獎機制已由 Tony 現場確認，不再是待驗證的推斷）。</li>
+</ul>
+
+<h2>折衷考量</h2>
+<ul>
+  <li>曾發現報價單 <code>RC 26 會員資料更新活動_製作報價單_20260519.xlsx.pdf</code>（5/19，較晚）寫「活動期間(7/10-7/31)」，與流程簡報（5/13）衝突，已請 Tony 拍板採用流程簡報的 7/10-7/17。</li>
+</ul>
+
+<h2>未決問題</h2>
+<ul>
+  <li>無殘留問題。內容已完成，等 Tony 最終確認要 commit/push 上線。</li>
+</ul>
+
+</body>
+</html>
