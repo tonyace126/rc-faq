@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2026 台北寵物用品展 · 現場情境互動教學</title>
+<style>
+  :root{
+    --bg:#F6F7F9; --card:#fff; --text:#111827; --muted:#6B7280;
+    --border:#E5E7EB; --primary:#C8102E; --primary-soft:#FEE2E2;
+    --accent:#E84393; --accent-soft:#FCE4F0; --warn:#B45309; --warn-bg:#FEF3C7;
+    --radius:16px; --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.06);
+    --sans:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;
+    -webkit-font-smoothing:antialiased;padding:0 0 28px}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+
+  header.hd{padding:22px 16px 14px;text-align:center}
+  .hd h1{margin:0;font-size:21px;font-weight:800;letter-spacing:.3px}
+  .hd .sub{color:var(--muted);font-size:13.5px;margin-top:4px}
+  .hd .date-pill{display:inline-block;margin-top:9px;background:var(--primary);color:#fff;
+    font-size:12.5px;font-weight:700;padding:4px 13px;border-radius:999px}
+
+  .scn-tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 4px}
+  .scn-tab{border:1.5px solid var(--border);background:var(--card);border-radius:12px;
+    padding:9px 14px;font-size:14px;font-weight:700;color:var(--text);cursor:pointer;
+    display:flex;align-items:center;gap:7px;transition:.15s;white-space:nowrap}
+  .scn-tab .em{font-size:17px}
+  .scn-tab:hover{border-color:var(--accent)}
+  .scn-tab.active{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 4px 12px rgba(232,67,147,.3)}
+  .scn-desc{text-align:center;color:var(--muted);font-size:13px;margin:10px 0 2px;min-height:20px}
+
+  .stage{display:flex;gap:30px;align-items:center;justify-content:center;
+    margin-top:14px;flex-wrap:wrap}
+
+  .phone-col{flex:0 0 auto;display:flex;flex-direction:column;align-items:center}
+  .phone{position:relative;width:296px;max-width:82vw;padding:11px;border-radius:42px;
+    background:linear-gradient(145deg,#2a2a2e,#0f0f12);
+    box-shadow:0 0 0 2px #3a3a40,0 18px 40px rgba(0,0,0,.28);cursor:pointer;user-select:none}
+  .phone::after{content:"";position:absolute;top:8px;right:-3px;width:3px;height:60px;
+    background:#3a3a40;border-radius:0 3px 3px 0}
+  .notch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:90px;height:22px;
+    background:#0f0f12;border-radius:0 0 14px 14px;z-index:3}
+  .screen{position:relative;border-radius:32px;overflow:hidden;background:#fff;
+    aspect-ratio:600/1298;width:100%}
+  .screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;
+    opacity:1;transition:opacity .22s ease}
+  .screen.fading img{opacity:0}
+  .tap-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+    background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:3px 10px;border-radius:999px;
+    z-index:4;pointer-events:none;opacity:.9}
+  .dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px;max-width:300px}
+  .dot{width:8px;height:8px;border-radius:50%;background:#d4d4d8;cursor:pointer;transition:.15s}
+  .dot.active{background:var(--accent);transform:scale(1.25)}
+
+  .info{flex:1 1 320px;max-width:430px;min-width:280px}
+  .step-no{font-size:12.5px;font-weight:800;color:var(--accent);letter-spacing:.5px}
+  .step-title{font-size:20px;font-weight:800;margin:3px 0 10px}
+  .step-action{font-size:15px;color:#374151;background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);padding:13px 15px;box-shadow:var(--shadow)}
+  .cs-note{margin-top:12px;background:var(--warn-bg);border:1px solid #FCD34D;border-radius:var(--radius);
+    padding:12px 14px;font-size:14px;color:#7c4a03}
+  .cs-note .lbl{font-weight:800;color:var(--warn);display:block;margin-bottom:2px;font-size:12.5px}
+
+  .nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:22px}
+  .nav button{border:1.5px solid var(--border);background:var(--card);border-radius:11px;
+    padding:10px 20px;font-size:15px;font-weight:700;cursor:pointer;color:var(--text);transition:.15s;
+    font-family:inherit}
+  .nav button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+  .nav button:disabled{opacity:.4;cursor:default}
+  .nav .counter{font-size:14px;color:var(--muted);font-weight:700;min-width:74px;text-align:center}
+
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:24px;line-height:1.7}
+
+  @media(max-width:760px){
+    .stage{flex-direction:column;gap:18px}
+    .info{max-width:92vw;width:100%}
+    .step-title{font-size:18px}
+    .hd h1{font-size:18px}
+  }
+</style>
+</head>
+<body>
+<header class="hd">
+  <h1>🐾 2026 台北寵物用品展 · 現場情境教學</h1>
+  <div class="sub">客服人員專用 · 跟著手機畫面一步步看會員怎麼操作</div>
+  <div class="date-pill">展期 2026 / 7 / 3 – 7 / 6 · 現場活動</div>
+</header>
+
+<div class="wrap">
+  <div class="scn-tabs" id="scnTabs"></div>
+  <div class="scn-desc" id="scnDesc"></div>
+
+  <div class="stage">
+    <div class="phone-col">
+      <div class="phone" id="phone" title="點一下看下一步">
+        <div class="notch"></div>
+        <div class="screen" id="screen">
+          <img id="shot" alt="操作畫面">
+          <div class="tap-hint">點畫面看下一步 ›</div>
+        </div>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+
+    <div class="info">
+      <div class="step-no" id="stepNo"></div>
+      <div class="step-title" id="stepTitle"></div>
+      <div class="step-action" id="stepAction"></div>
+      <div class="cs-note" id="csNote" style="display:none">
+        <span class="lbl">💡 客服提醒</span>
+        <span id="csText"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button id="prevBtn">‹ 上一步</button>
+    <span class="counter" id="counter"></span>
+    <button id="nextBtn">下一步 ›</button>
+  </div>
+
+  <div class="foot">
+    畫面為情境示範錄影擷取 · 票券一律由現場工作人員核銷,會員勿自行按「前往核銷 / 立即核銷」<br>
+    詳細話術請見客服查詢中心「寵物展現場」相關 QA
+  </div>
+</div>
+
+<script>
+const SCENARIOS = [
+  {
+    id:"newfriend", name:"新好友", icon:"🆕",
+    desc:"全新會員 — 第一次加入,現場掃碼註冊 → 自動入會禮 + 領券",
+    steps:[
+      {img:"images/petfair/newfriend/s01.jpg", title:"掃描現場 QR code",
+       action:"用 LINE 掃描攤位海報上的 QR code,加入「法國皇家 Royal Canin」官方帳號為好友。",
+       cs:"提醒會員確認加入的是「法國皇家」本人,別被 LINE 自動推薦的其他帳號干擾。"},
+      {img:"images/petfair/newfriend/s02.jpg", title:"填寫註冊問卷",
+       action:"點官方帳號傳來的活動連結進入問卷,填基本資料(性別、地址等),並勾選「我已閱讀並同意 會員條款及細則」(必勾)。",
+       cs:"地址會用於寄送贈品,請會員確實填寫。"},
+      {img:"images/petfair/newfriend/s03.jpg", title:"選擇飼養的寵物",
+       action:"Q3「您目前 / 將會飼養的寵物是?」選 狗 / 貓 / 都有 / 尚未養寵物,接著填寫寵物品種與年紀。",
+       cs:""},
+      {img:"images/petfair/newfriend/s04.jpg", title:"完成註冊,成為會員",
+       action:"看到「感謝您的填寫,您現在已經是『毛孩健康專寵計劃』的會員」,按「進入主頁面」。",
+       cs:""},
+      {img:"images/petfair/newfriend/s05.jpg", title:"確認寵物資料",
+       action:"在「會員面板 > 寵物資訊」可看到剛填的寵物(例:博美犬)。要再加一隻可按紅色「新增毛孩」。",
+       cs:"若年紀 / 體重沒填或填錯,點右上鉛筆圖示即可修改。"},
+      {img:"images/petfair/newfriend/s06.jpg", title:"入會禮點數自動入帳",
+       action:"在「點數紀錄」可看到系統自動發的「2026台北寵物展-新會員入會禮 +500」點。",
+       cs:""},
+      {img:"images/petfair/newfriend/s07.jpg", title:"領取展場兌換券",
+       action:"在「會員面板 > 我的票券 > 活動票券」會有兩張券:「幼貓幼犬禮盒兌換券」與「試吃包兌換券」,使用期限至 2026-07-06。",
+       cs:"❗ 票券一律由現場工作人員操作核銷,會員切勿自己按「前往核銷 / 立即核銷」(一經核銷立即失效、不可再使用)。"},
+      {img:"images/petfair/newfriend/s08.jpg", title:"核銷成功",
+       action:"工作人員核銷後顯示「票券已核銷,您的票券已核銷成功,感謝您的參與」。",
+       cs:""},
+    ]
+  },
+  {
+    id:"oldmember", name:"舊會員", icon:"👤",
+    desc:"已經是會員 — 免重新註冊,直接領券(含現場新增毛孩)",
+    steps:[
+      {img:"images/petfair/oldmember/s01.jpg", title:"點開活動連結 / 掃碼",
+       action:"舊會員用 LINE 掃現場 QR code,或點官方帳號的活動訊息連結進入。", cs:""},
+      {img:"images/petfair/oldmember/s02.jpg", title:"系統自動辨識會員",
+       action:"系統認出是既有會員,直接進入會員主頁(顯示暱稱、Health Point、加入時間),不需重新註冊。",
+       cs:"舊會員免再填問卷 — 這是與新好友最大的差別。"},
+      {img:"images/petfair/oldmember/s03.jpg", title:"領取活動兌換禮",
+       action:"跳出「這是送給你的活動兌換禮!」「展場限定活動兌換券」,按「確定」領券。",
+       cs:"若不小心按到「取消」,可到「會員面板 > 我的票券」查看券是否已入帳。"},
+      {img:"images/petfair/oldmember/s04.jpg", title:"(可選)現場新增毛孩",
+       action:"在「會員面板 > 寵物資訊」可看到既有寵物。要新增就按紅色「新增毛孩」,填品種、「毛孩的年紀*」(歲+月)、「毛孩的體重*」(預設 1KG 記得改成實際),按「新增」。",
+       cs:"年紀、體重為必填(*);送出後出現「資料處理中,請勿關閉頁面」,請耐心等候、不要關頁。"},
+      {img:"images/petfair/oldmember/s05.jpg", title:"票券核銷:幼貓幼犬禮盒券",
+       action:"現場由工作人員核銷「幼貓幼犬禮盒兌換券」(狀態「可使用」→ 立即核銷)。",
+       cs:"❗ 務必由工作人員操作,一經核銷立即失效。"},
+      {img:"images/petfair/oldmember/s06.jpg", title:"核銷完成",
+       action:"兩張券核銷後狀態顯示「已使用」,完成。", cs:""},
+    ]
+  },
+  {
+    id:"blocked", name:"封鎖好友", icon:"🔓",
+    desc:"曾封鎖官方帳號 — 掃碼沒反應 / 收不到訊息,要先解除封鎖",
+    steps:[
+      {img:"images/petfair/blocked/s01.jpg", title:"判斷:會員封鎖了官方帳號",
+       action:"會員掃碼沒反應 / 收不到訊息。打開與「法國皇家 Royal Canin」的聊天室,最底會顯示「該用戶已被封鎖」。",
+       cs:"聊天室底端的「該用戶已被封鎖」是判斷封鎖狀態最明確的訊號。"},
+      {img:"images/petfair/blocked/s02.jpg", title:"解除封鎖",
+       action:"點聊天室上方的「官方帳號名稱」進入主頁,點最上方那排按鈕最右邊的「解除封鎖」。",
+       cs:"「解除封鎖」在官方帳號「主頁」、不在聊天室裡 — 會員常找不到,要引導他先點帳號名稱進主頁。"},
+      {img:"images/petfair/blocked/s03.jpg", title:"解封後重新掃碼",
+       action:"解除封鎖後,回到現場 QR code 重新掃描、或重新點活動連結。", cs:""},
+      {img:"images/petfair/blocked/s04.jpg", title:"領取活動兌換禮",
+       action:"正常跳出「這是送給你的活動兌換禮!」,按「確定」領券。", cs:""},
+      {img:"images/petfair/blocked/s05.jpg", title:"票券核銷:幼貓幼犬禮盒券",
+       action:"由工作人員核銷「幼貓幼犬禮盒兌換券」。",
+       cs:"❗ 務必由工作人員操作,一經核銷立即失效。"},
+      {img:"images/petfair/blocked/s06.jpg", title:"票券核銷:試吃包券",
+       action:"再核銷「試吃包兌換券」,完成。", cs:""},
+    ]
+  },
+  {
+    id:"universal", name:"萬用 QRcode", icon:"🎫",
+    desc:"已是會員但帳號沒有寵物資料 — 改用現場「萬用 QRcode」",
+    steps:[
+      {img:"images/petfair/universal/s01.jpg", title:"情況:已是會員但帳號無寵物",
+       action:"對象是「已是會員、但帳號內沒有任何寵物資料」者。先在會員中心確認看得到 Health Point 與 UID(確認是會員)。",
+       cs:"走需要寵物資料的一般流程可能卡關,這時改用現場「萬用 QRcode」。"},
+      {img:"images/petfair/universal/s02.jpg", title:"掃萬用 QRcode → 領活動兌換禮",
+       action:"請會員改掃現場的「萬用 QRcode」,掃描後跳出「這是送給你的活動兌換禮!」,按「確定」領券。",
+       cs:"萬用 QRcode 是現場共用的通用入口碼,不綁特定寵物,讓無寵物的會員也能直接領券。"},
+      {img:"images/petfair/universal/s03.jpg", title:"票券:幼貓幼犬禮盒券",
+       action:"「我的票券」出現「幼貓幼犬禮盒兌換券」,狀態「可使用」,由工作人員核銷。",
+       cs:"❗ 務必由工作人員操作,一經核銷立即失效。"},
+      {img:"images/petfair/universal/s04.jpg", title:"核銷完成",
+       action:"核銷後票券顯示「已使用」。可提醒會員之後到「會員面板 > 寵物資訊 > 新增毛孩」把寵物資料補上,日後累積點數更方便。",
+       cs:""},
+    ]
+  },
+];
+
+let si = 0, pi = 0;
+const $ = s => document.querySelector(s);
+const scnTabs=$("#scnTabs"), scnDesc=$("#scnDesc"), shot=$("#shot"), screen=$("#screen"),
+      dots=$("#dots"), stepNo=$("#stepNo"), stepTitle=$("#stepTitle"), stepAction=$("#stepAction"),
+      csNote=$("#csNote"), csText=$("#csText"), counter=$("#counter"),
+      prevBtn=$("#prevBtn"), nextBtn=$("#nextBtn");
+
+function buildTabs(){
+  scnTabs.innerHTML="";
+  SCENARIOS.forEach((s,i)=>{
+    const b=document.createElement("button");
+    b.className="scn-tab"+(i===si?" active":"");
+    b.innerHTML=`<span class="em">${s.icon}</span>${s.name}`;
+    b.onclick=()=>{si=i;pi=0;render();};
+    scnTabs.appendChild(b);
+  });
+}
+function buildDots(){
+  dots.innerHTML="";
+  SCENARIOS[si].steps.forEach((_,i)=>{
+    const d=document.createElement("span");
+    d.className="dot"+(i===pi?" active":"");
+    d.onclick=()=>{pi=i;render();};
+    dots.appendChild(d);
+  });
+}
+function render(){
+  const scn=SCENARIOS[si], step=scn.steps[pi];
+  [...scnTabs.children].forEach((b,i)=>b.classList.toggle("active",i===si));
+  scnDesc.textContent=scn.desc;
+  buildDots();
+  screen.classList.add("fading");
+  setTimeout(()=>{shot.src=step.img;shot.alt=step.title;screen.classList.remove("fading");},120);
+  stepNo.textContent=`${scn.icon} ${scn.name}　第 ${pi+1} / ${scn.steps.length} 步`;
+  stepTitle.textContent=step.title;
+  stepAction.textContent=step.action;
+  if(step.cs){csNote.style.display="";csText.textContent=step.cs;} else {csNote.style.display="none";}
+  counter.textContent=`${pi+1} / ${scn.steps.length}`;
+  prevBtn.disabled=(pi===0);
+  nextBtn.disabled=(pi===scn.steps.length-1);
+  reportHeight();
+}
+function go(d){
+  const n=SCENARIOS[si].steps.length;
+  pi=Math.min(n-1,Math.max(0,pi+d));
+  render();
+}
+prevBtn.onclick=()=>go(-1);
+nextBtn.onclick=()=>go(1);
+$("#phone").onclick=()=>{ if(pi<SCENARIOS[si].steps.length-1) go(1); else go(-pi); };
+document.addEventListener("keydown",e=>{ if(e.key==="ArrowRight")go(1); if(e.key==="ArrowLeft")go(-1); });
+let tx=null;
+screen.addEventListener("touchstart",e=>tx=e.touches[0].clientX,{passive:true});
+screen.addEventListener("touchend",e=>{
+  if(tx===null)return;
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>40)go(dx<0?1:-1);
+  tx=null;
+});
+function reportHeight(){
+  try{ parent.postMessage({type:"petfair-height",height:document.body.scrollHeight},"*"); }catch(e){}
+}
+window.addEventListener("load",reportHeight);
+window.addEventListener("resize",reportHeight);
+
+buildTabs();
+render();
+</script>
+</body>
+</html>

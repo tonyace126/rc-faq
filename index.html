@@ -518,6 +518,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="qa">📋 QA 查詢</button>
     <button class="tab" data-tab="flows">📱 平台頁面流程</button>
+    <button class="tab" data-tab="petfair">🐾 寵物展活動</button>
     <button class="tab" data-tab="event" id="tab-event" hidden>🎫 會員平台活動</button>
   </div>
 </header>
@@ -562,6 +563,12 @@
     <div id="flows-flow-view"></div>
     <div id="flows-library-view" style="display:none"></div>
   </main>
+</div>
+
+<!-- ============== TAB: PETFAIR ============== -->
+<div class="panel" id="panel-petfair">
+  <iframe id="petfairFrame" src="petfair-guide.html" title="2026 寵物展現場情境教學"
+    style="width:100%;border:0;display:block;min-height:900px" scrolling="no"></iframe>
 </div>
 
 <!-- ============== TAB: EVENT ============== -->
@@ -740,6 +747,12 @@
   // ============ TABS ============
   function initTabs(){
     $$('.tab').forEach(b => b.addEventListener('click', () => activateTab(b.dataset.tab)));
+    window.addEventListener('message', e => {
+      if(e.data && e.data.type === 'petfair-height'){
+        const f = document.getElementById('petfairFrame');
+        if(f) f.style.height = (e.data.height + 4) + 'px';
+      }
+    });
     $$('.mode-toggle button').forEach(b => b.addEventListener('click', () => {
       flowMode = b.dataset.mode;
       $$('.mode-toggle button').forEach(x => x.classList.toggle('active', x === b));
@@ -774,6 +787,8 @@
       renderFlowDetail();
     } else if(h === 'event' || h === 'events'){
       activateTab('event');
+    } else if(h === 'petfair'){
+      activateTab('petfair');
     }
   }
 
