@@ -511,7 +511,9 @@
             "images/screens/pawer-2610/02-home-tasks-1.jpg",
             "images/screens/pawer-2610/03-home-tasks-2.jpg"
           ],
-          "relatedFaqs": []
+          "relatedFaqs": [
+            "PAW-005"
+          ]
         },
         {
           "title": "Step 2：活動辦法彈窗",
@@ -550,7 +552,9 @@
             "images/screens/pawer-2610/22-privacy-2.jpg",
             "images/screens/pawer-2610/23-upload-done.jpg"
           ],
-          "relatedFaqs": []
+          "relatedFaqs": [
+            "PAW-008"
+          ]
         },
         {
           "title": "Step 5：選擇能量小語",
@@ -562,7 +566,9 @@
           "title": "Step 6：小卡結果頁",
           "description": "顯示「你的毛孩能量小卡已準備好！」，下方按鈕導向：\n・下載毛孩能量小卡 → 另開視窗下載（Step 7）\n・分享毛孩能量小卡給好友 → 開啟 LINE 好友分享選單（Step 8，任務二）\n・立即加入會員 → 法國皇家集點平台（Step 9）\n・再玩一次 → 回到「上傳毛孩照片」\n・查看點數任務 → 首頁點數任務區",
           "image": "images/screens/pawer-2610/25-result.jpg",
-          "relatedFaqs": []
+          "relatedFaqs": [
+            "PAW-001"
+          ]
         },
         {
           "title": "Step 7：下載毛孩能量小卡",
@@ -577,13 +583,18 @@
             "images/screens/pawer-2610/27-share-card-picker.jpg",
             "images/screens/pawer-2610/31-share-card-received.jpg"
           ],
-          "relatedFaqs": []
+          "relatedFaqs": [
+            "PAW-006"
+          ]
         },
         {
           "title": "Step 9：立即加入會員",
           "description": "點「立即加入會員」會導向法國皇家集點平台（法國皇家毛孩健康專寵計劃）加入會員。HP 與贈品須完成會員登錄才能領取。（截圖中的會員名稱已馬賽克）",
           "image": "images/screens/pawer-2610/28-join-member.jpg",
-          "relatedFaqs": []
+          "relatedFaqs": [
+            "PAW-003",
+            "PAW-004"
+          ]
         },
         {
           "title": "Step 10：點數任務進度與邀請好友（任務三）",
@@ -593,7 +604,10 @@
             "images/screens/pawer-2610/30-tasks-done-2.jpg",
             "images/screens/pawer-2610/32-share-invite-link.jpg"
           ],
-          "relatedFaqs": []
+          "relatedFaqs": [
+            "PAW-002",
+            "PAW-006"
+          ]
         }
       ]
     }
