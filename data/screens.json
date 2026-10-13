@@ -496,6 +496,106 @@
           "relatedFaqs": []
         }
       ]
+    },
+    {
+      "id": "FLOW-PAWER-2610",
+      "category": "campaign",
+      "name": "2026/10/12-11/08 毛孩能量 PAWER 活動",
+      "description": "會員從活動首頁登入 LINE、上傳毛孩照片、選擇能量小語，生成「毛孩能量小卡」後可下載、分享給好友或加入會員；首頁點數任務區顯示三大任務進度。客服收到會員截圖時可對照這條流程找出所在頁面。",
+      "steps": [
+        {
+          "title": "Step 1：活動首頁與點數任務（不需登入）",
+          "description": "首頁不需登入即可瀏覽主視覺、活動辦法與三大點數任務。點「登入 Line 後製作毛孩能量小卡」或「登入查看點數任務」才會導向 LINE Login。\n\n注意：在一般瀏覽器開啟時，任務三會顯示「目前的環境不支援分享功能，請在 LINE App 內開啟本頁」，請會員改從 LINE 內開啟。",
+          "images": [
+            "images/screens/pawer-2610/01-home.jpg",
+            "images/screens/pawer-2610/02-home-tasks-1.jpg",
+            "images/screens/pawer-2610/03-home-tasks-2.jpg"
+          ],
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 2：活動辦法彈窗",
+          "description": "首頁「活動辦法」點開為彈窗，共九大段：壹 活動資訊、貳 參加資格、參 參加方式（含好友計數說明）、肆 獎項與資格、伍 得獎通知與領獎（含稅務規定）、陸 參加者上傳內容規範、柒 內容使用授權、捌 個人資料保護、玖 資格取消與爭議處理。會員問規則時可直接引用對應段落。",
+          "images": [
+            "images/screens/pawer-2610/04-rules-01.jpg",
+            "images/screens/pawer-2610/05-rules-02.jpg",
+            "images/screens/pawer-2610/06-rules-03.jpg",
+            "images/screens/pawer-2610/07-rules-04.jpg",
+            "images/screens/pawer-2610/08-rules-05.jpg",
+            "images/screens/pawer-2610/09-rules-06.jpg",
+            "images/screens/pawer-2610/10-rules-07.jpg",
+            "images/screens/pawer-2610/11-rules-08.jpg",
+            "images/screens/pawer-2610/12-rules-09.jpg",
+            "images/screens/pawer-2610/13-rules-10.jpg",
+            "images/screens/pawer-2610/14-rules-11.jpg",
+            "images/screens/pawer-2610/15-rules-12.jpg",
+            "images/screens/pawer-2610/16-rules-13.jpg",
+            "images/screens/pawer-2610/17-rules-14.jpg",
+            "images/screens/pawer-2610/18-rules-15.jpg"
+          ],
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 3：LINE Login 授權",
+          "description": "點登入按鈕後導向 LINE 登入授權頁（手機 LINE 內會直接授權；電腦瀏覽器會出現帳號密碼 / 行動條碼登入畫面）。只需 LINE 授權，不需加入官方帳號好友。",
+          "image": "images/screens/pawer-2610/19-line-login.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 4：上傳毛孩照片＋同意隱私權政策",
+          "description": "點擊或拖曳上傳照片，支援 JPG / PNG；上傳後點圖片可重新替換。須勾選「我已閱讀並同意隱私政策」，「下一步」才會亮起。隱私權政策為「毛孩能量 PAWER」個人資料蒐集同意聲明（利用期間至活動結束後 1 年）。",
+          "images": [
+            "images/screens/pawer-2610/20-upload-empty.jpg",
+            "images/screens/pawer-2610/21-privacy-1.jpg",
+            "images/screens/pawer-2610/22-privacy-2.jpg",
+            "images/screens/pawer-2610/23-upload-done.jpg"
+          ],
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 5：選擇能量小語",
+          "description": "畫面顯示 4 句能量小語範本（共 10 句隨機出現），最後一欄可自行輸入想對自己或毛孩說的話（20 字內）。選好後按「下一步」生成小卡。",
+          "image": "images/screens/pawer-2610/24-choose-message.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 6：小卡結果頁",
+          "description": "顯示「你的毛孩能量小卡已準備好！」，下方按鈕導向：\n・下載毛孩能量小卡 → 另開視窗下載（Step 7）\n・分享毛孩能量小卡給好友 → 開啟 LINE 好友分享選單（Step 8，任務二）\n・立即加入會員 → 法國皇家集點平台（Step 9）\n・再玩一次 → 回到「上傳毛孩照片」\n・查看點數任務 → 首頁點數任務區",
+          "image": "images/screens/pawer-2610/25-result.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 7：下載毛孩能量小卡",
+          "description": "結果頁點「下載毛孩能量小卡」會另開視窗顯示小卡，按「點我下載」存到手機。",
+          "image": "images/screens/pawer-2610/26-download.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 8：分享小卡給好友（任務二）",
+          "description": "結果頁點「分享毛孩能量小卡給好友」會開啟 LINE 分享選單，可選群組、好友或聊天室。好友收到的是小卡圖文訊息，標題「〔分享者名稱〕毛孩能量已送達，立即補充今日份 Pawer！」，點「立即製作」即可進入活動。（截圖中的好友名單與人名已馬賽克）",
+          "images": [
+            "images/screens/pawer-2610/27-share-card-picker.jpg",
+            "images/screens/pawer-2610/31-share-card-received.jpg"
+          ],
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 9：立即加入會員",
+          "description": "點「立即加入會員」會導向法國皇家集點平台（法國皇家毛孩健康專寵計劃）加入會員。HP 與贈品須完成會員登錄才能領取。（截圖中的會員名稱已馬賽克）",
+          "image": "images/screens/pawer-2610/28-join-member.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "Step 10：點數任務進度與邀請好友（任務三）",
+          "description": "回到首頁點數任務區可看到累積點數與各任務進度，完成的任務按鈕變成灰色「已完成」。任務三每成功邀請 1 位好友會打勾 +400。點「分享活動，邀請好友」送出的是帶分享者代碼（shareCode）的活動首頁連結，不是小卡圖；好友須透過此連結完成小卡製作並成為會員才算成功邀請。（截圖中的 shareCode 已馬賽克）",
+          "images": [
+            "images/screens/pawer-2610/29-tasks-done-1.jpg",
+            "images/screens/pawer-2610/30-tasks-done-2.jpg",
+            "images/screens/pawer-2610/32-share-invite-link.jpg"
+          ],
+          "relatedFaqs": []
+        }
+      ]
     }
   ]
 }
