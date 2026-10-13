@@ -98,7 +98,9 @@
           "FAIR-008",
           "FAIR-009",
           "FAIR-010"
-        ]
+        ],
+        "guideTab": "petfair",
+        "guideLabel": "寵物展現場情境教學"
       },
       {
         "id": "MEMBERUPDATE-2606",
