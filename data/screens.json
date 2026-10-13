@@ -610,6 +610,87 @@
           ]
         }
       ]
+    },
+    {
+      "id": "FLOW-TYPTTV-2026",
+      "category": "exchange",
+      "name": "2026/10/01-11/30 健檢折價券領取與使用（TYPTTV）",
+      "description": "會員從 LINE 貼文 / 圖文選單進入集點平台，兌換 500 元健檢折價券、登記合作醫院、電話預約，健檢當天在「我的票券」折抵核銷。（截圖為測試環境，顯示的期間為測試日期；帳號、醫院、核銷碼已打碼）",
+      "steps": [
+        {
+          "title": "活動入口：LINE 貼文與圖文選單",
+          "description": "10/1 起官方帳號推播「守護毛孩從健檢開始」貼文，圖文選單（10/1–11/30）有三個入口：如何領取健檢折價券（步驟教學圖）、查看我的健檢折價券、加入會員領取。",
+          "images": [
+            "images/screens/typttv-2610/14-line-post.jpg",
+            "images/screens/typttv-2610/15-richmenu.jpg"
+          ],
+          "relatedFaqs": []
+        },
+        {
+          "title": "步驟教學圖（會員看到的版本）",
+          "description": "圖文選單「如何領取健檢折價券」會跳出輪播教學圖，可直接拿來對照會員的問題。",
+          "images": [
+            "images/screens/typttv-2610/17-tutorial-1.jpg",
+            "images/screens/typttv-2610/18-tutorial-2.jpg",
+            "images/screens/typttv-2610/19-tutorial-3.jpg"
+          ],
+          "relatedFaqs": []
+        },
+        {
+          "title": "步驟 1–2：點擊貼文 → 加入會員進入集點平台",
+          "description": "點擊貼文訊息後，非會員須填寫問題完成加入會員，再進入集點平台首頁；已是會員直接進入首頁。",
+          "image": "images/screens/typttv-2610/07-step1-2-join.jpg",
+          "relatedFaqs": []
+        },
+        {
+          "title": "步驟 3–5：點數兌換 → 兌換健檢折價券 → 登記醫院",
+          "description": "首頁點【點數兌換】，在列表找到 500 元健檢折價券點「前往兌換」（免扣點），選擇縣市、區域與合作動物醫院後「確認兌換」。\n\n⚠️ 登記醫院不等於預約成功，兌換後務必自行電話聯繫醫院預約健檢時間。",
+          "image": "images/screens/typttv-2610/08-step3-5-redeem.jpg",
+          "relatedFaqs": [
+            "HLT-101",
+            "HLT-102",
+            "HLT-104",
+            "HLT-107"
+          ]
+        },
+        {
+          "title": "步驟 6–8：到醫院折抵 → 選擇寵物 → 醫院核銷",
+          "description": "依預約時間到醫院，在【我的票券】點健檢折價券的「立即折抵」，選擇這次健檢的寵物後按「下一步」，由醫院人員掃描 QR code 或輸入 6 碼序號核銷。核銷成功畫面會提醒熟齡貓犬飼主向醫院索取《熟齡毛孩照護指南》。",
+          "image": "images/screens/typttv-2610/09-step6-8-use.jpg",
+          "relatedFaqs": [
+            "HLT-106",
+            "HLT-103"
+          ]
+        },
+        {
+          "title": "步驟 9：查看使用紀錄",
+          "description": "核銷後在【我的票券】可看到健檢折價券狀態變成「已使用」，點進去可看使用紀錄與登記的醫院資訊。",
+          "image": "images/screens/typttv-2610/10-step9-record.jpg",
+          "relatedFaqs": [
+            "HLT-105"
+          ]
+        },
+        {
+          "title": "提醒推播：兌換通知 / 預約通知",
+          "description": "兌換後隔天仍未登記醫院 → 收到【兌換通知】；登記醫院後 7 天內未核銷 → 收到【預約通知】。點訊息即可回到集點平台。",
+          "images": [
+            "images/screens/typttv-2610/04-reminder-notify.jpg",
+            "images/screens/typttv-2610/03-reminder-guide.jpg"
+          ],
+          "relatedFaqs": [
+            "HLT-108"
+          ]
+        },
+        {
+          "title": "核銷後的 3 則訊息",
+          "description": "核銷完成當下推第 1 則（產品活動訊息）、D+1 推第 2 則（寵物守護聯盟訊息）、D+20 推第 3 則（加菜金：蝦皮 / momo / PChome coupon）。",
+          "image": "images/screens/typttv-2610/02-overview-messages.jpg",
+          "relatedFaqs": [
+            "HLT-109",
+            "HLT-110"
+          ]
+        }
+      ]
     }
   ]
 }
