@@ -65,7 +65,8 @@
   a:hover{text-decoration:underline}
 
   /* ---------- Header ---------- */
-  header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+  header{background:#fff;border-bottom:1px solid var(--border);position:relative}
+  .tabs-bar{background:#fff;position:sticky;top:0;z-index:50;box-shadow:0 1px 0 var(--border)}
   .header-inner{max-width:1080px;margin:0 auto;padding:14px 20px 0;
     display:flex;align-items:center;gap:14px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
@@ -115,10 +116,15 @@
   }
 
   /* ---------- Tabs ---------- */
-  .tabs{max-width:1080px;margin:0 auto;padding:14px 20px 0;display:flex;gap:2px;border-bottom:1px solid var(--border)}
+  .tabs{max-width:1080px;margin:0 auto;padding:10px 20px 0;display:flex;gap:2px;
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab-count{font-size:11px;font-weight:600;background:#F3F4F6;color:var(--muted);
+    border-radius:999px;padding:1px 7px}
+  .tab.active .tab-count{background:var(--primary-soft);color:var(--primary)}
   .tab{padding:10px 18px;border:none;background:transparent;font:inherit;font-size:14px;font-weight:600;
     color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
-    transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+    transition:all .15s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex:0 0 auto}
   .tab:hover{color:var(--text)}
   .tab.active{color:var(--primary);border-bottom-color:var(--primary)}
 
@@ -183,7 +189,7 @@
   .field-value li{margin:3px 0}
 
   .reply-box{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;
-    padding:12px 14px;font-size:14px;line-height:1.7;position:relative;white-space:pre-wrap}
+    padding:44px 14px 12px;font-size:14px;line-height:1.7;position:relative;white-space:pre-wrap}
   .copy-btn{position:absolute;top:8px;right:8px;padding:5px 10px;border-radius:6px;
     border:1px solid var(--border-strong);background:#fff;font-size:12px;cursor:pointer;
     color:var(--text);font-family:inherit;display:inline-flex;align-items:center;gap:4px;transition:all .15s}
@@ -292,6 +298,23 @@
 
   /* ---------- Event Panel ---------- */
   #panel-event{max-width:1080px;margin:0 auto;padding:0 20px 40px}
+  #event-archive .event-card.expired{opacity:1;background:var(--card)}
+  .event-seg{display:inline-flex;gap:4px;margin:16px 0 4px;padding:4px;background:#F3F4F6;border-radius:10px}
+  .event-seg button{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;
+    color:var(--muted);padding:7px 14px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .event-seg button.active{background:#fff;color:var(--primary);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .archive-intro{font-size:13px;color:var(--muted);margin:18px 0 6px;line-height:1.7}
+  .qa-archive-note{margin:0 0 12px;padding:10px 14px;border-radius:10px;background:#F8FAFC;
+    border:1px dashed var(--border-strong);font-size:13px;color:var(--muted)}
+  .qa-archive-note a{font-weight:600}
+  .quick-btn.archive{background:#F8FAFC;color:var(--muted);border-color:var(--border-strong)}
+  .event-guide-btn{display:inline-flex;align-items:center;gap:6px;margin:4px 0 14px;padding:9px 16px;
+    border-radius:8px;background:var(--primary);color:#fff;font-size:13px;font-weight:600}
+  .event-guide-btn:hover{text-decoration:none;background:#A50E26}
+  .event-flow-step-img.multi{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;
+    scrollbar-width:thin;align-items:flex-start}
+  .event-flow-step-img.multi img{flex:0 0 100%;scroll-snap-align:start}
+  .event-flow-step-count{font-size:11px;color:var(--muted);margin-top:6px}
   .event-section-title{font-size:11px;font-weight:700;color:var(--muted);
     letter-spacing:1.2px;text-transform:uppercase;margin:22px 0 10px;padding-top:14px;
     border-top:1px solid var(--border)}
@@ -308,7 +331,7 @@
   .event-card-summary:hover{background:#FAFAFA}
   .event-card-summary::-webkit-details-marker{display:none}
   .event-card-summary::marker{display:none;content:''}
-  .event-card-banner{width:170px;height:auto;max-height:160px;object-fit:cover;
+  .event-card-banner{width:170px;height:160px;object-fit:cover;object-position:top;
     border-radius:8px;border:1px solid var(--border);flex-shrink:0}
   .event-card-meta{flex:1;min-width:0;padding-right:36px}
   .event-card-toggle{position:absolute;right:16px;top:50%;transform:translateY(-50%);
@@ -381,7 +404,7 @@
   @media(max-width:600px){
     #panel-event{padding:0 14px 30px}
     .event-card-summary{flex-direction:column;padding:14px;padding-right:44px}
-    .event-card-banner{width:100%;max-height:200px}
+    .event-card-banner{width:100%;height:180px}
     .event-flow-step{flex-direction:column;gap:12px}
     .event-flow-step-img{width:100%;max-width:none}
     .event-flow-step-img img{max-height:none}
@@ -432,7 +455,8 @@
     text-decoration:none}
   .tracker-fab svg{width:18px;height:18px;flex-shrink:0}
   @media(max-width:600px){
-    .tracker-fab{padding:10px 14px;font-size:13px;bottom:16px;right:16px}
+    .tracker-fab{padding:12px;font-size:13px;bottom:16px;right:16px}
+    .tracker-fab > span{display:none}
     .tracker-fab .full{display:none}
   }
 
@@ -452,6 +476,14 @@
     .faq-id{display:none}
     .images img{height:70px}
     .tab{padding:10px 12px;font-size:13px}
+    .tabs{padding:4px 8px 0}
+    .header-inner{padding:10px 14px 0}
+    .brand{font-size:15px}
+    .quick-section{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:100%;padding-bottom:2px}
+    .quick-section::-webkit-scrollbar{display:none}
+    .quick-btn{flex:0 0 auto;white-space:nowrap}
+    .quick-bar-inner{flex-direction:column;align-items:stretch;gap:8px}
+    body{padding-bottom:72px}
   }
 </style>
 </head>
@@ -515,13 +547,14 @@
     <div class="header-meta" id="meta"></div>
   </div>
   <div class="quick-bar" id="quickBar" hidden></div>
+</header>
+<nav class="tabs-bar">
   <div class="tabs">
     <button class="tab active" data-tab="qa">📋 QA 查詢</button>
     <button class="tab" data-tab="flows">📱 平台頁面流程</button>
-    <button class="tab" data-tab="petfair">🐾 寵物展活動</button>
-    <button class="tab" data-tab="event" id="tab-event" hidden>🎫 會員平台活動</button>
+    <button class="tab" data-tab="event" id="tab-event">🎫 會員平台活動</button>
   </div>
-</header>
+</nav>
 
 <!-- ============== TAB: QA ============== -->
 <div class="panel active" id="panel-qa">
@@ -536,6 +569,7 @@
   </div>
   <div class="filters" id="qa-filters"></div>
   <div class="summary" id="qa-summary"></div>
+  <div class="qa-archive-note" id="qa-archive-note" hidden></div>
   <main id="qa-list"></main>
 </div>
 
@@ -573,8 +607,19 @@
 
 <!-- ============== TAB: EVENT ============== -->
 <div class="panel" id="panel-event">
-  <div id="event-list"></div>
-  <div class="event-empty" id="event-empty" hidden>目前沒有限時活動。</div>
+  <div class="event-seg" role="tablist">
+    <button class="active" data-seg="live">進行中 <span class="tab-count" id="tab-event-count"></span></button>
+    <button data-seg="archive">已結束活動 <span class="tab-count" id="tab-archive-count"></span></button>
+  </div>
+  <div id="event-live">
+    <div id="event-list"></div>
+    <div class="event-empty" id="event-empty" hidden>目前沒有進行中的活動。已結束的活動請切到「已結束活動」。</div>
+  </div>
+  <div id="event-archive" hidden>
+    <p class="archive-intro">已結束活動的說明、流程與異議 QA 都收在這裡，會員事後詢問（例如點數、中獎、寄送）時查閱。點卡片展開。</p>
+    <div id="archive-list"></div>
+    <div class="event-empty" id="archive-empty" hidden>目前沒有已結束的活動。</div>
+  </div>
 </div>
 
 <footer>
@@ -615,6 +660,23 @@
 
   let FAQS = null, SCREENS = null;
   let qaActiveCat = 'all', qaQuery = '';
+  // 已結束活動：其 QA 從 QA 查詢分頁移到「已結束活動」分頁
+  const TODAY = new Date().toISOString().slice(0, 10);
+  let archivedFaqIds = new Set();
+  const eventStatus = e => {
+    if(e.startDate && e.startDate > TODAY) return 'upcoming';
+    if(e.endDate && e.endDate < TODAY) return 'expired';
+    return 'active';
+  };
+  function computeArchived(){
+    const events = (FAQS.meta && FAQS.meta.events) || [];
+    const activeIds = new Set();
+    events.filter(e => eventStatus(e) !== 'expired').forEach(e => (e.faqIds||[]).forEach(id => activeIds.add(id)));
+    archivedFaqIds = new Set();
+    events.filter(e => eventStatus(e) === 'expired').forEach(e =>
+      (e.faqIds||[]).forEach(id => { if(!activeIds.has(id)) archivedFaqIds.add(id); }));
+  }
+  const visibleFaqs = () => FAQS.faqs.filter(f => !archivedFaqIds.has(f.id));
   let flowActiveCat = 'all', flowQuery = '', flowSelectedId = null, flowMode = 'flow';
 
   // 取得一個步驟的所有圖片（向後相容：支援 images 陣列 或 image 單張）
@@ -642,11 +704,15 @@
     $('#lastUpdated').textContent = FAQS.meta.lastUpdated || '—';
     $('#meta').textContent = `QA ${FAQS.faqs.length} 筆 · 流程 ${SCREENS.flows.length} 條 · 更新：${FAQS.meta.lastUpdated || '—'}`;
 
+    computeArchived();
     setupTrackerFAB();
     renderQuickLinks();
     initTabs();
     renderQAFilters(); renderQAList();
     renderFlowFilters(); renderFlowDetail(); renderFlowLibrary();
+    $('#qa-archive-note').addEventListener('click', e => {
+      if(e.target.closest('[data-goto-archive]')){ e.preventDefault(); location.hash = 'archive'; }
+    });
     renderEvents();
 
     $('#qa-search').addEventListener('input', e => { qaQuery = e.target.value.trim(); renderQAList(); });
@@ -720,8 +786,8 @@
       sections.push(`
         <div class="quick-section">
           <span class="quick-label">活動 / 功能</span>
-          ${ql.events.map(it => {
-            const expired = it.endDate && it.endDate < today;
+          ${ql.events.filter(it => !(it.endDate && it.endDate < today)).map(it => {
+            const expired = false;
             const tagType = expired ? 'expired' : (it.tagType || 'feature');
             const tagText = expired ? '已結束' : (it.tag || '');
             const period = (it.startDate || it.endDate)
@@ -735,6 +801,10 @@
                 </span>
               </a>`;
           }).join('')}
+          ${(() => {
+            const n = ql.events.filter(it => it.endDate && it.endDate < today).length;
+            return n ? `<a class="quick-btn event archive" href="#archive">🗂 已結束活動 ${n} 項</a>` : '';
+          })()}
         </div>`);
     }
 
@@ -747,6 +817,7 @@
   // ============ TABS ============
   function initTabs(){
     $$('.tab').forEach(b => b.addEventListener('click', () => activateTab(b.dataset.tab)));
+    $$('.event-seg button').forEach(b => b.addEventListener('click', () => setEventSeg(b.dataset.seg)));
     window.addEventListener('message', e => {
       if(e.data && e.data.type === 'petfair-height'){
         const f = document.getElementById('petfairFrame');
@@ -760,14 +831,34 @@
       $('#flows-library-view').style.display = flowMode === 'library' ? '' : 'none';
     }));
   }
+  function setEventSeg(seg){
+    $$('.event-seg button').forEach(b => b.classList.toggle('active', b.dataset.seg === seg));
+    $('#event-live').hidden = seg !== 'live';
+    $('#event-archive').hidden = seg !== 'archive';
+  }
   function activateTab(tab){
-    $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+    const tabKey = tab === 'petfair' ? 'event' : tab;   // 寵物展情境教學歸在會員平台活動（已結束）
+    $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
     $$('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tab));
   }
   function handleHash(){
     const h = (location.hash || '').replace('#','');
     if(!h) return;
-    if(h.startsWith('faq=')){
+    if(h.startsWith('faq=') && archivedFaqIds.has(h.slice(4))){
+      // 已結束活動的 QA：到會員平台活動 > 已結束活動，展開所屬活動卡
+      activateTab('event'); setEventSeg('archive');
+      const id = h.slice(4);
+      requestAnimationFrame(() => {
+        const el = document.querySelector(`#event-archive .faq[data-fid="${CSS.escape(id)}"]`);
+        if(el){
+          el.closest('details.event-card').open = true;
+          el.open = true;
+          el.classList.add('flash-target');
+          el.scrollIntoView({behavior:'smooth', block:'start'});
+          setTimeout(() => el.classList.remove('flash-target'), 2400);
+        }
+      });
+    } else if(h.startsWith('faq=')){
       activateTab('qa');
       const id = h.slice(4);
       requestAnimationFrame(() => {
@@ -786,7 +877,10 @@
       flowSelectedId = h.slice(5);
       renderFlowDetail();
     } else if(h === 'event' || h === 'events'){
-      activateTab('event');
+      activateTab('event'); setEventSeg('live');
+    } else if(h === 'archive'){
+      activateTab('event'); setEventSeg('archive');
+      window.scrollTo({top:0});
     } else if(h === 'petfair'){
       activateTab('petfair');
     }
@@ -794,9 +888,10 @@
 
   // ============ QA TAB ============
   function renderQAFilters(){
-    const counts = {all: FAQS.faqs.length};
+    const faqs = visibleFaqs();
+    const counts = {all: faqs.length};
     FAQS.categories.forEach(c => counts[c.id] = 0);
-    FAQS.faqs.forEach(f => { if(counts[f.category] !== undefined) counts[f.category]++; });
+    faqs.forEach(f => { if(counts[f.category] !== undefined) counts[f.category]++; });
 
     const html = [`<div class="chip ${qaActiveCat==='all'?'active':''}" data-cat="all">
         全部 <span class="chip-count">${counts.all}</span></div>`];
@@ -810,6 +905,9 @@
     $('#qa-filters').querySelectorAll('.chip').forEach(el => {
       el.addEventListener('click', () => { qaActiveCat = el.dataset.cat; renderQAFilters(); renderQAList(); });
     });
+    if(qaActiveCat !== 'all' && !counts[qaActiveCat]){ qaActiveCat = 'all'; }
+    $('#qa-filters').querySelectorAll('.chip').forEach(el => {
+    });
   }
   function qaMatches(faq, q){
     if(!q) return true;
@@ -819,8 +917,20 @@
   }
   function renderQAList(){
     const cat = FAQS.categories.reduce((m,c)=>{m[c.id]=c;return m;},{});
-    const filtered = FAQS.faqs.filter(f =>
+    const filtered = visibleFaqs().filter(f =>
       (qaActiveCat === 'all' || f.category === qaActiveCat) && qaMatches(f, qaQuery));
+    // 已結束活動 QA 提示：搜尋時顯示符合筆數，否則顯示總數
+    const note = $('#qa-archive-note');
+    const archived = FAQS.faqs.filter(f => archivedFaqIds.has(f.id));
+    const archivedHits = qaQuery ? archived.filter(f => qaMatches(f, qaQuery)) : archived;
+    if(archivedHits.length){
+      note.hidden = false;
+      note.innerHTML = qaQuery
+        ? `另有 <b>${archivedHits.length}</b> 筆<b>已結束活動</b>的 QA 符合「${escapeHtml(qaQuery)}」 → <a href="#archive" data-goto-archive>到「會員平台活動 › 已結束活動」查看</a>`
+        : `已結束活動的 ${archivedHits.length} 筆 QA 已移到 <a href="#archive" data-goto-archive>「會員平台活動 › 已結束活動」</a>`;
+    } else {
+      note.hidden = true;
+    }
     $('#qa-summary').innerHTML = qaQuery
       ? `找到 ${filtered.length} 筆「${escapeHtml(qaQuery)}」相關 QA`
       : (qaActiveCat === 'all' ? `共 ${filtered.length} 筆 QA` : `${cat[qaActiveCat].name}：${filtered.length} 筆`);
@@ -857,7 +967,7 @@
       ? `<div class="images">${f.images.map(src =>
           `<img src="${escapeHtml(src)}" data-full="${escapeHtml(src)}" data-cap="${escapeHtml(f.title)}" alt="" loading="lazy">`).join('')}</div>` : '';
     return `
-    <details class="faq"${setId ? ` id="${escapeHtml(f.id)}"` : ''}>
+    <details class="faq" data-fid="${escapeHtml(f.id)}"${setId ? ` id="${escapeHtml(f.id)}"` : ''}>
       <summary class="faq-summary">
         <span class="faq-cat" style="background:${catColor}">${escapeHtml(catName)}</span>
         <span class="faq-title">${hl(f.title)}</span>
@@ -1145,36 +1255,33 @@
   // ============ Event Panel ============
   function renderEvents(){
     const events = (FAQS.meta && FAQS.meta.events) || [];
-    const tabBtn = $('#tab-event');
-    if(!events.length){
-      tabBtn.hidden = true;
-      $('#event-empty').hidden = false;
-      return;
-    }
-    tabBtn.hidden = false;
-    $('#event-empty').hidden = true;
-
-    const today = new Date().toISOString().slice(0, 10);
-    const status = e => {
-      if(e.startDate && e.startDate > today) return 'upcoming';
-      if(e.endDate && e.endDate < today) return 'expired';
-      return 'active';
-    };
     const sortKey = e => e.startDate || '';
     const byStatus = {active: [], upcoming: [], expired: []};
-    events.forEach(e => byStatus[status(e)].push(e));
+    events.forEach(e => byStatus[eventStatus(e)].push(e));
     byStatus.active.sort((a,b) => sortKey(b).localeCompare(sortKey(a)));
     byStatus.upcoming.sort((a,b) => sortKey(a).localeCompare(sortKey(b)));
     byStatus.expired.sort((a,b) => sortKey(b).localeCompare(sortKey(a)));
 
-    const labels = {active:'進行中', upcoming:'即將開始', expired:'已結束'};
+    // 進行中 / 即將開始
+    const labels = {active:'進行中', upcoming:'即將開始'};
     const sections = [];
-    ['active','upcoming','expired'].forEach(s => {
-      if(!byStatus[s].length) return;
-      sections.push(`<h3 class="event-section-title">${labels[s]}（${byStatus[s].length}）</h3>`);
-      byStatus[s].forEach(e => sections.push(renderEventCard(e, s)));
+    ['active','upcoming'].forEach(st => {
+      if(!byStatus[st].length) return;
+      sections.push(`<h3 class="event-section-title">${labels[st]}（${byStatus[st].length}）</h3>`);
+      byStatus[st].forEach(e => sections.push(renderEventCard(e, st)));
     });
+    const liveCount = byStatus.active.length + byStatus.upcoming.length;
     $('#event-list').innerHTML = sections.join('');
+    $('#event-empty').hidden = liveCount > 0;
+    $('#tab-event-count').textContent = liveCount || '';
+    $('#tab-event-count').hidden = !liveCount;
+
+    // 已結束（預設收合）
+    $('#archive-list').innerHTML = byStatus.expired.map(e => renderEventCard(e, 'expired')).join('');
+    $('#archive-empty').hidden = byStatus.expired.length > 0;
+    $('#tab-archive-count').textContent = byStatus.expired.length || '';
+    $('#tab-archive-count').hidden = !byStatus.expired.length;
+
     bindEventCardEvents();
   }
 
@@ -1221,8 +1328,9 @@
       const stepsHtml = (flow.steps || []).map((s, i) => {
         const imgs = (s.images && s.images.length) ? s.images : (s.image ? [s.image] : []);
         const imgBlock = imgs.length
-          ? `<div class="event-flow-step-img">${imgs.map(src =>
-              `<img src="${escapeHtml(src)}" data-full="${escapeHtml(src)}" data-cap="${escapeHtml(e.name + ' / ' + s.title)}" alt="" loading="lazy">`).join('')}</div>`
+          ? `<div><div class="event-flow-step-img${imgs.length > 1 ? ' multi' : ''}">${imgs.map(src =>
+              `<img src="${escapeHtml(src)}" data-full="${escapeHtml(src)}" data-cap="${escapeHtml(e.name + ' / ' + s.title)}" alt="" loading="lazy">`).join('')}</div>${
+              imgs.length > 1 ? `<div class="event-flow-step-count">共 ${imgs.length} 張 · 左右滑動，點圖放大</div>` : ''}</div>`
           : `<div class="event-flow-step-img"><div class="event-flow-step-img-empty">尚未上傳截圖</div></div>`;
         return `<div class="event-flow-step">
           ${imgBlock}
@@ -1256,6 +1364,7 @@
         <span class="event-card-toggle" aria-hidden="true">${chevronSvg}</span>
       </summary>
       <div class="event-card-body">
+        ${e.guideTab ? `<a class="event-guide-btn" href="#${escapeHtml(e.guideTab)}">📖 開啟${escapeHtml(e.guideLabel || '情境教學')} →</a>` : ''}
         ${detailHtml}
         ${flowHtml}
         ${faqsHtml}
@@ -1307,6 +1416,7 @@
   function gatherLBGroup(img){
     const container =
       img.closest('.step-carousel-track') ||
+      img.closest('.event-flow-step-img.multi') ||
       img.closest('.images');
     const nodes = container
       ? Array.from(container.querySelectorAll('img[data-full]'))
