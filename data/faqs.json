@@ -2426,7 +2426,8 @@
       ],
       "replyTemplate": "您好，「活動分享」需要在手機 LINE App 內開啟曬寵打卡頁才能使用喔！如果是用 Safari、Chrome 或電腦開啟，按了不會有反應。麻煩您改從 LINE 裡點開活動連結再試一次～",
       "images": [
-        "images/screens/poopface-2611/09-success-popup.jpg"
+        "images/screens/poopface-2611/09-success-popup.jpg",
+        "images/screens/poopface-2611/11-share-card.jpg"
       ],
       "category": "campaign",
       "updated": "2026-11-06"

@@ -758,7 +758,10 @@
         {
           "title": "Step 6：已送出 → 活動分享／回曬寵牆／查看紀錄",
           "description": "送出後跳「已送出！感謝您的參與」。「活動分享」在 LINE 內會開好友選擇器，好友收到的是活動卡片（標題「毛孩嗯嗯臉」可愛募集中、按鈕「立即前往」，點了進活動衛教頁）；一般瀏覽器點了沒反應；「回曬寵牆」回列表；「查看紀錄」到本檔參加紀錄。",
-          "image": "images/screens/poopface-2611/09-success-popup.jpg",
+          "images": [
+            "images/screens/poopface-2611/09-success-popup.jpg",
+            "images/screens/poopface-2611/11-share-card.jpg"
+          ],
           "relatedFaqs": [
             "POOP-010",
             "POOP-006"
