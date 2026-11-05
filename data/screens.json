@@ -691,6 +691,89 @@
           ]
         }
       ]
+    },
+    {
+      "id": "FLOW-POOPFACE-2611",
+      "category": "campaign",
+      "name": "2026/11/09-12/31 毛孩嗯嗯臉 可愛募集中（曬寵打卡）",
+      "description": "會員從活動衛教頁點「立即上傳」→ 開啟 LINE 集點平台曬寵打卡 → 我要秀毛孩 → 上傳照片 → 已送出（活動分享／回曬寵牆／查看紀錄）→ 本檔參加紀錄「審核中」。客服收到會員截圖時可對照這條流程找出所在頁面。（截圖為測試站畫面；曬寵牆上的飼主暱稱已打碼）",
+      "steps": [
+        {
+          "title": "Step 1：活動衛教頁（不需登入）",
+          "description": "從媒體廣告、LINE 官方帳號選單或好友分享進入。頁面依序為：主視覺 → 點點看毛孩的嗯嗯是哪一種（石頭便／乾裂便／香蕉便／布丁便）→ 怎麼營造健康的腸道 → 當毛孩生病就像森林失衡 → 法國皇家腸胃道配方 → 獸醫推薦營養配方（貓／狗分頁、查看產品詳情、尋找附近動物醫院）。右下角浮動「立即上傳」按鈕。",
+          "images": [
+            "images/screens/poopface-2611/01-landing-hero.jpg",
+            "images/screens/poopface-2611/02-landing-1.jpg",
+            "images/screens/poopface-2611/02-landing-2.jpg",
+            "images/screens/poopface-2611/02-landing-3.jpg",
+            "images/screens/poopface-2611/02-landing-4.jpg",
+            "images/screens/poopface-2611/02-landing-5.jpg",
+            "images/screens/poopface-2611/02-landing-6.jpg"
+          ],
+          "relatedFaqs": [
+            "POOP-003",
+            "POOP-012"
+          ]
+        },
+        {
+          "title": "Step 2：點「立即上傳」→ 開啟 LINE",
+          "description": "按鈕連到 LINE 集點平台（LIFF）。用手機一般瀏覽器（Safari／Chrome）開啟會看到「請啟動 LINE 應用程式」，點「啟動 LINE 應用程式」即可；在 LINE 內點則直接進入。尚未加入「法國皇家 - 毛孩健康專寵計劃」者會先填會員問卷再回到曬寵頁。",
+          "image": "images/screens/poopface-2611/03-open-line-app.jpg",
+          "relatedFaqs": [
+            "POOP-008"
+          ]
+        },
+        {
+          "title": "Step 3：曬寵打卡頁",
+          "description": "本檔「毛孩嗯嗯臉！可愛募集中」曬寵打卡頁：主視覺、活動文案（上傳照片抽飼料、拿 50 點、每日點讚再賺 2 點、人氣冠軍再得 200 點）、「活動說明」「歷屆活動」按鈕、「曬寵牆」（依人氣排序）與「本檔參加紀錄」分頁，底部浮動「我要秀毛孩！」。",
+          "images": [
+            "images/screens/poopface-2611/04-petpost-home.jpg",
+            "images/screens/poopface-2611/05-wall.jpg"
+          ],
+          "relatedFaqs": [
+            "POOP-004",
+            "POOP-005"
+          ]
+        },
+        {
+          "title": "Step 4：我要秀毛孩 → 貼心小提示",
+          "description": "點「我要秀毛孩！」先跳「貼心小提示」：請上傳不同圖片，重複使用相同圖片無冠亞季資格。點「繼續上傳」進表單，「取消」回曬寵牆。每次上傳都會出現。",
+          "image": "images/screens/poopface-2611/06-tip-popup.jpg",
+          "relatedFaqs": [
+            "POOP-002",
+            "POOP-011"
+          ]
+        },
+        {
+          "title": "Step 5：上傳表單",
+          "description": "①「選擇毛孩」下拉（只列出已在「會員面板 › 寵物資訊」建立的毛孩，沒有就是空的）②點擊新增毛孩大頭照 ③裁切對齊（靠左／置中／靠右）④照片描述（30 字內）⑤「確認上傳」。",
+          "images": [
+            "images/screens/poopface-2611/07-upload-form.jpg",
+            "images/screens/poopface-2611/08-form-filled.jpg"
+          ],
+          "relatedFaqs": [
+            "POOP-009"
+          ]
+        },
+        {
+          "title": "Step 6：已送出 → 活動分享／回曬寵牆／查看紀錄",
+          "description": "送出後跳「已送出！感謝您的參與」。「活動分享」在 LINE 內會開好友選擇器，好友收到的是活動卡片（標題「毛孩嗯嗯臉」可愛募集中、按鈕「立即前往」，點了進活動衛教頁）；一般瀏覽器點了沒反應；「回曬寵牆」回列表；「查看紀錄」到本檔參加紀錄。",
+          "image": "images/screens/poopface-2611/09-success-popup.jpg",
+          "relatedFaqs": [
+            "POOP-010",
+            "POOP-006"
+          ]
+        },
+        {
+          "title": "Step 7：本檔參加紀錄（審核中）",
+          "description": "上傳後狀態為「審核中」，審核通過才會出現在曬寵牆並發 50 HP。會員問「我傳了沒點數」先請他看這裡。",
+          "image": "images/screens/poopface-2611/10-records.jpg",
+          "relatedFaqs": [
+            "POOP-001",
+            "POOP-011"
+          ]
+        }
+      ]
     }
   ]
 }
