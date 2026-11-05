@@ -63,8 +63,10 @@ FLOW = {
     "description": "會員從活動衛教頁點「立即上傳」→ 開啟 LINE 集點平台曬寵打卡 → 我要秀毛孩 → 上傳照片 → 已送出（活動分享／回曬寵牆／查看紀錄）→ 本檔參加紀錄「審核中」。客服收到會員截圖時可對照這條流程找出所在頁面。（截圖為測試站畫面；曬寵牆上的飼主暱稱已打碼）",
     "steps": [
         {"title": "Step 1：活動衛教頁（不需登入）",
-         "description": "從媒體廣告、LINE 官方帳號選單或好友分享進入。頁面依序為：主視覺 → 點點看毛孩的嗯嗯是哪一種（石頭便／乾裂便／香蕉便／布丁便）→ 怎麼營造健康的腸道 → 當毛孩生病就像森林失衡 → 法國皇家腸胃道配方 → 獸醫推薦營養配方（貓／狗分頁、查看產品詳情、尋找附近動物醫院）。右下角浮動「立即上傳」按鈕。",
-         "images": [IMG + "01-landing-hero.jpg"] + [IMG + "02-landing-%d.jpg" % i for i in range(1, 7)],
+         "description": "從媒體廣告、LINE 官方帳號選單或好友分享進入，不需登入。頁面依序為：\n① 主視覺（活動期 11/9–12/31，註明須先加入會員）\n② 點點看毛孩的嗯嗯是哪一種：四個圖示可點，點了展開紅色說明卡——石頭便（水分不足硬叩叩）、乾裂便（水分不足乾巴巴）、香蕉便（軟硬適中，理想嗯嗯）、布丁便（水分過多，可能是健康警訊，建議盡快就醫）\n③ 怎麼營造健康的腸道（腸道菌叢衛教）\n④ 當毛孩生病就像森林失衡（益生元）\n⑤ 法國皇家腸胃道配方 → 獸醫推薦營養配方：貓／狗分頁，依症狀（便秘／肝臟疾病／拉肚子嘔吐…）左右滑動看對應配方與產品代碼\n⑥ 底部「查看產品詳情」「尋找附近動物醫院」兩顆按鈕（註：獸醫推薦系列僅於動物醫院販售）\n右下角全程浮動「立即上傳」按鈕 → 進入曬寵打卡。（截圖為手機實機畫面）",
+         "images": [IMG + "01-landing-hero.jpg", IMG + "02-landing-01-types.jpg", IMG + "02-landing-02-stone.jpg", IMG + "02-landing-03-crack.jpg",
+                    IMG + "02-landing-04-banana.jpg", IMG + "02-landing-05-pudding.jpg", IMG + "02-landing-06-gut.jpg", IMG + "02-landing-07-forest.jpg",
+                    IMG + "02-landing-08-formula.jpg", IMG + "02-landing-09-cat.jpg", IMG + "02-landing-10-dog.jpg", IMG + "02-landing-11-products.jpg"],
          "relatedFaqs": []},
         {"title": "Step 2：點「立即上傳」→ 開啟 LINE",
          "description": "按鈕連到 LINE 集點平台（LIFF）。用手機一般瀏覽器（Safari／Chrome）開啟會看到「請啟動 LINE 應用程式」，點「啟動 LINE 應用程式」即可；在 LINE 內點則直接進入。尚未加入「法國皇家 - 毛孩健康專寵計劃」者會先填會員問卷再回到曬寵頁。",
