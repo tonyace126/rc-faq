@@ -789,7 +789,7 @@
           ${ql.events.filter(it => !(it.endDate && it.endDate < today)).map(it => {
             const expired = false;
             const tagType = expired ? 'expired' : (it.tagType || 'feature');
-            const tagText = expired ? '已結束' : (it.tag || '');
+            const tagText = expired ? '已結束' : ((it.startDate && it.startDate > today) ? '預告活動' : (it.tag || ''));
             const period = (it.startDate || it.endDate)
               ? `<span class="quick-period">${escapeHtml(it.startDate||'')}${it.endDate?` ~ ${escapeHtml(it.endDate)}`:''}</span>` : '';
             return `
@@ -1263,7 +1263,7 @@
     byStatus.expired.sort((a,b) => sortKey(b).localeCompare(sortKey(a)));
 
     // 進行中 / 即將開始
-    const labels = {active:'進行中', upcoming:'即將開始'};
+    const labels = {active:'進行中', upcoming:'預告活動'};
     const sections = [];
     ['active','upcoming'].forEach(st => {
       if(!byStatus[st].length) return;
@@ -1309,7 +1309,7 @@
   }
 
   function renderEventCard(e, status){
-    const labels = {active:'進行中', upcoming:'即將開始', expired:'已結束'};
+    const labels = {active:'進行中', upcoming:'預告活動', expired:'已結束'};
     const isOpen = (status !== 'expired');
     const period = `${e.startDate || ''}${e.endDate ? ' ~ ' + e.endDate : ''}`;
     const banner = e.bannerImage
